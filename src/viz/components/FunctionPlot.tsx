@@ -25,7 +25,6 @@ function evaluateExpression(expr: string, x: number, extraVars: Record<string, n
   try {
     const varNames = Object.keys(extraVars);
     const varVals = Object.values(extraVars);
-    // eslint-disable-next-line no-new-func
     const fn = new Function("x", ...varNames, `"use strict"; return (${expr});`);
     const result = fn(x, ...varVals) as number;
     return isFinite(result) ? result : null;

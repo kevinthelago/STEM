@@ -74,7 +74,7 @@ describe("VizHost", () => {
 
   it("merges default params with provided params", async () => {
     const customExpression = "Math.cos(x)";
-    const renderSpy = vi.fn((_props: unknown) => <div data-testid="comp-function_plot" />);
+    const renderSpy = vi.fn(() => <div data-testid="comp-function_plot" />);
 
     vi.doMock("../components/FunctionPlot", () => ({
       FunctionPlot: renderSpy,

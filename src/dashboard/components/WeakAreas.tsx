@@ -1,4 +1,3 @@
-import React from "react";
 import type { Topic, MasteryRecord } from "../api";
 import { computeMasteryScore, DEFAULT_WEIGHTS } from "../masteryModel";
 

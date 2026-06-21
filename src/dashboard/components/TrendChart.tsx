@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as d3 from "d3";
 import type { MasteryRecord } from "../api";
 import { computeMasteryScore, DEFAULT_WEIGHTS } from "../masteryModel";

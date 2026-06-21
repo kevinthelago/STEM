@@ -23,18 +23,6 @@ function mergeParams(params: Record<string, unknown>): MatrixTransformParams {
   };
 }
 
-function buildThreeMatrix(m: number[][]): THREE.Matrix4 {
-  // m is 3×3, place into 4×4
-  const mat4 = new THREE.Matrix4();
-  mat4.set(
-    m[0][0], m[0][1], m[0][2], 0,
-    m[1][0], m[1][1], m[1][2], 0,
-    m[2][0], m[2][1], m[2][2], 0,
-    0,       0,       0,       1
-  );
-  return mat4;
-}
-
 // Unit cube corners
 const CUBE_EDGES: Array<[[number,number,number],[number,number,number]]> = [
   [[0,0,0],[1,0,0]], [[1,0,0],[1,1,0]], [[1,1,0],[0,1,0]], [[0,1,0],[0,0,0]],

@@ -3,14 +3,6 @@ import * as d3 from "d3";
 import type { VizComponentProps, DistributionParams } from "../types";
 import { VIZ_COLORS, VIZ_DEFAULTS } from "../theme";
 
-const DEFAULT_PARAMS: DistributionParams = {
-  kind: "normal",
-  mu: 0,
-  sigma: 1,
-  showMean: true,
-  showStd: true,
-};
-
 function mergeParams(params: Record<string, unknown>): DistributionParams {
   return {
     kind: (params.kind as DistributionParams["kind"]) ?? "normal",
@@ -59,7 +51,7 @@ export function Distribution({ params }: VizComponentProps) {
     if (!containerRef.current) return;
     const obs = new ResizeObserver((entries) => {
       const { width, height } = entries[0].contentRect;
-      if (width > 0 && height > 0) setDims({ width, height - 80 > 100 ? height - 80 : height });
+      if (width > 0 && height > 0) setDims({ width, height: height - 80 > 100 ? height - 80 : height });
     });
     obs.observe(containerRef.current);
     return () => obs.disconnect();

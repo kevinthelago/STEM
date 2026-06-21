@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useMasteryStore } from "./masteryStore";
 import { TopicCard } from "./components/TopicCard";
 import { TrendChart } from "./components/TrendChart";

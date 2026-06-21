@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useReviewStore } from "./reviewStore";
-import { sm2QualityFromOutcome, type ReviewOutcome } from "./sm2";
+import type { ReviewOutcome } from "./sm2";
 
 type SimplifiedOutcome = "forgot" | "hard" | "good" | "easy";
 

@@ -1,4 +1,3 @@
-import React from "react";
 import type { Topic } from "../api";
 
 interface TopicCardProps {

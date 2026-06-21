@@ -28,7 +28,6 @@ function mergeParams(params: Record<string, unknown>): GradientDescentParams {
 
 function evalObjective(expr: string, x: number, y: number): number {
   try {
-    // eslint-disable-next-line no-new-func
     const fn = new Function("x", "y", `"use strict"; return (${expr});`);
     const v = fn(x, y) as number;
     return isFinite(v) ? v : Infinity;

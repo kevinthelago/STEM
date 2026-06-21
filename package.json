@@ -5,13 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc -b && vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
+    "coverage": "vitest run --coverage",
+    "lint": "eslint src --max-warnings 0",
     "format": "prettier --write src",
+    "type-check": "tsc --noEmit",
     "tauri": "tauri"
   },
   "dependencies": {
@@ -19,6 +20,9 @@
     "@react-three/fiber": "^8.17.14",
     "@tauri-apps/api": "^2.5.0",
     "@tauri-apps/plugin-shell": "^2.2.0",
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/addon-webgl": "^0.18.0",
+    "@xterm/xterm": "^5.5.0",
     "d3": "^7.9.0",
     "katex": "^0.16.22",
     "lucide-react": "^0.511.0",
@@ -55,6 +59,7 @@
     "happy-dom": "^17.5.2",
     "prettier": "^3.5.3",
     "typescript": "~6.0.0",
+    "typescript-eslint": "^8.33.1",
     "vite": "^6.3.5",
     "vitest": "^3.2.3"
   }

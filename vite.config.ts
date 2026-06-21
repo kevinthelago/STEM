@@ -1,30 +1,34 @@
-import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
-import { resolve } from "path";
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import { resolve } from 'path'
 
-export default defineConfig(async () => ({
+// https://vite.dev/config/
+export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": resolve(__dirname, "./src"),
+      '@': resolve(__dirname, './src'),
     },
   },
+  // Tauri: prevent vite from obscuring Rust errors
   clearScreen: false,
+  // Tauri: tauri expects a fixed port
   server: {
     port: 1420,
     strictPort: true,
     watch: {
-      ignored: ["**/src-tauri/**"],
+      // exclude Tauri's watch from Vite's watcher
+      ignored: ['**/src-tauri/**'],
     },
   },
-  test: {
-    globals: true,
-    environment: "happy-dom",
-    setupFiles: ["src/test-setup.ts"],
-    include: ["src/**/__tests__/**/*.{ts,tsx}", "src/**/*.test.{ts,tsx}"],
-    coverage: {
-      reporter: ["text", "json", "html"],
-      include: ["src/viz/**", "src/dashboard/**", "src/review/**", "src/capstone/**"],
-    },
+  // Tauri: produce sourcemaps for debug builds
+  build: {
+    sourcemap: process.env.TAURI_DEBUG ? true : false,
+    // Tauri supports es2021
+    target: ['es2021', 'chrome100', 'safari13'],
+    // don't minify for debug builds
+    minify: !process.env.TAURI_DEBUG ? 'esbuild' : false,
   },
-}));
+  // Tauri: use an env file to avoid exposing TAURI_* variables to Vite
+  envPrefix: ['VITE_', 'TAURI_'],
+})

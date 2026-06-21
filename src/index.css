@@ -1,0 +1,140 @@
+/* Design system CSS variables — mirrors src/theme/tokens.ts */
+:root {
+  /* Surfaces */
+  --surface-base: #08090c;
+  --surface-panel: #0e0f13;
+  --surface-overlay: #131419;
+  --surface-raised: #1a1c22;
+  --surface-track: #22242c;
+  --surface-input: #16181d;
+  --surface-canvas: #0b0c10;
+
+  /* Accent */
+  --accent: #9a7cff;
+  --accent-text: #cdbcff;
+  --accent-tint: rgba(154, 124, 255, 0.16);
+  --accent-border: rgba(154, 124, 255, 0.34);
+  --accent-active-bg: rgba(154, 124, 255, 0.13);
+
+  /* Text */
+  --text-primary: #e6e8ee;
+  --text-secondary: #c9cdd8;
+  --text-tertiary: #d7dae2;
+  --text-muted: #9aa0ad;
+  --text-dimmed: #7e8494;
+  --text-placeholder: #626878;
+  --text-disabled: #5b6172;
+
+  /* Borders */
+  --border-outer: #262932;
+  --border-inner: #1e2027;
+  --border-subtle: #24262e;
+  --border-card: #2a2d36;
+
+  /* Mastery */
+  --mastery-unstarted: #5b6172;
+  --mastery-learning: #d2934a;
+  --mastery-proficient: #4f93e0;
+  --mastery-mastered: #43b888;
+
+  /* Grade */
+  --grade-correct: #43b888;
+  --grade-partial: #d2934a;
+  --grade-wrong: #e0625f;
+
+  /* Typography */
+  --font-ui: 'IBM Plex Sans', -apple-system, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  overflow: hidden;
+  background: var(--surface-base);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 11px;
+  height: 11px;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2d36;
+  border-radius: 7px;
+  border: 3px solid #0e0f13;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* KaTeX */
+.katex {
+  font-size: 1.03em;
+  color: var(--text-primary);
+}
+.katex-display {
+  margin: 0.45em 0;
+}
+
+/* xterm.js overrides */
+.xterm {
+  height: 100%;
+}
+.xterm-viewport {
+  overflow-y: hidden !important;
+}
+
+/* Selection */
+::selection {
+  background: rgba(154, 124, 255, 0.3);
+}
+
+/* Button resets */
+button {
+  font-family: var(--font-ui);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input,
+textarea {
+  font-family: var(--font-ui);
+  color: var(--text-primary);
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+}
+
+/* Utility */
+.mono {
+  font-family: var(--font-mono);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

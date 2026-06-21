@@ -16,7 +16,6 @@
     "noFallthroughCasesInSwitch": true,
     "ignoreDeprecations": "6.0",
     "noUncheckedSideEffectImports": true,
-    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]

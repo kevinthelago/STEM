@@ -51,6 +51,9 @@ pub fn run() {
             // ── Data layer — settings ────────────────────────────────────────
             data::db_settings_get,
             data::db_settings_set,
+            // ── Data layer — problem templates ───────────────────────────────
+            data::db_problem_templates_list,
+            data::db_problem_templates_get,
             // ── Utilities ────────────────────────────────────────────────────
             data::claude_probe,
         ])

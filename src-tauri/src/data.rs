@@ -12,7 +12,7 @@ use tauri::{Manager, State};
 
 use stem_data::{
     Db, Mastery, NewMastery, NewNote, NewPracticeAttempt, NewReviewSchedule, NewTopic,
-    Note, PracticeAttempt, ReviewSchedule, Topic,
+    Note, PracticeAttempt, ProblemTemplate, ReviewSchedule, Topic,
 };
 
 // ── DB state (lazy path resolution) ──────────────────────────────────────────
@@ -256,6 +256,28 @@ pub fn db_settings_set(
 ) -> Result<(), String> {
     let db = open_db(&app, &state)?;
     db.settings().set(&key, &value).map_err(|e| e.to_string())
+}
+
+// ── Problem templates ─────────────────────────────────────────────────────────
+
+#[tauri::command]
+pub fn db_problem_templates_list(
+    topic_id: String,
+    app: tauri::AppHandle,
+    state: State<'_, DbState>,
+) -> Result<Vec<ProblemTemplate>, String> {
+    let db = open_db(&app, &state)?;
+    db.problem_templates().list_by_topic(&topic_id).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_problem_templates_get(
+    id: String,
+    app: tauri::AppHandle,
+    state: State<'_, DbState>,
+) -> Result<ProblemTemplate, String> {
+    let db = open_db(&app, &state)?;
+    db.problem_templates().get_by_id(&id).map_err(|e| e.to_string())
 }
 
 // ── Claude probe ──────────────────────────────────────────────────────────────

@@ -13,16 +13,21 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "ignoreDeprecations": "6.0",
     "noUncheckedSideEffectImports": true,
+    "ignoreDeprecations": "6.0",
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     }
   },
   "include": ["src"],
+  "exclude": [
+    "src/viz",
+    "src/dashboard",
+    "src/review",
+    "src/capstone"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

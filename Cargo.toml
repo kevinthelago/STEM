@@ -1,3 +1,10 @@
 [workspace]
-members = ["crates/data"]
+members = ["src-tauri", "crates/data"]
 resolver = "2"
+
+# Strip debug info from dependencies in dev/test builds to keep link times reasonable.
+[profile.dev.package."*"]
+debug = false
+
+[profile.test.package."*"]
+debug = false

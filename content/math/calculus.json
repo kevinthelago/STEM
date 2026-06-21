@@ -17,7 +17,24 @@
         "Identify and classify discontinuities"
       ],
       "viz_refs": ["function-plot", "epsilon-delta-viz"],
-      "prerequisites": []
+      "prerequisites": [],
+      "problem_templates": [
+        {
+          "id": "calc-limits-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Evaluate the limit algebraically: lim_{x→2} (x²−4)/(x−2). Show each factoring step and explain why direct substitution fails."
+        },
+        {
+          "id": "calc-limits-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Determine whether lim_{x→0} sin(x)/x exists. Evaluate it using the squeeze theorem and explain each bound."
+        },
+        {
+          "id": "calc-limits-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Use the epsilon-delta definition to prove that lim_{x→3} (2x−1) = 5. Explicitly construct δ in terms of ε."
+        }
+      ]
     },
     {
       "id": "calc-derivatives",
@@ -33,7 +50,24 @@
         "Understand differentiability vs. continuity"
       ],
       "viz_refs": ["tangent-line-viz", "function-plot"],
-      "prerequisites": ["calc-limits"]
+      "prerequisites": ["calc-limits"],
+      "problem_templates": [
+        {
+          "id": "calc-derivatives-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Using the limit definition of the derivative, find f'(x) for f(x) = x² + 3x. Write out every step of the difference quotient."
+        },
+        {
+          "id": "calc-derivatives-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Find the equation of the tangent line to f(x) = √x at x = 4. Use the derivative to find the slope; show your work."
+        },
+        {
+          "id": "calc-derivatives-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Show that f(x) = |x| is continuous but not differentiable at x = 0. Prove both claims rigorously using limits."
+        }
+      ]
     },
     {
       "id": "calc-differentiation-rules",
@@ -49,7 +83,24 @@
         "Differentiate trigonometric, exponential, and logarithmic functions"
       ],
       "viz_refs": ["function-plot"],
-      "prerequisites": ["calc-derivatives"]
+      "prerequisites": ["calc-derivatives"],
+      "problem_templates": [
+        {
+          "id": "calc-diff-rules-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Differentiate h(x) = (x³ + 2x)(sin x). Apply the product rule step-by-step and simplify."
+        },
+        {
+          "id": "calc-diff-rules-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Find dy/dx for y = e^(x²·ln x). Apply the chain rule and product rule, identifying each composite layer."
+        },
+        {
+          "id": "calc-diff-rules-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Differentiate f(x) = (sin(x²))/(1 + cos x) and find all critical points on [0, 2π]. Show the quotient and chain rule applications."
+        }
+      ]
     },
     {
       "id": "calc-integration",
@@ -65,7 +116,24 @@
         "Understand the relationship between integration and area"
       ],
       "viz_refs": ["riemann-sum-viz", "area-under-curve"],
-      "prerequisites": ["calc-derivatives"]
+      "prerequisites": ["calc-derivatives"],
+      "problem_templates": [
+        {
+          "id": "calc-integration-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Compute ∫(3x² − 5x + 2) dx. Apply the power rule for integration term-by-term and include the constant of integration."
+        },
+        {
+          "id": "calc-integration-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Evaluate ∫₀¹ x·e^(x²) dx using substitution. Identify u, compute du, transform the bounds, and evaluate."
+        },
+        {
+          "id": "calc-integration-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Approximate ∫₁³ (1/x) dx using a right Riemann sum with n=4 subintervals, then compare to the exact value. Compute the absolute error."
+        }
+      ]
     },
     {
       "id": "calc-fundamental-theorem",
@@ -81,7 +149,24 @@
         "Apply the theorem to solve applied problems"
       ],
       "viz_refs": ["ftc-viz"],
-      "prerequisites": ["calc-integration"]
+      "prerequisites": ["calc-integration"],
+      "problem_templates": [
+        {
+          "id": "calc-ftc-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Use FTC Part 2 to evaluate ∫₀^π sin(x) dx. State the antiderivative, apply the evaluation theorem, and give the exact value."
+        },
+        {
+          "id": "calc-ftc-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Find d/dx[∫₁^(x²) √(1+t³) dt] using FTC Part 1 combined with the chain rule. Show each step."
+        },
+        {
+          "id": "calc-ftc-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A particle moves with velocity v(t) = t² − 4t + 3. Use the FTC to find the displacement and total distance travelled on [0, 4]. Distinguish between the two."
+        }
+      ]
     },
     {
       "id": "calc-series-sequences",
@@ -97,7 +182,24 @@
         "Determine radius and interval of convergence"
       ],
       "viz_refs": ["series-partial-sums"],
-      "prerequisites": ["calc-limits"]
+      "prerequisites": ["calc-limits"],
+      "problem_templates": [
+        {
+          "id": "calc-series-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Determine whether the series Σ(1/n²) from n=1 to ∞ converges or diverges. Apply the p-series test and state its conditions."
+        },
+        {
+          "id": "calc-series-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Derive the Maclaurin series for f(x) = cos(x) up to the x⁶ term. Show the pattern of derivatives at x=0 and identify the general term."
+        },
+        {
+          "id": "calc-series-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Find the radius and interval of convergence for the power series Σ (n·xⁿ)/(3ⁿ) from n=0 to ∞. Apply the ratio test and check endpoints."
+        }
+      ]
     }
   ]
 }

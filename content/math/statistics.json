@@ -17,7 +17,24 @@
         "Understand skewness and kurtosis"
       ],
       "viz_refs": ["histogram", "boxplot"],
-      "prerequisites": []
+      "prerequisites": [],
+      "problem_templates": [
+        {
+          "id": "stat-descriptive-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Given the dataset [4, 7, 13, 2, 7, 9, 1, 14, 7, 6], compute the mean, median, mode, variance, and standard deviation. Show all steps."
+        },
+        {
+          "id": "stat-descriptive-pt-2",
+          "difficulty": 2,
+          "prompt_template": "For the dataset [2, 5, 8, 12, 15, 18, 22, 25], construct a boxplot. Identify Q1, Q3, IQR, and any outliers using the 1.5×IQR rule."
+        },
+        {
+          "id": "stat-descriptive-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Two datasets have the same mean of 50. Dataset A has standard deviation 5; Dataset B has standard deviation 20. Explain what this reveals about their distributions and sketch the expected shape of each histogram."
+        }
+      ]
     },
     {
       "id": "stat-probability",
@@ -33,7 +50,24 @@
         "Distinguish independent from dependent events"
       ],
       "viz_refs": ["venn-diagram", "probability-tree"],
-      "prerequisites": []
+      "prerequisites": [],
+      "problem_templates": [
+        {
+          "id": "stat-probability-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A bag contains 4 red and 6 blue marbles. Two marbles are drawn without replacement. Find P(both red), P(one of each), and P(both blue). Use the multiplication rule."
+        },
+        {
+          "id": "stat-probability-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A disease affects 1% of the population. A test has 95% sensitivity and 90% specificity. Given a positive test result, what is the probability the patient has the disease? Apply Bayes' theorem and explain the base-rate fallacy."
+        },
+        {
+          "id": "stat-probability-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Two events A and B have P(A) = 0.4, P(B) = 0.3, P(A∩B) = 0.1. Compute P(A|B), P(B|A), P(A∪B). Are A and B independent? Prove your answer using the definition."
+        }
+      ]
     },
     {
       "id": "stat-distributions",
@@ -49,7 +83,24 @@
         "Apply the Central Limit Theorem"
       ],
       "viz_refs": ["distribution-plot", "normal-curve"],
-      "prerequisites": ["stat-probability"]
+      "prerequisites": ["stat-probability"],
+      "problem_templates": [
+        {
+          "id": "stat-dist-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A fair coin is flipped 10 times. Using the binomial distribution, find P(exactly 6 heads), P(at least 8 heads), and E[heads]. Show the PMF formula."
+        },
+        {
+          "id": "stat-dist-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Test scores are normally distributed with μ = 72, σ = 10. Find (a) P(score > 85), (b) P(60 < score < 80), (c) the 90th percentile. Use z-scores and the standard normal table."
+        },
+        {
+          "id": "stat-dist-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A factory produces 200 items/hour with each item defective with probability 0.02. Compare the exact Poisson approximation to the binomial for P(≥5 defects/hour). Explain when the approximation is valid."
+        }
+      ]
     },
     {
       "id": "stat-hypothesis-testing",
@@ -65,7 +116,24 @@
         "Apply t-tests, z-tests, and chi-square tests"
       ],
       "viz_refs": ["p-value-viz", "rejection-region"],
-      "prerequisites": ["stat-distributions"]
+      "prerequisites": ["stat-distributions"],
+      "problem_templates": [
+        {
+          "id": "stat-hyp-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A sample of 30 students has mean exam score 78 with s = 12. Test H₀: μ = 75 vs H₁: μ > 75 at α = 0.05. State the t-statistic, degrees of freedom, and conclusion."
+        },
+        {
+          "id": "stat-hyp-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Explain the relationship between p-value, significance level α, and Type I error. Give an example where a p-value of 0.03 would lead to different conclusions at α = 0.01 vs α = 0.05."
+        },
+        {
+          "id": "stat-hyp-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A chi-square test for independence: a survey of 200 people records gender (M/F) and preference (A/B/C). Given a contingency table, test independence at α = 0.05. Compute expected frequencies, the chi-square statistic, and state the conclusion."
+        }
+      ]
     },
     {
       "id": "stat-regression",
@@ -81,7 +149,24 @@
         "Extend to multiple predictors"
       ],
       "viz_refs": ["scatter-plot", "regression-line"],
-      "prerequisites": ["stat-descriptive", "stat-probability"]
+      "prerequisites": ["stat-descriptive", "stat-probability"],
+      "problem_templates": [
+        {
+          "id": "stat-regression-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Given data points (1,2), (2,4), (3,5), (4,4), (5,5), derive the least-squares regression line ŷ = a + bx by computing b = Σ(xᵢ−x̄)(yᵢ−ȳ)/Σ(xᵢ−x̄)². Predict y at x = 6."
+        },
+        {
+          "id": "stat-regression-pt-2",
+          "difficulty": 2,
+          "prompt_template": "For a regression model with R² = 0.72, interpret what this means. Describe each of the four key assumptions of linear regression and explain how to check each with a residual plot."
+        },
+        {
+          "id": "stat-regression-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Distinguish between correlation and causation using a concrete example. Explain Simpson's paradox and construct a small dataset that demonstrates it."
+        }
+      ]
     },
     {
       "id": "stat-bayesian",
@@ -97,7 +182,24 @@
         "Work with conjugate priors"
       ],
       "viz_refs": ["prior-posterior-viz"],
-      "prerequisites": ["stat-probability"]
+      "prerequisites": ["stat-probability"],
+      "problem_templates": [
+        {
+          "id": "stat-bayesian-pt-1",
+          "difficulty": 1,
+          "prompt_template": "You have a coin whose fairness is unknown. You flip it 5 times and get 4 heads. Start with a uniform prior on p ∈ [0,1], state the likelihood function for Binomial(5, p), and describe (without computing) the posterior distribution."
+        },
+        {
+          "id": "stat-bayesian-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Using a Beta(2,2) prior for a coin's probability of heads, observe 7 heads in 10 flips. Write the posterior distribution, compute its mean and mode, and compare to the MLE estimate."
+        },
+        {
+          "id": "stat-bayesian-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Explain the key philosophical difference between a Bayesian credible interval and a frequentist confidence interval. Construct an example where they give different numerical answers."
+        }
+      ]
     }
   ]
 }

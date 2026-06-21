@@ -17,7 +17,19 @@
         "Describe charging by conduction and induction"
       ],
       "viz_refs": ["charge-viz", "coulomb-force"],
-      "prerequisites": []
+      "prerequisites": [],
+      "problem_templates": [
+        {
+          "id": "phys-charge-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Two point charges q₁ = +3 μC and q₂ = −5 μC are 0.2 m apart. Compute the magnitude and direction of the Coulomb force on each. Use k = 8.99×10⁹ N·m²/C²."
+        },
+        {
+          "id": "phys-charge-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Three charges (+2 μC, −3 μC, +4 μC) are placed at the corners of an equilateral triangle with side 0.1 m. Find the net force on the +4 μC charge using vector superposition."
+        }
+      ]
     },
     {
       "id": "phys-electric-field",
@@ -33,7 +45,24 @@
         "Understand superposition of electric fields"
       ],
       "viz_refs": ["electric-field-viz", "field-lines"],
-      "prerequisites": ["phys-electric-charge"]
+      "prerequisites": ["phys-electric-charge"],
+      "problem_templates": [
+        {
+          "id": "phys-efield-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Find the electric field at a point P located 0.3 m from a +5 μC charge. Give magnitude and direction. Then find the force on a −2 μC test charge placed at P."
+        },
+        {
+          "id": "phys-efield-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Two charges +q and −q are separated by distance d (an electric dipole). Find the electric field at a point on the perpendicular bisector at distance r >> d. Simplify using the dipole approximation."
+        },
+        {
+          "id": "phys-efield-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A uniform line charge λ (C/m) lies along the z-axis from z = −L to z = +L. Set up but do not evaluate the integral for the electric field at a point (r, 0, 0) on the x-axis. Explain each element dE."
+        }
+      ]
     },
     {
       "id": "phys-gauss-law",
@@ -49,7 +78,24 @@
         "Derive field inside/outside a uniformly charged sphere"
       ],
       "viz_refs": ["gaussian-surface-viz"],
-      "prerequisites": ["phys-electric-field"]
+      "prerequisites": ["phys-electric-field"],
+      "problem_templates": [
+        {
+          "id": "phys-gauss-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A spherical shell of radius R carries total charge Q uniformly distributed. Using Gauss's law, find E(r) for (a) r < R and (b) r > R. Choose appropriate Gaussian surfaces and justify your choice."
+        },
+        {
+          "id": "phys-gauss-pt-2",
+          "difficulty": 2,
+          "prompt_template": "An infinite line charge with λ = 2×10⁻⁶ C/m. Using a cylindrical Gaussian surface of radius r and length L, derive E(r). Compute E at r = 0.05 m."
+        },
+        {
+          "id": "phys-gauss-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A solid non-conducting sphere of radius R has volume charge density ρ(r) = ρ₀(1 − r/R). Find the total charge Q, then use Gauss's law to find E(r) for both r < R and r > R. Show the charge enclosed as a function of r."
+        }
+      ]
     },
     {
       "id": "phys-electric-potential",
@@ -65,7 +111,24 @@
         "Understand equipotential surfaces"
       ],
       "viz_refs": ["potential-viz", "equipotential-lines"],
-      "prerequisites": ["phys-electric-field"]
+      "prerequisites": ["phys-electric-field"],
+      "problem_templates": [
+        {
+          "id": "phys-potential-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Find the electric potential at a point 0.2 m from a +8 μC charge. Then compute the potential energy of a −3 μC charge placed at that point."
+        },
+        {
+          "id": "phys-potential-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Two charges +4 μC (at origin) and −4 μC (at x = 0.1 m) form a dipole. Find the potential at (a) the midpoint between them and (b) a point on the perpendicular bisector 0.05 m away. Interpret the results."
+        },
+        {
+          "id": "phys-potential-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Given V(x,y) = 3x² − 2y² (volts), find the electric field vector E = −∇V. Identify the equipotential surfaces and sketch a few field lines."
+        }
+      ]
     },
     {
       "id": "phys-circuits",
@@ -81,7 +144,24 @@
         "Compute power dissipation in resistors"
       ],
       "viz_refs": ["circuit-diagram"],
-      "prerequisites": ["phys-electric-potential"]
+      "prerequisites": ["phys-electric-potential"],
+      "problem_templates": [
+        {
+          "id": "phys-circuits-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Three resistors (4Ω, 6Ω, 12Ω) are connected in parallel across a 12 V battery. Find the equivalent resistance, total current, and current through each resistor."
+        },
+        {
+          "id": "phys-circuits-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A circuit has two loops with battery E₁ = 12 V (R₁ = 3Ω in series), battery E₂ = 8 V (R₂ = 2Ω in series), and shared R₃ = 4Ω. Apply Kirchhoff's laws to find the current in each branch."
+        },
+        {
+          "id": "phys-circuits-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Find the Thevenin equivalent of a circuit with a 24 V source, R₁ = 6Ω in series, and R₂ = 12Ω in parallel with the output terminals. Compute V_th and R_th. Then find the current through a 4Ω load."
+        }
+      ]
     },
     {
       "id": "phys-magnetism",
@@ -97,7 +177,24 @@
         "Understand magnetic dipoles and bar magnets"
       ],
       "viz_refs": ["magnetic-field-viz", "lorentz-force"],
-      "prerequisites": ["phys-electric-field"]
+      "prerequisites": ["phys-electric-field"],
+      "problem_templates": [
+        {
+          "id": "phys-magnetism-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A proton (q = 1.6×10⁻¹⁹ C, m = 1.67×10⁻²⁷ kg) moves at 3×10⁶ m/s in the +x direction through B = 0.2 T in the +z direction. Find the magnetic force vector and the radius of the resulting circular orbit."
+        },
+        {
+          "id": "phys-magnetism-pt-2",
+          "difficulty": 2,
+          "prompt_template": "An infinite straight wire carries current I = 5 A. Find the magnetic field at distance r = 0.1 m using Ampere's law. Then find the force per meter on a parallel wire carrying I = 3 A at the same distance."
+        },
+        {
+          "id": "phys-magnetism-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A rectangular current loop (a × b, current I) is placed in a uniform field B parallel to the loop plane. Derive the torque on the loop and show it equals τ = m × B where m is the magnetic dipole moment."
+        }
+      ]
     },
     {
       "id": "phys-faraday-law",
@@ -113,7 +210,24 @@
         "Understand mutual and self-inductance"
       ],
       "viz_refs": ["induction-viz"],
-      "prerequisites": ["phys-magnetism"]
+      "prerequisites": ["phys-magnetism"],
+      "problem_templates": [
+        {
+          "id": "phys-faraday-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A circular loop of radius 0.1 m is in a magnetic field B = 0.5 sin(100πt) T perpendicular to the loop. Find the induced EMF as a function of time. Use Faraday's law and Lenz's law."
+        },
+        {
+          "id": "phys-faraday-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A conducting rod of length 0.5 m moves at 2 m/s perpendicular to B = 0.3 T. Find the induced EMF, and if the rod has resistance 2Ω in a closed loop of total resistance 5Ω, find the induced current and the power dissipated."
+        },
+        {
+          "id": "phys-faraday-pt-3",
+          "difficulty": 3,
+          "prompt_template": "An ideal transformer has N₁ = 200 turns and N₂ = 50 turns. The primary voltage is 240 V AC. Find the secondary voltage and current if a 10Ω load is attached. Verify power conservation. Explain how this relies on Faraday's law."
+        }
+      ]
     }
   ]
 }

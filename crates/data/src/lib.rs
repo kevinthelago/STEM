@@ -9,11 +9,12 @@ pub mod seed;
 pub use db::Db;
 pub use error::{Error, Result};
 pub use models::{
-    Mastery, NewMastery, NewNote, NewPracticeAttempt, NewReviewSchedule, NewTopic, Note,
-    PracticeAttempt, ReviewSchedule, Setting, Topic,
+    Mastery, NewMastery, NewNote, NewPracticeAttempt, NewProblemTemplate, NewReviewSchedule,
+    NewTopic, Note, PracticeAttempt, ProblemTemplate, ReviewSchedule, Setting, Topic,
 };
 pub use repo::{
-    MasteryRepo, NotesRepo, PracticeAttemptsRepo, ReviewScheduleRepo, SettingsRepo, TopicsRepo,
+    MasteryRepo, NotesRepo, PracticeAttemptsRepo, ProblemTemplatesRepo, ReviewScheduleRepo,
+    SettingsRepo, TopicsRepo,
 };
 
 #[cfg(test)]
@@ -60,7 +61,7 @@ mod tests {
             )
             .unwrap();
         assert_eq!(v1, v2);
-        assert_eq!(v1, 1);
+        assert_eq!(v1, 2);
     }
 
     #[test]
@@ -189,5 +190,37 @@ mod tests {
         let db = Db::open_in_memory().unwrap();
         seed_all(&db).unwrap();
         assert!(!has_cycle(&db.conn), "seeded prerequisite graph contains a cycle");
+    }
+
+    #[test]
+    fn test_problem_templates_seeded() {
+        let db = Db::open_in_memory().unwrap();
+        seed_all(&db).unwrap();
+
+        // Every seeded topic should have at least one problem template
+        let topics = db.topics().list_by_subject("math").unwrap();
+        for topic in &topics {
+            let templates = db.problem_templates().list_by_topic(&topic.id).unwrap();
+            assert!(
+                !templates.is_empty(),
+                "topic '{}' has no problem templates",
+                topic.slug
+            );
+        }
+
+        // Spot-check a specific template exists and round-trips correctly
+        let tpl = db
+            .problem_templates()
+            .get_by_id("calc-limits-pt-1")
+            .unwrap();
+        assert_eq!(tpl.topic_id, "calc-limits");
+        assert_eq!(tpl.difficulty, 1);
+        assert!(!tpl.prompt_template.is_empty());
+
+        // Difficulty ordering is respected in list_by_topic
+        let calc_templates = db.problem_templates().list_by_topic("calc-limits").unwrap();
+        assert_eq!(calc_templates.len(), 3);
+        assert!(calc_templates[0].difficulty <= calc_templates[1].difficulty);
+        assert!(calc_templates[1].difficulty <= calc_templates[2].difficulty);
     }
 }

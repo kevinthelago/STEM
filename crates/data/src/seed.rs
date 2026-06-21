@@ -1,8 +1,16 @@
 use crate::db::Db;
 use crate::error::Result;
+use crate::models::problem_template::NewProblemTemplate;
 use crate::models::topic::NewTopic;
 use serde::Deserialize;
 use serde_json;
+
+#[derive(Debug, Deserialize)]
+struct ContentProblemTemplate {
+    id: String,
+    difficulty: i64,
+    prompt_template: String,
+}
 
 #[derive(Debug, Deserialize)]
 struct ContentTopic {
@@ -15,6 +23,8 @@ struct ContentTopic {
     objectives: Option<Vec<String>>,
     viz_refs: Option<Vec<String>>,
     prerequisites: Vec<String>,
+    #[serde(default)]
+    problem_templates: Vec<ContentProblemTemplate>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -80,6 +90,8 @@ static PACK_SOURCES: &[(&str, &str)] = &[
 
 fn insert_pack(db: &Db, pack: &ContentPack) -> Result<()> {
     let topics_repo = db.topics();
+    let templates_repo = db.problem_templates();
+
     for ct in &pack.topics {
         let objectives = ct
             .objectives
@@ -105,11 +117,19 @@ fn insert_pack(db: &Db, pack: &ContentPack) -> Result<()> {
             viz_refs,
         };
         topics_repo.insert_or_ignore(&new_topic)?;
+
+        for pt in &ct.problem_templates {
+            templates_repo.insert_or_ignore(&NewProblemTemplate {
+                id: pt.id.clone(),
+                topic_id: ct.id.clone(),
+                difficulty: pt.difficulty,
+                prompt_template: pt.prompt_template.clone(),
+            })?;
+        }
     }
     // second pass: prerequisites (topics must exist first)
     for ct in &pack.topics {
         for prereq_id in &ct.prerequisites {
-            // skip if prerequisite topic doesn't exist yet (cross-pack deps seeded separately)
             let _ = topics_repo.add_prerequisite(&ct.id, prereq_id);
         }
     }
@@ -127,6 +147,8 @@ pub fn seed_pack(db: &Db, pack_name: &str) -> Result<()> {
 }
 
 pub fn seed_all(db: &Db) -> Result<()> {
+    let templates_repo = db.problem_templates();
+
     // First pass: insert all topics (so cross-pack prerequisite refs resolve)
     let mut packs: Vec<ContentPack> = Vec::new();
     for (_name, src) in PACK_SOURCES {
@@ -159,12 +181,20 @@ pub fn seed_all(db: &Db) -> Result<()> {
         }
         packs.push(pack);
     }
-    // Second pass: prerequisites
+    // Second pass: prerequisites and problem templates
     let topics_repo = db.topics();
     for pack in &packs {
         for ct in &pack.topics {
             for prereq_id in &ct.prerequisites {
                 let _ = topics_repo.add_prerequisite(&ct.id, prereq_id);
+            }
+            for pt in &ct.problem_templates {
+                templates_repo.insert_or_ignore(&NewProblemTemplate {
+                    id: pt.id.clone(),
+                    topic_id: ct.id.clone(),
+                    difficulty: pt.difficulty,
+                    prompt_template: pt.prompt_template.clone(),
+                })?;
             }
         }
     }

@@ -17,7 +17,24 @@
         "Determine centroids and moments of inertia of areas"
       ],
       "viz_refs": ["free-body-diagram", "truss-viz"],
-      "prerequisites": ["calc-derivatives", "phys-newtons-laws"]
+      "prerequisites": ["calc-derivatives", "phys-newtons-laws"],
+      "problem_templates": [
+        {
+          "id": "eng-statics-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A simply supported beam of length 6 m carries a point load of 10 kN at 2 m from the left support. Find the reactions at both supports using equilibrium equations ΣFy = 0 and ΣM = 0."
+        },
+        {
+          "id": "eng-statics-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Analyze a pin-jointed truss with 5 members supporting a 20 kN load at the apex. Use the method of joints to find the force (tension or compression) in each member. Draw FBDs for two joints."
+        },
+        {
+          "id": "eng-statics-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A beam carries a uniformly distributed load of 5 kN/m over 4 m and a point load of 8 kN at mid-span. Find all reactions, then draw the shear force and bending moment diagrams. Locate the maximum bending moment."
+        }
+      ]
     },
     {
       "id": "eng-dynamics",
@@ -33,7 +50,24 @@
         "Solve vibration problems"
       ],
       "viz_refs": ["dynamics-viz"],
-      "prerequisites": ["eng-statics"]
+      "prerequisites": ["eng-statics"],
+      "problem_templates": [
+        {
+          "id": "eng-dynamics-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A 10 kg crate slides down a 30° ramp with μ_k = 0.25. Find the acceleration, the time to slide 5 m from rest, and the velocity at the bottom. Use Newton's second law in the inclined-axis frame."
+        },
+        {
+          "id": "eng-dynamics-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A 5 kg flywheel (disk, r = 0.4 m) starts from rest and a 20 N tangential force is applied at the rim. Find angular acceleration, angular velocity after 3 s, and kinetic energy at that instant. I_disk = ½mr²."
+        },
+        {
+          "id": "eng-dynamics-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A single-degree-of-freedom mass-spring-damper system has m = 2 kg, k = 200 N/m, c = 8 N·s/m. Determine the natural frequency ωₙ, damping ratio ζ, and classify the response. Write the general solution for free vibration."
+        }
+      ]
     },
     {
       "id": "eng-stress-strain",
@@ -49,7 +83,24 @@
         "Interpret stress-strain diagrams"
       ],
       "viz_refs": ["stress-strain-plot"],
-      "prerequisites": ["eng-statics"]
+      "prerequisites": ["eng-statics"],
+      "problem_templates": [
+        {
+          "id": "eng-stress-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A steel rod (diameter 20 mm, E = 200 GPa, L = 1.5 m) carries an axial tensile load of 80 kN. Compute the normal stress, strain, and elongation. Is the stress below the yield strength of 250 MPa?"
+        },
+        {
+          "id": "eng-stress-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A stepped shaft has a 40 mm section (L₁ = 0.8 m) and a 25 mm section (L₂ = 0.6 m), both steel (E = 200 GPa), loaded by P = 50 kN. Find the stress in each segment and the total elongation."
+        },
+        {
+          "id": "eng-stress-pt-3",
+          "difficulty": 3,
+          "prompt_template": "From a stress-strain curve, identify (a) proportional limit, (b) yield point, (c) ultimate tensile strength, (d) fracture point, (e) modulus of elasticity. Explain what 'ductile' vs 'brittle' failure looks like on the curve."
+        }
+      ]
     },
     {
       "id": "eng-fluid-statics",
@@ -65,7 +116,24 @@
         "Understand pressure measurement devices"
       ],
       "viz_refs": ["pressure-viz", "buoyancy-viz"],
-      "prerequisites": ["eng-statics"]
+      "prerequisites": ["eng-statics"],
+      "problem_templates": [
+        {
+          "id": "eng-fluid-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A rectangular tank is 3 m wide and 5 m long, filled with water (ρ = 1000 kg/m³) to depth 4 m. Find (a) the pressure at the bottom, (b) the total hydrostatic force on one 3 m × 4 m side wall."
+        },
+        {
+          "id": "eng-fluid-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A 0.1 m³ wooden block (ρ_wood = 600 kg/m³) floats in seawater (ρ_sw = 1025 kg/m³). What fraction of the block is submerged? What upward force must be applied to fully submerge it?"
+        },
+        {
+          "id": "eng-fluid-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A trapezoidal dam face (top width 2 m, bottom width 4 m, height 5 m) holds water (ρ = 1000 kg/m³) on one side to full height. Find the total hydrostatic force and the location of the center of pressure. Use the second moment of area formula."
+        }
+      ]
     },
     {
       "id": "eng-thermodynamics",
@@ -81,7 +149,24 @@
         "Analyze ideal gas processes and cycles"
       ],
       "viz_refs": ["pv-diagram", "carnot-viz"],
-      "prerequisites": ["phys-work-energy"]
+      "prerequisites": ["phys-work-energy"],
+      "problem_templates": [
+        {
+          "id": "eng-thermo-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A gas in a piston-cylinder absorbs 500 J of heat and does 200 J of work on the surroundings. Find the change in internal energy. Then identify the process on a P-V diagram."
+        },
+        {
+          "id": "eng-thermo-pt-2",
+          "difficulty": 2,
+          "prompt_template": "An ideal Carnot engine operates between T_H = 600 K and T_C = 300 K. Find the thermal efficiency. If it produces 1 kW of power, find Q_H and Q_C per second. Explain why no real engine can exceed this efficiency."
+        },
+        {
+          "id": "eng-thermo-pt-3",
+          "difficulty": 3,
+          "prompt_template": "1 mole of an ideal gas undergoes an isothermal expansion at T = 400 K from V₁ = 10 L to V₂ = 25 L. Compute the work done, the heat transferred, and the entropy change. Compare to an adiabatic expansion to the same final volume."
+        }
+      ]
     }
   ]
 }

@@ -17,7 +17,24 @@
         "Interpret position-time and velocity-time graphs"
       ],
       "viz_refs": ["motion-graph", "projectile-viz"],
-      "prerequisites": []
+      "prerequisites": [],
+      "problem_templates": [
+        {
+          "id": "phys-kinematics-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A car accelerates from rest at 3 m/s². Find its velocity and displacement after 8 seconds using the kinematic equations. Show which equation you choose and why."
+        },
+        {
+          "id": "phys-kinematics-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A ball is launched at 45° with initial speed 20 m/s. Find (a) the maximum height, (b) the range, and (c) the time of flight. Use component-wise kinematic equations and g = 9.8 m/s²."
+        },
+        {
+          "id": "phys-kinematics-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Two trains leave the same station: Train A at 40 m/s, Train B departing 10 s later at 60 m/s in the same direction. At what time and position does Train B overtake Train A? Show the algebraic setup."
+        }
+      ]
     },
     {
       "id": "phys-newtons-laws",
@@ -33,7 +50,24 @@
         "Apply Newton's laws to inclines and pulleys"
       ],
       "viz_refs": ["free-body-diagram", "force-viz"],
-      "prerequisites": ["phys-kinematics"]
+      "prerequisites": ["phys-kinematics"],
+      "problem_templates": [
+        {
+          "id": "phys-newtons-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A 5 kg block sits on a frictionless surface. Three horizontal forces act on it: 10 N east, 6 N west, 4 N west. Draw a free-body diagram, find the net force, and compute the acceleration."
+        },
+        {
+          "id": "phys-newtons-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Two masses m₁ = 3 kg and m₂ = 5 kg are connected by a string over a frictionless pulley (Atwood machine). Find the acceleration of the system and the tension in the string. Draw FBDs for each mass."
+        },
+        {
+          "id": "phys-newtons-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A block of mass 4 kg is on a 30° incline with μ_k = 0.2. It is pulled up the incline by a force F parallel to the surface. Find the minimum F to move it at constant velocity. Include friction in the FBD."
+        }
+      ]
     },
     {
       "id": "phys-work-energy",
@@ -49,7 +83,24 @@
         "Apply conservation of mechanical energy"
       ],
       "viz_refs": ["energy-diagram"],
-      "prerequisites": ["phys-newtons-laws"]
+      "prerequisites": ["phys-newtons-laws"],
+      "problem_templates": [
+        {
+          "id": "phys-work-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A 2 kg box is pushed 5 m along a frictionless floor by a 15 N horizontal force. Compute the work done, the final kinetic energy, and the final speed (starting from rest). Use the work-energy theorem."
+        },
+        {
+          "id": "phys-work-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A 0.5 kg ball is dropped from 10 m. Using conservation of energy (ignoring air resistance), find its speed just before hitting the ground. Then redo the calculation assuming 20% of energy is lost to air resistance."
+        },
+        {
+          "id": "phys-work-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A spring with k = 500 N/m is compressed 0.2 m and launches a 0.1 kg ball up a frictionless 30° ramp. How far along the ramp does the ball travel before stopping? Use energy methods throughout."
+        }
+      ]
     },
     {
       "id": "phys-momentum",
@@ -65,7 +116,24 @@
         "Distinguish elastic and inelastic collisions"
       ],
       "viz_refs": ["collision-viz"],
-      "prerequisites": ["phys-newtons-laws"]
+      "prerequisites": ["phys-newtons-laws"],
+      "problem_templates": [
+        {
+          "id": "phys-momentum-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A 1500 kg car moving at 20 m/s collides with a stationary 1000 kg car. They stick together (perfectly inelastic). Find their common velocity after collision. What fraction of kinetic energy is lost?"
+        },
+        {
+          "id": "phys-momentum-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A 0.05 kg bullet fired at 400 m/s embeds in a 2 kg block on a frictionless surface. Find the block's velocity. Then the block slides up a frictionless ramp — how high does it reach?"
+        },
+        {
+          "id": "phys-momentum-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A 3 kg ball (v = 5 m/s east) has a perfectly elastic collision with a stationary 1 kg ball. Derive both final velocities using conservation of momentum AND kinetic energy simultaneously."
+        }
+      ]
     },
     {
       "id": "phys-rotational-motion",
@@ -81,7 +149,24 @@
         "Apply conservation of angular momentum"
       ],
       "viz_refs": ["rotation-viz", "torque-diagram"],
-      "prerequisites": ["phys-work-energy"]
+      "prerequisites": ["phys-work-energy"],
+      "problem_templates": [
+        {
+          "id": "phys-rotation-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A wheel starts from rest and reaches 120 rpm in 5 seconds with constant angular acceleration. Find α, the number of revolutions completed, and the final angular velocity in rad/s."
+        },
+        {
+          "id": "phys-rotation-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A solid cylinder (mass 4 kg, radius 0.3 m) rolls without slipping down a 20° incline from height 2 m. Find its speed at the bottom using energy conservation with rotational KE. I = ½mr²."
+        },
+        {
+          "id": "phys-rotation-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A figure skater pulls her arms in, reducing her moment of inertia from 4 kg·m² to 1.5 kg·m². If she starts at 1 rev/s, find her final angular velocity. Compute the ratio of final to initial kinetic energy and explain the source of the extra energy."
+        }
+      ]
     },
     {
       "id": "phys-oscillations",
@@ -97,7 +182,24 @@
         "Apply superposition and resonance concepts"
       ],
       "viz_refs": ["oscillation-viz", "wave-viz"],
-      "prerequisites": ["phys-rotational-motion"]
+      "prerequisites": ["phys-rotational-motion"],
+      "problem_templates": [
+        {
+          "id": "phys-oscillations-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A mass of 0.4 kg on a spring (k = 100 N/m) is released from x = 0.05 m. Write x(t) for the position, find the period T, and compute the maximum speed and acceleration."
+        },
+        {
+          "id": "phys-oscillations-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A simple pendulum has period 2 s on Earth. Find its length. If taken to Mars where g = 3.72 m/s², what is its new period? What length would give T = 2 s on Mars?"
+        },
+        {
+          "id": "phys-oscillations-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Two waves on a string: y₁ = 3 sin(2πx − 6πt) and y₂ = 3 sin(2πx + 6πt). Find the superposition y = y₁ + y₂ using the sum-to-product identity. Identify nodes and antinodes."
+        }
+      ]
     }
   ]
 }

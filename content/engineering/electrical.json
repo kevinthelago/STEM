@@ -17,7 +17,24 @@
         "Apply Thevenin and Norton equivalent circuits"
       ],
       "viz_refs": ["circuit-diagram"],
-      "prerequisites": ["phys-circuits", "la-linear-systems"]
+      "prerequisites": ["phys-circuits", "la-linear-systems"],
+      "problem_templates": [
+        {
+          "id": "eng-circuit-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A circuit has nodes A and B with a 10 V source between ground and A, R₁ = 5Ω (A to B), R₂ = 10Ω (B to ground), R₃ = 20Ω (B to ground). Apply the node voltage method to find V_B and all branch currents."
+        },
+        {
+          "id": "eng-circuit-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Find the Thevenin equivalent circuit seen by R_L in a circuit with V_s = 24 V, R₁ = 6Ω in series from the source, R₂ = 12Ω in parallel with the terminals. Compute V_th and R_th. Find I_L when R_L = 8Ω."
+        },
+        {
+          "id": "eng-circuit-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Use superposition to find the current through R₃ = 4Ω in a circuit with two sources: V₁ = 12 V and V₂ = 6 V, plus R₁ = 2Ω and R₂ = 3Ω. Analyze with each source active separately, then sum."
+        }
+      ]
     },
     {
       "id": "eng-ac-circuits",
@@ -33,7 +50,24 @@
         "Compute power in AC circuits"
       ],
       "viz_refs": ["phasor-viz", "impedance-diagram"],
-      "prerequisites": ["eng-circuit-analysis"]
+      "prerequisites": ["eng-circuit-analysis"],
+      "problem_templates": [
+        {
+          "id": "eng-ac-pt-1",
+          "difficulty": 1,
+          "prompt_template": "A series RLC circuit has R = 10Ω, L = 50 mH, C = 100 μF driven by v(t) = 20 cos(200t) V. Find the impedance Z, the phasor current, and the actual time-domain current i(t)."
+        },
+        {
+          "id": "eng-ac-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Find the resonant frequency, bandwidth, and quality factor Q for a parallel RLC circuit with R = 1 kΩ, L = 10 mH, C = 1 μF. Sketch the impedance magnitude vs. frequency."
+        },
+        {
+          "id": "eng-ac-pt-3",
+          "difficulty": 3,
+          "prompt_template": "In an AC circuit, R = 8Ω, X_L = 6Ω (inductive reactance). Compute the apparent power S, real power P, reactive power Q, and power factor. Describe what capacitance value at ω = 100 rad/s would bring the power factor to unity."
+        }
+      ]
     },
     {
       "id": "eng-op-amps",
@@ -49,7 +83,24 @@
         "Understand feedback and stability qualitatively"
       ],
       "viz_refs": ["op-amp-circuit"],
-      "prerequisites": ["eng-ac-circuits"]
+      "prerequisites": ["eng-ac-circuits"],
+      "problem_templates": [
+        {
+          "id": "eng-opamp-pt-1",
+          "difficulty": 1,
+          "prompt_template": "An inverting amplifier has R_f = 100 kΩ and R_in = 10 kΩ. Find the voltage gain. If v_in = 0.5 sin(1000t) V, find v_out. State the two ideal op-amp rules used."
+        },
+        {
+          "id": "eng-opamp-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Design a summing amplifier to compute v_out = −(2v₁ + 3v₂). Choose R_f = 60 kΩ and find R₁ and R₂. Verify your design by computing v_out for v₁ = 1 V, v₂ = 0.5 V."
+        },
+        {
+          "id": "eng-opamp-pt-3",
+          "difficulty": 3,
+          "prompt_template": "An op-amp integrator has R = 10 kΩ, C = 1 μF. If v_in = 2 V (constant), find v_out(t) starting from 0 V. At what time does |v_out| reach 10 V (the supply rail)? Explain what happens to ideal vs. real integrators at DC."
+        }
+      ]
     },
     {
       "id": "eng-digital-logic",
@@ -65,7 +116,24 @@
         "Understand binary number representation"
       ],
       "viz_refs": ["logic-gate-viz", "truth-table"],
-      "prerequisites": ["phys-electric-charge"]
+      "prerequisites": ["phys-electric-charge"],
+      "problem_templates": [
+        {
+          "id": "eng-digital-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Simplify the Boolean expression F = AB + A'C + BC using Boolean algebra laws. Verify with a truth table. Implement using only NAND gates."
+        },
+        {
+          "id": "eng-digital-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Design a 2-bit binary adder. Write the truth table for sum and carry outputs, derive the minimal SOP expressions, and draw the logic gate schematic."
+        },
+        {
+          "id": "eng-digital-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Design a D flip-flop-based 2-bit synchronous up-counter. Draw the state diagram, write the state transition table, derive the D inputs, and describe the output sequence for 4 clock cycles starting from 00."
+        }
+      ]
     },
     {
       "id": "eng-signal-processing",
@@ -81,7 +149,24 @@
         "Introduce discrete-time signals and the DFT"
       ],
       "viz_refs": ["fourier-viz", "filter-response"],
-      "prerequisites": ["eng-ac-circuits", "la-linear-systems"]
+      "prerequisites": ["eng-ac-circuits", "la-linear-systems"],
+      "problem_templates": [
+        {
+          "id": "eng-signal-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Find the Fourier series of a square wave with amplitude A and period T. Compute the DC term and the first three non-zero harmonics. Sketch the partial sum through the 5th harmonic."
+        },
+        {
+          "id": "eng-signal-pt-2",
+          "difficulty": 2,
+          "prompt_template": "A first-order RC low-pass filter has R = 1 kΩ and C = 1 μF. Find the cutoff frequency f_c. Plot |H(jω)| in dB at 0.1f_c, f_c, and 10f_c. Describe the phase response."
+        },
+        {
+          "id": "eng-signal-pt-3",
+          "difficulty": 3,
+          "prompt_template": "A signal x[n] = {1, 2, 3, 4} (N=4). Compute the 4-point DFT X[k] for k = 0, 1, 2, 3 using the DFT formula X[k] = Σ x[n]·e^(−j2πkn/N). Identify the DC component and the Nyquist component."
+        }
+      ]
     }
   ]
 }

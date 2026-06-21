@@ -1,7 +1,8 @@
 use crate::error::Result;
 use crate::migrations::{all_migrations, run_migrations};
 use crate::repo::{
-    MasteryRepo, NotesRepo, PracticeAttemptsRepo, ReviewScheduleRepo, SettingsRepo, TopicsRepo,
+    MasteryRepo, NotesRepo, PracticeAttemptsRepo, ProblemTemplatesRepo, ReviewScheduleRepo,
+    SettingsRepo, TopicsRepo,
 };
 use rusqlite::Connection;
 use std::path::Path;
@@ -50,5 +51,9 @@ impl Db {
 
     pub fn settings(&self) -> SettingsRepo<'_> {
         SettingsRepo::new(&self.conn)
+    }
+
+    pub fn problem_templates(&self) -> ProblemTemplatesRepo<'_> {
+        ProblemTemplatesRepo::new(&self.conn)
     }
 }

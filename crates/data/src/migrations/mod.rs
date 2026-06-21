@@ -1,6 +1,8 @@
 mod v1;
+mod v2;
 
 pub use v1::MIGRATION_V1;
+pub use v2::MIGRATION_V2;
 
 use crate::error::Result;
 use rusqlite::Connection;
@@ -11,7 +13,7 @@ pub struct Migration {
 }
 
 pub fn all_migrations() -> Vec<Migration> {
-    vec![MIGRATION_V1]
+    vec![MIGRATION_V1, MIGRATION_V2]
 }
 
 pub fn run_migrations(conn: &Connection, migrations: &[Migration]) -> Result<()> {

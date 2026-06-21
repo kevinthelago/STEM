@@ -114,10 +114,14 @@ export function getReviewDue(): Promise<ReviewItem[]> {
   return invoke('get_review_due')
 }
 
-// ── PTY history ───────────────────────────────────────────────────────────────
+// ── PTY ──────────────────────────────────────────────────────────────────────
 
 export function getPtyHistory(sessionId: string): Promise<string> {
   return invoke('get_pty_history', { sessionId })
+}
+
+export function writePty(sessionId: string, data: string): Promise<void> {
+  return invoke('write_pty', { sessionId, data })
 }
 
 // ── Events ────────────────────────────────────────────────────────────────────

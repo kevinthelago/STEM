@@ -1,27 +1,32 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Terminal } from '@xterm/xterm'
 import { FitAddon } from '@xterm/addon-fit'
 import { WebglAddon } from '@xterm/addon-webgl'
 import { surface, font } from '@/theme'
 import { useSessionStore } from '@/app/store'
-import { onPtyOutput, getPtyHistory } from '@/lib/tauri'
+import { onPtyOutput, getPtyHistory, writePty } from '@/lib/tauri'
 
 interface TerminalModeProps {
   topicId: string
 }
 
 /** xterm.js surface bound to the active session's PTY. */
-export function TerminalMode({ topicId: _topicId }: TerminalModeProps) {
+export function TerminalMode({ topicId }: TerminalModeProps) {
   const containerRef = useRef<HTMLDivElement>(null)
   const termRef = useRef<Terminal | null>(null)
   const fitRef = useRef<FitAddon | null>(null)
   const unlistenRef = useRef<(() => void) | null>(null)
+  const [sessionId, setSessionId] = useState<string | null>(null)
 
-  const sessions = useSessionStore((s) => s.sessions)
-  const session = Object.values(sessions)[0] ?? null
+  const { ensureSession } = useSessionStore()
+
+  // Ensure session for this topic
+  useEffect(() => {
+    ensureSession(topicId).then((s) => setSessionId(s.id))
+  }, [topicId, ensureSession])
 
   useEffect(() => {
-    if (!containerRef.current) return
+    if (!containerRef.current || !sessionId) return
 
     const term = new Terminal({
       fontFamily: font.mono,
@@ -69,18 +74,19 @@ export function TerminalMode({ topicId: _topicId }: TerminalModeProps) {
     termRef.current = term
     fitRef.current = fitAddon
 
-    // Replay PTY history if we have an active session
-    if (session) {
-      getPtyHistory(session.id)
-        .then((history) => {
-          if (history) term.write(history)
-        })
-        .catch(() => {})
-    }
+    // Replay PTY history
+    getPtyHistory(sessionId)
+      .then((history) => { if (history) term.write(history) })
+      .catch(() => {})
+
+    // Forward keystrokes to backend PTY
+    const inputDisposable = term.onData((data) => {
+      writePty(sessionId, data).catch(() => {})
+    })
 
     // Subscribe to PTY output events
     onPtyOutput((payload) => {
-      if (!session || payload.sessionId !== session.id) return
+      if (payload.sessionId !== sessionId) return
       term.write(payload.data)
     }).then((unlisten) => {
       unlistenRef.current = unlisten
@@ -91,11 +97,12 @@ export function TerminalMode({ topicId: _topicId }: TerminalModeProps) {
     observer.observe(containerRef.current)
 
     return () => {
+      inputDisposable.dispose()
       unlistenRef.current?.()
       observer.disconnect()
       term.dispose()
     }
-  }, [session])
+  }, [sessionId])
 
   return (
     <div
@@ -121,7 +128,7 @@ export function TerminalMode({ topicId: _topicId }: TerminalModeProps) {
         }}
       >
         <span style={{ fontSize: '12px', color: '#9aa0ad', fontFamily: font.mono }}>
-          Terminal · {session ? `session ${session.id.slice(0, 8)}` : 'no active session'}
+          Terminal · {sessionId ? `session ${sessionId.slice(0, 8)}` : 'connecting…'}
         </span>
       </div>
 

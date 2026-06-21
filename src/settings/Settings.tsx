@@ -2,13 +2,17 @@ import { useEffect, useState } from 'react'
 import { surface, border, accent, text, font } from '@/theme'
 import { Button } from '@/lib/components/Button'
 import { useSettingsStore } from '@/app/store'
-import { claudeProbe } from '@/lib/tauri'
+import { claudeProbe, exportBackup, resetAllData } from '@/lib/tauri'
 import type { ClaudeProbeResult } from '@/lib/types'
 
 export function Settings() {
   const { settings, dirty, load, update, persist } = useSettingsStore()
   const [probing, setProbing] = useState(false)
   const [probeResult, setProbeResult] = useState<ClaudeProbeResult | null>(null)
+  const [exporting, setExporting] = useState(false)
+  const [exportPath, setExportPath] = useState<string | null>(null)
+  const [showResetConfirm, setShowResetConfirm] = useState(false)
+  const [resetting, setResetting] = useState(false)
 
   useEffect(() => {
     load()
@@ -24,6 +28,27 @@ export function Settings() {
       }
     } finally {
       setProbing(false)
+    }
+  }
+
+  async function handleExportBackup() {
+    setExporting(true)
+    setExportPath(null)
+    try {
+      const path = await exportBackup()
+      setExportPath(path)
+    } finally {
+      setExporting(false)
+    }
+  }
+
+  async function handleResetData() {
+    setResetting(true)
+    try {
+      await resetAllData()
+      setShowResetConfirm(false)
+    } finally {
+      setResetting(false)
     }
   }
 
@@ -132,13 +157,53 @@ export function Settings() {
               }}
             />
           </Field>
-          <div style={{ display: 'flex', gap: '8px', marginTop: '10px' }}>
-            <Button variant="ghost" size="sm">
-              Export backup
-            </Button>
-            <Button variant="danger" size="sm">
-              Reset all data…
-            </Button>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '10px' }}>
+            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={handleExportBackup}
+                disabled={exporting}
+              >
+                {exporting ? 'Exporting…' : 'Export backup'}
+              </Button>
+              {exportPath && (
+                <span style={{ fontSize: '11px', color: '#43b888', fontFamily: font.mono }}>
+                  ✓ {exportPath}
+                </span>
+              )}
+            </div>
+            {showResetConfirm ? (
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                <span style={{ fontSize: '12px', color: '#e0625f' }}>
+                  All data will be permanently deleted.
+                </span>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={handleResetData}
+                  disabled={resetting}
+                >
+                  {resetting ? 'Resetting…' : 'Yes, reset everything'}
+                </Button>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setShowResetConfirm(false)}
+                >
+                  Cancel
+                </Button>
+              </div>
+            ) : (
+              <Button
+                variant="danger"
+                size="sm"
+                onClick={() => setShowResetConfirm(true)}
+                style={{ alignSelf: 'flex-start' }}
+              >
+                Reset all data…
+              </Button>
+            )}
           </div>
         </Section>
 

@@ -100,6 +100,14 @@ export function claudeProbe(): Promise<ClaudeProbeResult> {
   return invoke('claude_probe')
 }
 
+export function exportBackup(): Promise<string> {
+  return invoke('export_backup')
+}
+
+export function resetAllData(): Promise<void> {
+  return invoke('reset_all_data')
+}
+
 // ── Review ────────────────────────────────────────────────────────────────────
 
 export function getReviewDue(): Promise<ReviewItem[]> {

@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef, useState, useCallback } from 'react'
 import { surface, border, accent, text, font } from '@/theme'
 import { MasteryBar } from '@/lib/components/MasteryBar'
 import { Button } from '@/lib/components/Button'
-import { useSessionStore, useCurriculumStore } from '@/app/store'
+import { useSessionStore, useCurriculumStore, useNavStore } from '@/app/store'
 import { sendLearnMessage } from '@/lib/tauri'
 import { TutorMessage } from './TutorMessage'
 import { ExplainCheck } from './ExplainCheck'
@@ -20,6 +20,7 @@ export function LearnMode({ topicId }: LearnModeProps) {
 
   const { sessions, messages, ensureSession } = useSessionStore()
   const { topicsBySubject } = useCurriculumStore()
+  const { navigateTo } = useNavStore()
 
   const topic = Object.values(topicsBySubject).flat().find((t) => t.id === topicId)
   const [sessionId, setSessionId] = useState<string | null>(null)
@@ -161,8 +162,14 @@ export function LearnMode({ topicId }: LearnModeProps) {
               <TutorMessage
                 key={msg.id}
                 message={msg}
-                onVizClick={(_viz) => {
-                  // Navigate to visualize mode — handled by parent
+                onVizClick={(viz) => {
+                  if (sessionId) {
+                    useSessionStore.getState().setPendingViz(sessionId, viz)
+                  }
+                  const view = useNavStore.getState().view
+                  if (view.type === 'mode') {
+                    navigateTo({ ...view, mode: 'visualize' })
+                  }
                 }}
               />
             ) : (

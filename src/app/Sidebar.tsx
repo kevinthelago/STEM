@@ -6,7 +6,7 @@ import type { MasteryLevel } from '@/theme'
 export function Sidebar() {
   const { subjects, topicsBySubject, expandedSubjects, activeTopicId, toggleSubject } =
     useCurriculumStore()
-  const { view, navigateTo } = useNavStore()
+  const { view, navigateTo, openCommandPalette } = useNavStore()
 
   function handleTopicClick(topic: Topic, subject: Subject) {
     useCurriculumStore.getState().setActiveTopic(topic.id)
@@ -55,9 +55,7 @@ export function Sidebar() {
             width: '100%',
             cursor: 'pointer',
           }}
-          onClick={() => {
-            // Command palette — Ctrl+K handled in App
-          }}
+          onClick={openCommandPalette}
         >
           <span style={{ fontFamily: font.mono, fontSize: '12px', color: text.disabled }}>⌘K</span>
           <span style={{ fontSize: '12.5px', color: text.placeholder }}>

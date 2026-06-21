@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { TopBar } from './TopBar'
 import { Sidebar } from './Sidebar'
 import { StatusBar } from './StatusBar'
+import { CommandPalette } from './CommandPalette'
 import { useCurriculumStore, useSessionStore, useSettingsStore, useNavStore } from './store'
 import { onTutorChunk, onParsedProblem, onParsedGrade, onParsedMastery, onParsedViz } from '@/lib/tauri'
 import { LearnMode } from '@/modes/learn/LearnMode'
@@ -17,13 +18,25 @@ export default function App() {
   const { load: loadCurriculum, updateTopicMastery } = useCurriculumStore()
   const { appendTutorChunk, setProblem, setGrade, attachVizToLastMessage } = useSessionStore()
   const { load: loadSettings } = useSettingsStore()
-  const view = useNavStore((s) => s.view)
+  const { view, commandPaletteOpen, openCommandPalette, closeCommandPalette } = useNavStore()
 
   // Bootstrap
   useEffect(() => {
     loadCurriculum()
     loadSettings()
   }, [loadCurriculum, loadSettings])
+
+  // Global keyboard shortcuts
+  useEffect(() => {
+    function handleKey(e: KeyboardEvent) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        openCommandPalette()
+      }
+    }
+    window.addEventListener('keydown', handleKey)
+    return () => window.removeEventListener('keydown', handleKey)
+  }, [openCommandPalette])
 
   // Subscribe to backend events
   useEffect(() => {
@@ -66,6 +79,7 @@ export default function App() {
         </main>
       </div>
       <StatusBar />
+      <CommandPalette open={commandPaletteOpen} onClose={closeCommandPalette} />
     </div>
   )
 }

@@ -9,9 +9,11 @@ interface GradePanelProps {
   grade: Grade
   onTryAgain(): void
   onNextProblem(): void
+  onRevealSolution?(): void
+  onRequestHint?(): void
 }
 
-export function GradePanel({ grade, onTryAgain, onNextProblem }: GradePanelProps) {
+export function GradePanel({ grade, onTryAgain, onNextProblem, onRevealSolution, onRequestHint }: GradePanelProps) {
   const isCorrect = grade.result === 'correct'
   const isPartial = grade.result === 'partial'
   const isWrong = grade.result === 'wrong'
@@ -194,11 +196,16 @@ export function GradePanel({ grade, onTryAgain, onNextProblem }: GradePanelProps
             </Button>
           )}
           <Button variant="secondary" onClick={onNextProblem}>
-            {isCorrect ? 'Next problem' : 'Show next hint'}
+            Next problem
           </Button>
           <div style={{ flex: 1 }} />
-          {!isCorrect && !grade.solution && (
-            <Button variant="ghost" onClick={() => {}}>
+          {!isCorrect && onRequestHint && grade.hintLevel < grade.maxHints && !grade.solution && (
+            <Button variant="ghost" onClick={onRequestHint}>
+              {grade.hintLevel === 0 ? 'Get hint' : 'Next hint'}
+            </Button>
+          )}
+          {!isCorrect && !grade.solution && onRevealSolution && (
+            <Button variant="ghost" onClick={onRevealSolution}>
               Reveal solution
             </Button>
           )}

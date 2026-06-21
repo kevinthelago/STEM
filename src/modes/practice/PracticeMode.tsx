@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { surface, border, accent, text, font } from '@/theme'
 import { useSessionStore, useCurriculumStore } from '@/app/store'
-import { generateProblem } from '@/lib/tauri'
+import { generateProblem, revealSolution, requestHint } from '@/lib/tauri'
 import { ProblemCard } from './ProblemCard'
 import { GradePanel } from './GradePanel'
 import type { Difficulty } from '@/lib/types'
@@ -49,6 +49,16 @@ export function PracticeMode({ topicId }: PracticeModeProps) {
     if (!sessionId) return
     clearGrade(sessionId)
     setAttemptNum((n) => n + 1)
+  }
+
+  async function handleRevealSolution() {
+    if (!sessionId || !problem) return
+    await revealSolution(sessionId, problem.id)
+  }
+
+  async function handleRequestHint() {
+    if (!sessionId || !problem) return
+    await requestHint(sessionId, problem.id)
   }
 
   return (
@@ -176,6 +186,8 @@ export function PracticeMode({ topicId }: PracticeModeProps) {
               grade={grade}
               onTryAgain={handleTryAgain}
               onNextProblem={handleGenerate}
+              onRevealSolution={handleRevealSolution}
+              onRequestHint={handleRequestHint}
             />
           )}
         </div>

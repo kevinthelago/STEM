@@ -25,6 +25,7 @@ const DEFAULTS: Record<VizType, Record<string, unknown>> = {
   matrix_transform: {
     matrix: [[1, 0, 0], [0, 1, 0], [0, 0, 1]],
     showBasis: true,
+    showEigenvectors: false,
   } satisfies MatrixTransformParams,
   function_plot: {
     expression: "Math.sin(x)",

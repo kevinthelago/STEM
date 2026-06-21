@@ -28,6 +28,7 @@ export interface Vector3DParams {
 export interface MatrixTransformParams {
   matrix: number[][];
   showBasis?: boolean;
+  showEigenvectors?: boolean;
 }
 
 export interface FunctionPlotParams {

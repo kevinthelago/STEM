@@ -4,6 +4,8 @@ import { OrbitControls, Line } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import type { VizComponentProps, MatrixTransformParams } from "../types";
 import { VIZ_COLORS } from "../theme";
+import { computeEigenvectors2D } from "../utils/eigenvectors";
+import type { EigResult } from "../utils/eigenvectors";
 
 const IDENTITY: number[][] = [
   [1, 0, 0],
@@ -14,13 +16,42 @@ const IDENTITY: number[][] = [
 const DEFAULT_PARAMS: MatrixTransformParams = {
   matrix: IDENTITY,
   showBasis: true,
+  showEigenvectors: false,
 };
 
 function mergeParams(params: Record<string, unknown>): MatrixTransformParams {
   return {
     matrix: (params.matrix as number[][]) ?? DEFAULT_PARAMS.matrix,
     showBasis: (params.showBasis as boolean) ?? DEFAULT_PARAMS.showBasis,
+    showEigenvectors: (params.showEigenvectors as boolean) ?? DEFAULT_PARAMS.showEigenvectors,
   };
+}
+
+const EIGVEC_COLORS = ["#ff6b6b", "#51cf66"] as const;
+
+interface EigenvectorArrowsProps {
+  eigenvectors: EigResult[];
+}
+
+function EigenvectorArrows({ eigenvectors }: EigenvectorArrowsProps) {
+  return (
+    <>
+      {eigenvectors.map((ev, i) => {
+        const scale = Math.abs(ev.eigenvalue);
+        if (scale < 1e-10) return null;
+        const dir = new THREE.Vector3(...ev.vector);
+        const arrow = new THREE.ArrowHelper(
+          dir.normalize(),
+          new THREE.Vector3(0, 0, 0),
+          Math.max(scale, 0.3) * 1.5,
+          EIGVEC_COLORS[i % EIGVEC_COLORS.length],
+          0.25,
+          0.12
+        );
+        return <primitive key={i} object={arrow} />;
+      })}
+    </>
+  );
 }
 
 // Unit cube corners
@@ -96,6 +127,8 @@ function BasisArrows({ matrix }: BasisArrowsProps) {
 export function MatrixTransform({ params }: VizComponentProps) {
   const p = mergeParams(params);
   const isIdentity = JSON.stringify(p.matrix) === JSON.stringify(IDENTITY);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const eigenvectors = useMemo(() => computeEigenvectors2D(p.matrix), [JSON.stringify(p.matrix)]);
 
   return (
     <Canvas
@@ -110,6 +143,10 @@ export function MatrixTransform({ params }: VizComponentProps) {
       {!isIdentity && <CubeWireframe matrix={p.matrix} color={VIZ_COLORS.primary} opacity={0.9} />}
       {/* Basis vectors of the transform */}
       {p.showBasis && <BasisArrows matrix={p.matrix} />}
+      {/* Eigenvectors in the z=0 plane — toggled via showEigenvectors */}
+      {p.showEigenvectors && eigenvectors.length > 0 && (
+        <EigenvectorArrows eigenvectors={eigenvectors} />
+      )}
     </Canvas>
   );
 }

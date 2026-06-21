@@ -7,6 +7,8 @@ use crate::repo::{
 use rusqlite::Connection;
 use std::path::Path;
 
+pub use crate::seed::{seed_all, seed_pack};
+
 pub struct Db {
     pub(crate) conn: Connection,
 }
@@ -55,5 +57,16 @@ impl Db {
 
     pub fn problem_templates(&self) -> ProblemTemplatesRepo<'_> {
         ProblemTemplatesRepo::new(&self.conn)
+    }
+
+    /// Seeds all content packs on first launch (no-op when topics already exist).
+    pub fn ensure_content_seeded(&self) -> Result<()> {
+        let count: i64 = self
+            .conn
+            .query_row("SELECT COUNT(*) FROM topics", [], |r| r.get(0))?;
+        if count == 0 {
+            crate::seed::seed_all(self)?;
+        }
+        Ok(())
     }
 }

@@ -8,6 +8,7 @@ pub mod seed;
 
 pub use db::Db;
 pub use error::{Error, Result};
+pub use seed::{seed_all, seed_pack};
 pub use models::{
     Mastery, NewMastery, NewNote, NewPracticeAttempt, NewProblemTemplate, NewReviewSchedule,
     NewTopic, Note, PracticeAttempt, ProblemTemplate, ReviewSchedule, Setting, Topic,
@@ -197,15 +198,19 @@ mod tests {
         let db = Db::open_in_memory().unwrap();
         seed_all(&db).unwrap();
 
-        // Every seeded topic should have at least one problem template
-        let topics = db.topics().list_by_subject("math").unwrap();
-        for topic in &topics {
-            let templates = db.problem_templates().list_by_topic(&topic.id).unwrap();
-            assert!(
-                !templates.is_empty(),
-                "topic '{}' has no problem templates",
-                topic.slug
-            );
+        // Every seeded topic across all subjects must have at least one problem template
+        for subject in &["math", "physics", "engineering"] {
+            let topics = db.topics().list_by_subject(subject).unwrap();
+            assert!(!topics.is_empty(), "subject '{}' has no topics", subject);
+            for topic in &topics {
+                let templates = db.problem_templates().list_by_topic(&topic.id).unwrap();
+                assert!(
+                    !templates.is_empty(),
+                    "topic '{}' (subject={}) has no problem templates",
+                    topic.slug,
+                    subject
+                );
+            }
         }
 
         // Spot-check a specific template exists and round-trips correctly
@@ -222,5 +227,18 @@ mod tests {
         assert_eq!(calc_templates.len(), 3);
         assert!(calc_templates[0].difficulty <= calc_templates[1].difficulty);
         assert!(calc_templates[1].difficulty <= calc_templates[2].difficulty);
+    }
+
+    #[test]
+    fn test_ensure_content_seeded_idempotent() {
+        let db = Db::open_in_memory().unwrap();
+        // First call seeds; second call is a no-op
+        db.ensure_content_seeded().unwrap();
+        db.ensure_content_seeded().unwrap();
+        let count: i64 = db
+            .conn
+            .query_row("SELECT COUNT(*) FROM topics", [], |r| r.get(0))
+            .unwrap();
+        assert!(count > 0, "topics should be seeded after ensure_content_seeded");
     }
 }

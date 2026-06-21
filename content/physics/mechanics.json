@@ -1,0 +1,103 @@
+{
+  "pack": "mechanics",
+  "subject": "physics",
+  "category": "mechanics",
+  "topics": [
+    {
+      "id": "phys-kinematics",
+      "slug": "kinematics",
+      "title": "Kinematics",
+      "description": "The description of motion — position, velocity, and acceleration without regard to cause.",
+      "level": 0,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Define position, displacement, velocity, and acceleration",
+        "Apply kinematic equations for constant acceleration",
+        "Analyze projectile motion",
+        "Interpret position-time and velocity-time graphs"
+      ],
+      "viz_refs": ["motion-graph", "projectile-viz"],
+      "prerequisites": []
+    },
+    {
+      "id": "phys-newtons-laws",
+      "slug": "newtons-laws",
+      "title": "Newton's Laws of Motion",
+      "description": "The three laws governing the relationship between force, mass, and acceleration.",
+      "level": 1,
+      "estimated_minutes": 120,
+      "objectives": [
+        "State and apply Newton's three laws",
+        "Draw free-body diagrams",
+        "Solve problems with multiple forces",
+        "Apply Newton's laws to inclines and pulleys"
+      ],
+      "viz_refs": ["free-body-diagram", "force-viz"],
+      "prerequisites": ["phys-kinematics"]
+    },
+    {
+      "id": "phys-work-energy",
+      "slug": "work-energy",
+      "title": "Work and Energy",
+      "description": "Energy as the capacity to do work — kinetic, potential, and conservation of energy.",
+      "level": 2,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Define work as force times displacement",
+        "Apply the work-energy theorem",
+        "Distinguish conservative and non-conservative forces",
+        "Apply conservation of mechanical energy"
+      ],
+      "viz_refs": ["energy-diagram"],
+      "prerequisites": ["phys-newtons-laws"]
+    },
+    {
+      "id": "phys-momentum",
+      "slug": "momentum",
+      "title": "Momentum and Impulse",
+      "description": "Momentum as mass times velocity; the impulse-momentum theorem and conservation.",
+      "level": 2,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Define linear momentum and impulse",
+        "Apply the impulse-momentum theorem",
+        "Apply conservation of momentum to collisions",
+        "Distinguish elastic and inelastic collisions"
+      ],
+      "viz_refs": ["collision-viz"],
+      "prerequisites": ["phys-newtons-laws"]
+    },
+    {
+      "id": "phys-rotational-motion",
+      "slug": "rotational-motion",
+      "title": "Rotational Motion",
+      "description": "Extension of kinematics and Newton's laws to rotating bodies — torque, angular momentum.",
+      "level": 3,
+      "estimated_minutes": 150,
+      "objectives": [
+        "Define angular displacement, velocity, and acceleration",
+        "Apply rotational kinematics equations",
+        "Compute torque and moment of inertia",
+        "Apply conservation of angular momentum"
+      ],
+      "viz_refs": ["rotation-viz", "torque-diagram"],
+      "prerequisites": ["phys-work-energy"]
+    },
+    {
+      "id": "phys-oscillations",
+      "slug": "oscillations",
+      "title": "Oscillations and Waves",
+      "description": "Simple harmonic motion and wave phenomena — springs, pendulums, and wave properties.",
+      "level": 4,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Describe simple harmonic motion mathematically",
+        "Analyze mass-spring and pendulum systems",
+        "Define wave speed, frequency, and wavelength",
+        "Apply superposition and resonance concepts"
+      ],
+      "viz_refs": ["oscillation-viz", "wave-viz"],
+      "prerequisites": ["phys-rotational-motion"]
+    }
+  ]
+}

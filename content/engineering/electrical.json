@@ -1,0 +1,87 @@
+{
+  "pack": "electrical",
+  "subject": "engineering",
+  "category": "electrical-engineering",
+  "topics": [
+    {
+      "id": "eng-circuit-analysis",
+      "slug": "circuit-analysis",
+      "title": "Circuit Analysis",
+      "description": "Systematic methods for analyzing electrical circuits — node voltage and mesh current methods.",
+      "level": 0,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Apply the node voltage method",
+        "Apply the mesh current method",
+        "Use superposition and source transformation",
+        "Apply Thevenin and Norton equivalent circuits"
+      ],
+      "viz_refs": ["circuit-diagram"],
+      "prerequisites": ["phys-circuits", "la-linear-systems"]
+    },
+    {
+      "id": "eng-ac-circuits",
+      "slug": "ac-circuits",
+      "title": "AC Circuits",
+      "description": "Analysis of circuits with sinusoidal sources using phasors and impedance.",
+      "level": 1,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Represent sinusoidal signals with phasors",
+        "Define impedance for resistors, inductors, and capacitors",
+        "Analyze AC circuits in the frequency domain",
+        "Compute power in AC circuits"
+      ],
+      "viz_refs": ["phasor-viz", "impedance-diagram"],
+      "prerequisites": ["eng-circuit-analysis"]
+    },
+    {
+      "id": "eng-op-amps",
+      "slug": "op-amps",
+      "title": "Operational Amplifiers",
+      "description": "The ideal op-amp model and common configurations — inverting, non-inverting, summing, integrator.",
+      "level": 2,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Apply the ideal op-amp rules",
+        "Analyze inverting and non-inverting amplifier circuits",
+        "Design summing amplifiers and integrators",
+        "Understand feedback and stability qualitatively"
+      ],
+      "viz_refs": ["op-amp-circuit"],
+      "prerequisites": ["eng-ac-circuits"]
+    },
+    {
+      "id": "eng-digital-logic",
+      "slug": "digital-logic",
+      "title": "Digital Logic",
+      "description": "Boolean algebra, logic gates, combinational and sequential logic circuits.",
+      "level": 1,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Apply Boolean algebra and De Morgan's theorems",
+        "Design and simplify combinational logic circuits",
+        "Build flip-flops and sequential logic",
+        "Understand binary number representation"
+      ],
+      "viz_refs": ["logic-gate-viz", "truth-table"],
+      "prerequisites": ["phys-electric-charge"]
+    },
+    {
+      "id": "eng-signal-processing",
+      "slug": "signal-processing",
+      "title": "Signal Processing",
+      "description": "Fourier analysis, filtering, and the frequency-domain view of signals.",
+      "level": 3,
+      "estimated_minutes": 150,
+      "objectives": [
+        "Compute Fourier series for periodic signals",
+        "Apply the Fourier transform and understand its properties",
+        "Design simple low-pass and high-pass filters",
+        "Introduce discrete-time signals and the DFT"
+      ],
+      "viz_refs": ["fourier-viz", "filter-response"],
+      "prerequisites": ["eng-ac-circuits", "la-linear-systems"]
+    }
+  ]
+}

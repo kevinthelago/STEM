@@ -1,0 +1,103 @@
+{
+  "pack": "statistics",
+  "subject": "math",
+  "category": "statistics",
+  "topics": [
+    {
+      "id": "stat-descriptive",
+      "slug": "descriptive-stats",
+      "title": "Descriptive Statistics",
+      "description": "Summarizing and describing data using measures of center, spread, and shape.",
+      "level": 0,
+      "estimated_minutes": 60,
+      "objectives": [
+        "Compute mean, median, and mode",
+        "Calculate variance, standard deviation, and IQR",
+        "Interpret histograms, boxplots, and scatter plots",
+        "Understand skewness and kurtosis"
+      ],
+      "viz_refs": ["histogram", "boxplot"],
+      "prerequisites": []
+    },
+    {
+      "id": "stat-probability",
+      "slug": "probability",
+      "title": "Probability",
+      "description": "Fundamental rules of probability, conditional probability, and independence.",
+      "level": 1,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Define probability using set theory and sample spaces",
+        "Apply addition and multiplication rules",
+        "Compute conditional probability and use Bayes' theorem",
+        "Distinguish independent from dependent events"
+      ],
+      "viz_refs": ["venn-diagram", "probability-tree"],
+      "prerequisites": []
+    },
+    {
+      "id": "stat-distributions",
+      "slug": "distributions",
+      "title": "Probability Distributions",
+      "description": "Discrete and continuous distributions — binomial, Poisson, normal, and more.",
+      "level": 2,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Define PMF, PDF, and CDF",
+        "Work with binomial and Poisson distributions",
+        "Understand the normal distribution and standardization",
+        "Apply the Central Limit Theorem"
+      ],
+      "viz_refs": ["distribution-plot", "normal-curve"],
+      "prerequisites": ["stat-probability"]
+    },
+    {
+      "id": "stat-hypothesis-testing",
+      "slug": "hypothesis-testing",
+      "title": "Hypothesis Testing",
+      "description": "Statistical inference framework for testing claims about population parameters.",
+      "level": 3,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Formulate null and alternative hypotheses",
+        "Compute test statistics and p-values",
+        "Understand Type I and Type II errors",
+        "Apply t-tests, z-tests, and chi-square tests"
+      ],
+      "viz_refs": ["p-value-viz", "rejection-region"],
+      "prerequisites": ["stat-distributions"]
+    },
+    {
+      "id": "stat-regression",
+      "slug": "regression",
+      "title": "Regression Analysis",
+      "description": "Modeling relationships between variables — simple and multiple linear regression.",
+      "level": 3,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Fit a simple linear regression model",
+        "Interpret slope, intercept, and R²",
+        "Check regression assumptions",
+        "Extend to multiple predictors"
+      ],
+      "viz_refs": ["scatter-plot", "regression-line"],
+      "prerequisites": ["stat-descriptive", "stat-probability"]
+    },
+    {
+      "id": "stat-bayesian",
+      "slug": "bayesian-inference",
+      "title": "Bayesian Inference",
+      "description": "Updating beliefs with evidence using Bayes' theorem as a general inference framework.",
+      "level": 4,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Define prior, likelihood, and posterior",
+        "Apply Bayes' theorem to update distributions",
+        "Compare Bayesian and frequentist approaches",
+        "Work with conjugate priors"
+      ],
+      "viz_refs": ["prior-posterior-viz"],
+      "prerequisites": ["stat-probability"]
+    }
+  ]
+}

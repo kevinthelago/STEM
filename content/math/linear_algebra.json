@@ -1,0 +1,103 @@
+{
+  "pack": "linear_algebra",
+  "subject": "math",
+  "category": "linear-algebra",
+  "topics": [
+    {
+      "id": "la-vectors",
+      "slug": "vectors",
+      "title": "Vectors",
+      "description": "Geometric and algebraic representation of vectors in 2D and 3D space.",
+      "level": 0,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Represent vectors geometrically and as coordinate tuples",
+        "Perform vector addition, scalar multiplication",
+        "Compute dot product and cross product",
+        "Understand magnitude, direction, and unit vectors"
+      ],
+      "viz_refs": ["3d-vector-viz", "vector-addition"],
+      "prerequisites": []
+    },
+    {
+      "id": "la-matrices",
+      "slug": "matrices",
+      "title": "Matrices",
+      "description": "Rectangular arrays of numbers representing linear transformations and systems.",
+      "level": 1,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Define matrices and their dimensions",
+        "Add and subtract matrices",
+        "Understand matrix as a linear transformation",
+        "Compute transpose and recognize special matrices"
+      ],
+      "viz_refs": ["matrix-transform-viz"],
+      "prerequisites": ["la-vectors"]
+    },
+    {
+      "id": "la-matrix-operations",
+      "slug": "matrix-operations",
+      "title": "Matrix Operations",
+      "description": "Multiplication, inversion, and determinants of matrices.",
+      "level": 2,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Multiply matrices and understand non-commutativity",
+        "Compute the determinant of 2×2 and 3×3 matrices",
+        "Find the inverse of a matrix when it exists",
+        "Apply properties of determinants"
+      ],
+      "viz_refs": ["matrix-transform-viz"],
+      "prerequisites": ["la-matrices"]
+    },
+    {
+      "id": "la-linear-systems",
+      "slug": "linear-systems",
+      "title": "Linear Systems",
+      "description": "Solving systems of linear equations via Gaussian elimination and matrix methods.",
+      "level": 2,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Write a linear system in matrix form Ax=b",
+        "Apply row reduction and Gaussian elimination",
+        "Determine consistency and the solution set",
+        "Understand the geometric interpretation of solutions"
+      ],
+      "viz_refs": ["linear-system-viz"],
+      "prerequisites": ["la-matrices"]
+    },
+    {
+      "id": "la-eigenvalues",
+      "slug": "eigenvalues",
+      "title": "Eigenvalues and Eigenvectors",
+      "description": "Special scalars and vectors that reveal intrinsic properties of linear transformations.",
+      "level": 3,
+      "estimated_minutes": 150,
+      "objectives": [
+        "Define eigenvalues and eigenvectors",
+        "Compute eigenvalues from the characteristic equation",
+        "Find eigenvectors for each eigenvalue",
+        "Apply to matrix diagonalization and PCA intuition"
+      ],
+      "viz_refs": ["eigenvalue-viz"],
+      "prerequisites": ["la-linear-systems"]
+    },
+    {
+      "id": "la-vector-spaces",
+      "slug": "vector-spaces",
+      "title": "Vector Spaces",
+      "description": "Abstract generalization of vectors — sets closed under addition and scalar multiplication.",
+      "level": 3,
+      "estimated_minutes": 120,
+      "objectives": [
+        "State the axioms of a vector space",
+        "Identify subspaces, span, and linear independence",
+        "Define basis and dimension",
+        "Understand null space and column space of a matrix"
+      ],
+      "viz_refs": ["subspace-viz"],
+      "prerequisites": ["la-vectors"]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "pack": "calculus",
+  "subject": "math",
+  "category": "calculus",
+  "topics": [
+    {
+      "id": "calc-limits",
+      "slug": "limits",
+      "title": "Limits",
+      "description": "The foundation of calculus — understanding what a function approaches as input approaches a value.",
+      "level": 0,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Define the limit of a function informally and formally (epsilon-delta)",
+        "Evaluate limits algebraically and graphically",
+        "Apply limit laws to compute limits",
+        "Identify and classify discontinuities"
+      ],
+      "viz_refs": ["function-plot", "epsilon-delta-viz"],
+      "prerequisites": []
+    },
+    {
+      "id": "calc-derivatives",
+      "slug": "derivatives",
+      "title": "Derivatives",
+      "description": "The instantaneous rate of change of a function — defined as the limit of the difference quotient.",
+      "level": 1,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Define the derivative as a limit",
+        "Interpret the derivative as slope of tangent line and rate of change",
+        "Compute derivatives from the definition",
+        "Understand differentiability vs. continuity"
+      ],
+      "viz_refs": ["tangent-line-viz", "function-plot"],
+      "prerequisites": ["calc-limits"]
+    },
+    {
+      "id": "calc-differentiation-rules",
+      "slug": "differentiation-rules",
+      "title": "Differentiation Rules",
+      "description": "Systematic rules for computing derivatives: power, product, quotient, and chain rules.",
+      "level": 2,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Apply power, constant, and sum/difference rules",
+        "Use the product and quotient rules",
+        "Apply the chain rule to composite functions",
+        "Differentiate trigonometric, exponential, and logarithmic functions"
+      ],
+      "viz_refs": ["function-plot"],
+      "prerequisites": ["calc-derivatives"]
+    },
+    {
+      "id": "calc-integration",
+      "slug": "integration",
+      "title": "Integration",
+      "description": "The antiderivative and the definite integral as the area under a curve.",
+      "level": 2,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Define the indefinite integral as antiderivative",
+        "Compute definite integrals using Riemann sums",
+        "Apply basic integration rules",
+        "Understand the relationship between integration and area"
+      ],
+      "viz_refs": ["riemann-sum-viz", "area-under-curve"],
+      "prerequisites": ["calc-derivatives"]
+    },
+    {
+      "id": "calc-fundamental-theorem",
+      "slug": "fundamental-theorem",
+      "title": "Fundamental Theorem of Calculus",
+      "description": "Connects differentiation and integration, showing they are inverse operations.",
+      "level": 3,
+      "estimated_minutes": 90,
+      "objectives": [
+        "State and prove both parts of the Fundamental Theorem",
+        "Use FTC Part 1 to differentiate integral functions",
+        "Use FTC Part 2 to evaluate definite integrals",
+        "Apply the theorem to solve applied problems"
+      ],
+      "viz_refs": ["ftc-viz"],
+      "prerequisites": ["calc-integration"]
+    },
+    {
+      "id": "calc-series-sequences",
+      "slug": "series-sequences",
+      "title": "Series and Sequences",
+      "description": "Infinite sequences, convergence, and series including Taylor and power series.",
+      "level": 3,
+      "estimated_minutes": 150,
+      "objectives": [
+        "Define convergence and divergence of sequences",
+        "Apply convergence tests for series",
+        "Construct Taylor and Maclaurin series",
+        "Determine radius and interval of convergence"
+      ],
+      "viz_refs": ["series-partial-sums"],
+      "prerequisites": ["calc-limits"]
+    }
+  ]
+}

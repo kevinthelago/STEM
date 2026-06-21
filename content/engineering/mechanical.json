@@ -1,0 +1,87 @@
+{
+  "pack": "mechanical",
+  "subject": "engineering",
+  "category": "mechanical-engineering",
+  "topics": [
+    {
+      "id": "eng-statics",
+      "slug": "statics",
+      "title": "Statics",
+      "description": "Analysis of forces on bodies in equilibrium — the foundation of structural engineering.",
+      "level": 0,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Apply the conditions of static equilibrium",
+        "Analyze trusses, frames, and machines",
+        "Compute support reactions and internal forces",
+        "Determine centroids and moments of inertia of areas"
+      ],
+      "viz_refs": ["free-body-diagram", "truss-viz"],
+      "prerequisites": ["calc-derivatives", "phys-newtons-laws"]
+    },
+    {
+      "id": "eng-dynamics",
+      "slug": "dynamics",
+      "title": "Dynamics",
+      "description": "Analysis of motion and forces on bodies — kinematics and kinetics of particles and rigid bodies.",
+      "level": 1,
+      "estimated_minutes": 150,
+      "objectives": [
+        "Apply equations of motion to particles and rigid bodies",
+        "Use work-energy and impulse-momentum methods",
+        "Analyze planar kinematics of rigid bodies",
+        "Solve vibration problems"
+      ],
+      "viz_refs": ["dynamics-viz"],
+      "prerequisites": ["eng-statics"]
+    },
+    {
+      "id": "eng-stress-strain",
+      "slug": "stress-strain",
+      "title": "Stress, Strain, and Material Properties",
+      "description": "Internal forces in materials — stress, strain, Young's modulus, and failure criteria.",
+      "level": 1,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Define normal stress, shear stress, and strain",
+        "Apply Hooke's law for elastic materials",
+        "Analyze axially loaded members",
+        "Interpret stress-strain diagrams"
+      ],
+      "viz_refs": ["stress-strain-plot"],
+      "prerequisites": ["eng-statics"]
+    },
+    {
+      "id": "eng-fluid-statics",
+      "slug": "fluid-statics",
+      "title": "Fluid Statics",
+      "description": "Pressure in static fluids, buoyancy, and hydrostatic forces on surfaces.",
+      "level": 1,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Relate pressure variation with depth in a static fluid",
+        "Apply Archimedes' principle to buoyancy",
+        "Compute hydrostatic forces on plane surfaces",
+        "Understand pressure measurement devices"
+      ],
+      "viz_refs": ["pressure-viz", "buoyancy-viz"],
+      "prerequisites": ["eng-statics"]
+    },
+    {
+      "id": "eng-thermodynamics",
+      "slug": "thermodynamics-basics",
+      "title": "Thermodynamics Fundamentals",
+      "description": "Energy, heat, work, and the laws of thermodynamics applied to engineering systems.",
+      "level": 2,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Define thermodynamic systems, state, and processes",
+        "Apply the first law to closed and open systems",
+        "State the second law and define entropy",
+        "Analyze ideal gas processes and cycles"
+      ],
+      "viz_refs": ["pv-diagram", "carnot-viz"],
+      "prerequisites": ["phys-work-energy"]
+    }
+  ]
+}

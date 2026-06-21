@@ -1,0 +1,119 @@
+{
+  "pack": "electromagnetism",
+  "subject": "physics",
+  "category": "electromagnetism",
+  "topics": [
+    {
+      "id": "phys-electric-charge",
+      "slug": "electric-charge",
+      "title": "Electric Charge",
+      "description": "The fundamental property of matter that causes electromagnetic phenomena.",
+      "level": 0,
+      "estimated_minutes": 60,
+      "objectives": [
+        "Explain the nature of electric charge and its conservation",
+        "Apply Coulomb's law to compute forces between charges",
+        "Distinguish conductors from insulators",
+        "Describe charging by conduction and induction"
+      ],
+      "viz_refs": ["charge-viz", "coulomb-force"],
+      "prerequisites": []
+    },
+    {
+      "id": "phys-electric-field",
+      "slug": "electric-field",
+      "title": "Electric Field",
+      "description": "The vector field representing the force per unit charge at every point in space.",
+      "level": 1,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Define electric field as force per unit charge",
+        "Draw and interpret field lines",
+        "Compute fields from point charges and distributions",
+        "Understand superposition of electric fields"
+      ],
+      "viz_refs": ["electric-field-viz", "field-lines"],
+      "prerequisites": ["phys-electric-charge"]
+    },
+    {
+      "id": "phys-gauss-law",
+      "slug": "gauss-law",
+      "title": "Gauss's Law",
+      "description": "Relates total electric flux through a closed surface to the enclosed charge.",
+      "level": 2,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Define electric flux",
+        "State Gauss's law in integral form",
+        "Apply Gauss's law to symmetric charge distributions",
+        "Derive field inside/outside a uniformly charged sphere"
+      ],
+      "viz_refs": ["gaussian-surface-viz"],
+      "prerequisites": ["phys-electric-field"]
+    },
+    {
+      "id": "phys-electric-potential",
+      "slug": "electric-potential",
+      "title": "Electric Potential",
+      "description": "Potential energy per unit charge — the scalar counterpart to the electric field.",
+      "level": 2,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Define electric potential and potential difference (voltage)",
+        "Relate potential to electric field via the gradient",
+        "Calculate potential from point charges",
+        "Understand equipotential surfaces"
+      ],
+      "viz_refs": ["potential-viz", "equipotential-lines"],
+      "prerequisites": ["phys-electric-field"]
+    },
+    {
+      "id": "phys-circuits",
+      "slug": "circuits",
+      "title": "DC Circuits",
+      "description": "Analysis of direct-current circuits using Ohm's law and Kirchhoff's rules.",
+      "level": 3,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Apply Ohm's law V=IR",
+        "Analyze series and parallel resistor networks",
+        "Apply Kirchhoff's current and voltage laws",
+        "Compute power dissipation in resistors"
+      ],
+      "viz_refs": ["circuit-diagram"],
+      "prerequisites": ["phys-electric-potential"]
+    },
+    {
+      "id": "phys-magnetism",
+      "slug": "magnetism",
+      "title": "Magnetism",
+      "description": "Magnetic forces, fields, and the behavior of moving charges in magnetic fields.",
+      "level": 2,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Describe magnetic force on moving charges (Lorentz force)",
+        "Compute magnetic field from current-carrying wires",
+        "Apply the right-hand rule",
+        "Understand magnetic dipoles and bar magnets"
+      ],
+      "viz_refs": ["magnetic-field-viz", "lorentz-force"],
+      "prerequisites": ["phys-electric-field"]
+    },
+    {
+      "id": "phys-faraday-law",
+      "slug": "faraday-law",
+      "title": "Faraday's Law and Induction",
+      "description": "A changing magnetic flux induces an EMF — the foundation of generators and transformers.",
+      "level": 3,
+      "estimated_minutes": 120,
+      "objectives": [
+        "State Faraday's law of induction",
+        "Apply Lenz's law to determine direction of induced current",
+        "Compute induced EMF for moving conductors",
+        "Understand mutual and self-inductance"
+      ],
+      "viz_refs": ["induction-viz"],
+      "prerequisites": ["phys-magnetism"]
+    }
+  ]
+}

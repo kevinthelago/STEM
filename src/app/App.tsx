@@ -9,6 +9,9 @@ import { LearnMode } from '@/modes/learn/LearnMode'
 import { PracticeMode } from '@/modes/practice/PracticeMode'
 import { TerminalMode } from '@/modes/terminal/TerminalMode'
 import { ResearchMode } from '@/modes/research/ResearchMode'
+import { MasteryDashboard } from '@/dashboard'
+import { ReviewQueue, ReviewSession, useReviewStore } from '@/review'
+import { VizGallery } from '@/viz'
 import { Notes } from '@/notes/Notes'
 import { Settings } from '@/settings/Settings'
 import { surface } from '@/theme'
@@ -88,60 +91,26 @@ function MainContent({ view }: { view: ActiveView }) {
   if (view.type === 'settings') return <Settings />
   if (view.type === 'notes') return <Notes topicId={view.topicId} />
 
-  if (view.type === 'dashboard') {
-    return (
-      <div
-        style={{
-          flex: 1,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#626878',
-          fontSize: '13px',
-        }}
-      >
-        Dashboard — coming soon (frontend-viz stream)
-      </div>
-    )
-  }
-
-  if (view.type === 'review') {
-    return (
-      <div
-        style={{
-          flex: 1,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#626878',
-          fontSize: '13px',
-        }}
-      >
-        Review — coming soon (frontend-viz stream)
-      </div>
-    )
-  }
+  if (view.type === 'dashboard') return <MasteryDashboard />
+  if (view.type === 'review') return <ReviewQueueView />
 
   // mode view
   const { mode, topicId } = view
   if (mode === 'learn') return <LearnMode topicId={topicId} />
   if (mode === 'practice') return <PracticeMode topicId={topicId} />
-  if (mode === 'visualize') return (
-    <div
-      style={{
-        flex: 1,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#626878',
-        fontSize: '13px',
-      }}
-    >
-      Visualize — frontend-viz stream
-    </div>
-  )
+  if (mode === 'visualize') return <VizGallery />
   if (mode === 'research') return <ResearchMode topicId={topicId} />
 
   // terminal — accessible via the terminal button / command palette
   return <TerminalMode topicId={topicId} />
+}
+
+function ReviewQueueView() {
+  const { sessionActive, dueItems } = useReviewStore()
+
+  if (sessionActive) {
+    return <ReviewSession totalItems={dueItems.length} />
+  }
+
+  return <ReviewQueue />
 }

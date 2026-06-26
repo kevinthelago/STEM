@@ -62,7 +62,7 @@ mod tests {
             )
             .unwrap();
         assert_eq!(v1, v2);
-        assert_eq!(v1, 2);
+        assert_eq!(v1, 3);
     }
 
     #[test]
@@ -90,6 +90,47 @@ mod tests {
         db.topics().add_prerequisite("a", "b").unwrap();
         db.topics().add_prerequisite("b", "a").unwrap();
         assert!(has_cycle(&db.conn));
+    }
+
+    #[test]
+    fn test_notes_uuid_ids() {
+        let db = Db::open_in_memory().unwrap();
+        let note = NewNote {
+            topic_id: None,
+            title: "UUID test".to_string(),
+            body: "body".to_string(),
+            tags: None,
+        };
+        let id = db.notes().insert(&note).unwrap();
+
+        // Must be UUID v4 format: xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx
+        let parts: Vec<&str> = id.split('-').collect();
+        assert_eq!(parts.len(), 5, "UUID must have 5 dash-separated parts");
+        assert_eq!(parts[0].len(), 8);
+        assert_eq!(parts[1].len(), 4);
+        assert_eq!(parts[2].len(), 4);
+        assert_eq!(parts[3].len(), 4);
+        assert_eq!(parts[4].len(), 12);
+        assert!(parts[2].starts_with('4'), "version nibble must be 4");
+        assert!(
+            matches!(parts[3].chars().next(), Some('8' | '9' | 'a' | 'b')),
+            "variant nibble must be 8, 9, a, or b"
+        );
+
+        // Round-trip: fetch by string id
+        let fetched = db.notes().get(&id).unwrap();
+        assert_eq!(fetched.id, id);
+        assert_eq!(fetched.title, "UUID test");
+
+        // Two inserts produce distinct IDs
+        let note2 = NewNote {
+            topic_id: None,
+            title: "second".to_string(),
+            body: "body2".to_string(),
+            tags: None,
+        };
+        let id2 = db.notes().insert(&note2).unwrap();
+        assert_ne!(id, id2, "each insert must produce a unique UUID");
     }
 
     #[test]

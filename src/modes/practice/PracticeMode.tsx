@@ -177,6 +177,7 @@ export function PracticeMode({ topicId }: PracticeModeProps) {
               sessionId={sessionId}
               answered={!!grade}
               gradeResult={grade?.result}
+              submittedAnswer={grade?.submittedAnswer}
             />
           )}
 

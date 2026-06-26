@@ -1,0 +1,38 @@
+{
+  "name": "stem",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@codemirror/lang-python": "^6.1.6",
+    "@react-three/drei": "^9.118.0",
+    "@react-three/fiber": "^8.17.14",
+    "@tauri-apps/api": "^2.5.0",
+    "@tauri-apps/plugin-shell": "^2.2.0",
+    "@uiw/react-codemirror": "^4.23.7",
+    "@xterm/addon-fit": "^0.10.0",
+    "@xterm/addon-webgl": "^0.18.0",
+    "@xterm/xterm": "^5.5.0",
+    "d3": "^7.9.0",
+    "katex": "^0.16.22",
+    "lucide-react": "^0.511.0",
+    "mathjs": "^14.5.2",
+    "plotly.js-dist-min": "^2.35.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-markdown": "^10.1.0",
+    "rehype-katex": "^7.0.1",
+    "remark-math": "^6.0.0",
+    "three": "^0.175.0",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.5.0",
+    "@testing-library/react": "^16.3.0",
+    "@vitejs/plugin-react": "^4.5.1",
+    "eslint": "^9.28.0",
+    "typescript": "~6.0.0",
+    "typescript-eslint": "^8.61.1",
+    "vite": "^6.3.5",
+    "vitest": "^3.2.3"
+  }
+}

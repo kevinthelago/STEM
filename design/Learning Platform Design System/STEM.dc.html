@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+<style>
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:#08090c;}
+  ::-webkit-scrollbar{width:11px;height:11px;}
+  ::-webkit-scrollbar-thumb{background:#2a2d36;border-radius:7px;border:3px solid #0e0f13;}
+  ::-webkit-scrollbar-track{background:transparent;}
+  .katex{font-size:1.03em;color:#e6e8ee;}
+  .katex-display{margin:0.45em 0;}
+</style>
+</helmet>
+<div id="stemRoot" style="min-width:100%; width:max-content; min-height:100vh; box-sizing:border-box; padding:44px; background:#08090c; font-family:'IBM Plex Sans',-apple-system,system-ui,sans-serif; -webkit-font-smoothing:antialiased;">
+
+  <!-- ===================== DESIGN NOTES / SYSTEM BAND ===================== -->
+  <div style="width:1440px; background:#0e0f13; border:1px solid #262932; border-radius:9px; padding:28px 32px; margin-bottom:54px;">
+    <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:6px;">
+      <div style="display:flex; align-items:center; gap:9px;">
+        <span style="width:11px; height:11px; border-radius:3px; background:#9a7cff; box-shadow:0 0 0 4px rgba(154,124,255,0.16);"></span>
+        <span style="font-size:16px; font-weight:600; letter-spacing:0.04em; color:#e6e8ee;">STEM</span>
+      </div>
+      <span style="font-size:12.5px; color:#626878;">Design system &amp; core-loop layouts · dark, keyboard-first, local-first desktop app</span>
+    </div>
+    <p style="margin:10px 0 22px; font-size:13px; line-height:1.6; color:#9aa0ad; max-width:1000px;">
+      A calm, dense developer-tool aesthetic — neutral graphite surfaces, a single violet accent for focus &amp; actions,
+      semantic color only for <em style="color:#c9cdd8; font-style:normal;">mastery</em> and <em style="color:#c9cdd8; font-style:normal;">grading</em>.
+      Math renders as real typeset equations. Below: the global shell, then Learn · Practice · Visualize in context, then layout &amp; problem-card variations.
+    </p>
+    <div style="display:flex; gap:40px; flex-wrap:wrap;">
+      <!-- surfaces -->
+      <div>
+        <div style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#626878; margin-bottom:9px;">Surfaces</div>
+        <div style="display:flex; gap:7px;">
+          <div style="width:46px; height:46px; border-radius:6px; background:#08090c; border:1px solid #262932;"></div>
+          <div style="width:46px; height:46px; border-radius:6px; background:#0e0f13; border:1px solid #262932;"></div>
+          <div style="width:46px; height:46px; border-radius:6px; background:#131419; border:1px solid #262932;"></div>
+          <div style="width:46px; height:46px; border-radius:6px; background:#1a1c22; border:1px solid #262932;"></div>
+        </div>
+      </div>
+      <!-- accent -->
+      <div>
+        <div style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#626878; margin-bottom:9px;">Accent</div>
+        <div style="display:flex; gap:7px; align-items:center;">
+          <div style="width:46px; height:46px; border-radius:6px; background:#9a7cff;"></div>
+          <div style="width:46px; height:46px; border-radius:6px; background:rgba(154,124,255,0.16); border:1px solid rgba(154,124,255,0.4);"></div>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#626878;">#9A7CFF</span>
+        </div>
+      </div>
+      <!-- mastery -->
+      <div>
+        <div style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#626878; margin-bottom:9px;">Mastery</div>
+        <div style="display:flex; gap:14px;">
+          <div style="display:flex; align-items:center; gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#5b6172;"></span><span style="font-size:11px;color:#9aa0ad;">Unstarted</span></div>
+          <div style="display:flex; align-items:center; gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#d2934a;"></span><span style="font-size:11px;color:#9aa0ad;">Learning</span></div>
+          <div style="display:flex; align-items:center; gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#4f93e0;"></span><span style="font-size:11px;color:#9aa0ad;">Proficient</span></div>
+          <div style="display:flex; align-items:center; gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:#43b888;"></span><span style="font-size:11px;color:#9aa0ad;">Mastered</span></div>
+        </div>
+      </div>
+      <!-- grading -->
+      <div>
+        <div style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#626878; margin-bottom:9px;">Grading</div>
+        <div style="display:flex; gap:14px;">
+          <div style="display:flex; align-items:center; gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#43b888;"></span><span style="font-size:11px;color:#9aa0ad;">Correct</span></div>
+          <div style="display:flex; align-items:center; gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#d2934a;"></span><span style="font-size:11px;color:#9aa0ad;">Partial</span></div>
+          <div style="display:flex; align-items:center; gap:6px;"><span style="width:8px;height:8px;border-radius:2px;background:#e0625f;"></span><span style="font-size:11px;color:#9aa0ad;">Wrong</span></div>
+        </div>
+      </div>
+      <!-- type -->
+      <div>
+        <div style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#626878; margin-bottom:9px;">Type</div>
+        <div style="display:flex; gap:18px; align-items:baseline;">
+          <span style="font-size:15px; color:#e6e8ee;">IBM Plex Sans <span style="color:#626878; font-size:11px;">· UI</span></span>
+          <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#e6e8ee;">JetBrains Mono <span style="color:#626878; font-size:11px; font-family:'IBM Plex Sans';">· code / numerics</span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== FRAMES COLUMN ===================== -->
+  <div style="display:flex; flex-direction:column; align-items:flex-start; gap:64px;">
+
+    <!-- ============ FRAME 1: GLOBAL SHELL · LEARN MODE (hero) ============ -->
+    <div style="display:flex; flex-direction:column; gap:13px;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#9a7cff;">01</span>
+        <span style="font-size:13px; font-weight:600; color:#c9cdd8;">Global shell · Learn mode</span>
+        <span style="font-size:11.5px; color:#626878;">Socratic tutor chat — prose, typeset math, a &lt;viz&gt; launch chip, streaming response, explain-check</span>
+      </div>
+
+      <div data-screen-label="Shell — Learn" style="width:1440px; height:900px; background:#0e0f13; border:1px solid #262932; border-radius:9px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 28px 70px rgba(0,0,0,0.55);">
+
+        <!-- ---------- TOP BAR ---------- -->
+        <div style="height:46px; flex:none; display:flex; align-items:center; gap:0; padding:0 14px; background:#131419; border-bottom:1px solid #1e2027;">
+          <div style="display:flex; align-items:center; gap:8px; padding-right:16px;">
+            <span style="width:10px; height:10px; border-radius:3px; background:#9a7cff;"></span>
+            <span style="font-size:13px; font-weight:600; letter-spacing:0.03em; color:#e6e8ee;">STEM</span>
+          </div>
+          <!-- breadcrumb / active topic -->
+          <div style="display:flex; align-items:center; gap:7px; padding:0 14px; border-left:1px solid #24262e; height:24px;">
+            <span style="font-size:12px; color:#626878;">Linear Algebra</span>
+            <span style="font-size:11px; color:#3a3e48;">/</span>
+            <span style="font-size:12px; color:#c9cdd8; font-weight:500;">Eigenvectors &amp; Eigenvalues</span>
+          </div>
+          <!-- mode switcher -->
+          <div style="display:flex; align-items:center; gap:2px; margin-left:18px; background:#0e0f13; border:1px solid #24262e; border-radius:7px; padding:2px;">
+            <div style="display:flex; align-items:center; gap:6px; padding:5px 13px; border-radius:5px; background:rgba(154,124,255,0.16); box-shadow:inset 0 0 0 1px rgba(154,124,255,0.34);">
+              <span style="width:5px;height:5px;border-radius:50%;background:#9a7cff;"></span>
+              <span style="font-size:12px; font-weight:600; color:#cdbcff;">Learn</span>
+            </div>
+            <div style="padding:5px 13px; border-radius:5px; font-size:12px; color:#9aa0ad;">Practice</div>
+            <div style="padding:5px 13px; border-radius:5px; font-size:12px; color:#9aa0ad;">Visualize</div>
+            <div style="padding:5px 13px; border-radius:5px; font-size:12px; color:#9aa0ad;">Research</div>
+          </div>
+          <div style="flex:1;"></div>
+          <!-- right nav -->
+          <div style="display:flex; align-items:center; gap:4px;">
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad;">Dashboard</div>
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad;">Notes</div>
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad; display:flex; align-items:center; gap:7px;">
+              Review
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; color:#0e0f13; background:#9a7cff; border-radius:9px; padding:1px 6px;">3</span>
+            </div>
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad;">Settings</div>
+          </div>
+        </div>
+
+        <!-- ---------- BODY ---------- -->
+        <div style="flex:1; display:flex; min-height:0;">
+
+          <!-- ===== SIDEBAR ===== -->
+          <div style="width:266px; flex:none; background:#131419; border-right:1px solid #1e2027; display:flex; flex-direction:column; min-height:0;">
+            <!-- search / quick switch -->
+            <div style="padding:12px 12px 10px;">
+              <div style="display:flex; align-items:center; gap:9px; height:34px; padding:0 11px; background:#0e0f13; border:1px solid #24262e; border-radius:7px;">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#5b6172;">⌘K</span>
+                <span style="font-size:12.5px; color:#626878;">Search topics, jump to mode…</span>
+              </div>
+            </div>
+            <!-- tree -->
+            <div style="flex:1; overflow:hidden; padding:2px 8px;">
+              <!-- subject: Linear Algebra (expanded, active) -->
+              <div style="display:flex; align-items:center; gap:7px; padding:7px 8px 6px; cursor:default;">
+                <span style="font-size:9px; color:#9aa0ad; width:9px;">▾</span>
+                <span style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#c9cdd8; font-weight:600; flex:1;">Linear Algebra</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#626878;">61</span>
+              </div>
+              <!-- nodes -->
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 24px; border-radius:6px;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#43b888; flex:none;"></span>
+                <span style="flex:1; font-size:12.5px; color:#9aa0ad;">Vectors &amp; Spaces</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#43b888;">92</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 24px; border-radius:6px;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#4f93e0; flex:none;"></span>
+                <span style="flex:1; font-size:12.5px; color:#9aa0ad;">Linear Combinations</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#4f93e0;">78</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 24px; border-radius:6px;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#d2934a; flex:none;"></span>
+                <span style="flex:1; font-size:12.5px; color:#9aa0ad;">Matrix Transformations</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#d2934a;">54</span>
+              </div>
+              <!-- ACTIVE node -->
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 21px; border-radius:6px; background:rgba(154,124,255,0.13); box-shadow:inset 2px 0 0 #9a7cff;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#d2934a; flex:none;"></span>
+                <span style="flex:1; font-size:12.5px; color:#e6e8ee; font-weight:500;">Eigenvectors &amp; Eigenvalues</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#d2934a;">41</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 24px; border-radius:6px;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#5b6172; flex:none;"></span>
+                <span style="flex:1; font-size:12.5px; color:#7e8494;">Determinants</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#5b6172;">—</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 24px; border-radius:6px;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#5b6172; flex:none;"></span>
+                <span style="flex:1; font-size:12.5px; color:#7e8494;">Diagonalization</span>
+                <span title="prerequisite unmet" style="font-size:10px; color:#a06a3a;">⚠</span>
+              </div>
+              <!-- other subjects collapsed -->
+              <div style="display:flex; align-items:center; gap:7px; padding:11px 8px 6px; cursor:default;">
+                <span style="font-size:9px; color:#626878; width:9px;">▸</span>
+                <span style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#7e8494; font-weight:600; flex:1;">Calculus</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#626878;">23</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:7px; padding:6px 8px; cursor:default;">
+                <span style="font-size:9px; color:#626878; width:9px;">▸</span>
+                <span style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#7e8494; font-weight:600; flex:1;">Physics</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#626878;">8</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:7px; padding:6px 8px; cursor:default;">
+                <span style="font-size:9px; color:#9a7cff; width:9px;">◆</span>
+                <span style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#9aa0ad; font-weight:600; flex:1;">Capstone · Neural Net</span>
+                <span style="font-size:9px; color:#a06a3a;">⚠</span>
+              </div>
+            </div>
+            <!-- suggested path footer -->
+            <div style="border-top:1px solid #1e2027; padding:11px 14px;">
+              <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#626878; margin-bottom:6px;">Suggested next</div>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#d2934a;"></span>
+                <span style="font-size:12px; color:#cdbcff;">Determinants</span>
+                <span style="font-size:11px; color:#626878;">→ unlocks Diagonalization</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== MAIN: LEARN ===== -->
+          <div style="flex:1; min-width:0; display:flex; flex-direction:column; background:#0e0f13;">
+            <!-- mode header strip -->
+            <div style="height:54px; flex:none; display:flex; align-items:center; gap:16px; padding:0 28px; border-bottom:1px solid #1a1c22;">
+              <span style="font-size:14.5px; font-weight:600; color:#e6e8ee;">Eigenvectors &amp; Eigenvalues</span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <div style="width:120px; height:5px; border-radius:3px; background:#22242c; overflow:hidden;">
+                  <div style="width:41%; height:100%; background:#d2934a; border-radius:3px;"></div>
+                </div>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#d2934a;">41</span>
+                <span style="font-size:11px; color:#626878;">Learning</span>
+              </div>
+              <div style="flex:1;"></div>
+              <div style="display:flex; align-items:center; gap:8px; font-size:11.5px; color:#7e8494;">
+                <span style="width:6px;height:6px;border-radius:50%;background:#43b888;"></span>
+                session active · 4 turns
+              </div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#626878; padding:4px 9px; border:1px solid #24262e; border-radius:6px;">claude · pty</div>
+            </div>
+
+            <!-- chat scroll -->
+            <div style="flex:1; overflow:hidden; padding:26px 28px;">
+              <div style="max-width:780px; margin:0 auto; display:flex; flex-direction:column; gap:22px;">
+
+                <!-- tutor message 1 -->
+                <div style="display:flex; gap:14px;">
+                  <div style="width:26px; height:26px; flex:none; border-radius:6px; background:rgba(154,124,255,0.16); border:1px solid rgba(154,124,255,0.34); display:flex; align-items:center; justify-content:center;">
+                    <span style="width:7px;height:7px;border-radius:2px;background:#9a7cff;"></span>
+                  </div>
+                  <div style="flex:1; min-width:0;">
+                    <div style="font-size:11px; color:#626878; margin-bottom:7px;">Tutor</div>
+                    <div style="font-size:14px; line-height:1.72; color:#c9cdd8;">
+                      Think of a matrix \(A\) as a transformation of space. Most vectors get knocked off their original line when you apply \(A\). The <strong style="color:#e6e8ee; font-weight:600;">eigenvectors</strong> are the rare directions that survive — \(A\) only stretches or squashes them:
+                      \[ A\mathbf{v} = \lambda\mathbf{v} \]
+                      The scalar \(\lambda\) is the <strong style="color:#e6e8ee; font-weight:600;">eigenvalue</strong> — exactly how much that surviving direction is scaled.
+                    </div>
+                    <!-- viz launch chip -->
+                    <div style="display:inline-flex; align-items:center; gap:10px; margin-top:14px; padding:8px 13px 8px 11px; background:#16181d; border:1px solid #2a2d36; border-radius:8px;">
+                      <span style="width:22px;height:22px;border-radius:5px;background:rgba(154,124,255,0.16);display:flex;align-items:center;justify-content:center;">
+                        <svg width="9" height="10" viewBox="0 0 9 10"><polygon points="0,0 9,5 0,10" fill="#b6a3ff"></polygon></svg>
+                      </span>
+                      <div style="display:flex; flex-direction:column; gap:1px;">
+                        <span style="font-size:12.5px; font-weight:500; color:#cdbcff;">Visualize: eigenvectors of a 2×2 shear</span>
+                        <span style="font-size:10.5px; color:#626878; font-family:'JetBrains Mono',monospace;">&lt;viz type="eigen-2d"&gt; · opens Visualize host</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- user message -->
+                <div style="display:flex; gap:14px; justify-content:flex-end;">
+                  <div style="max-width:560px; background:#16181d; border:1px solid #24262e; border-radius:10px; padding:12px 15px;">
+                    <div style="font-size:14px; line-height:1.6; color:#d7dae2;">So how do I actually <em style="color:#e6e8ee; font-style:normal; font-weight:500;">find</em> \(\lambda\) for a given matrix?</div>
+                  </div>
+                  <div style="width:26px; height:26px; flex:none; border-radius:6px; background:#22242c; border:1px solid #2e313a; display:flex; align-items:center; justify-content:center; font-size:11px; color:#9aa0ad; font-weight:600;">You</div>
+                </div>
+
+                <!-- tutor message 2 — streaming -->
+                <div style="display:flex; gap:14px;">
+                  <div style="width:26px; height:26px; flex:none; border-radius:6px; background:rgba(154,124,255,0.16); border:1px solid rgba(154,124,255,0.34); display:flex; align-items:center; justify-content:center;">
+                    <span style="width:7px;height:7px;border-radius:2px;background:#9a7cff;"></span>
+                  </div>
+                  <div style="flex:1; min-width:0;">
+                    <div style="font-size:11px; color:#626878; margin-bottom:7px; display:flex; align-items:center; gap:8px;">Tutor <span style="display:inline-flex; align-items:center; gap:5px; color:#9a7cff;"><span style="width:5px;height:5px;border-radius:50%;background:#9a7cff;"></span>streaming</span></div>
+                    <div style="font-size:14px; line-height:1.72; color:#c9cdd8;">
+                      We want a non-zero \(\mathbf{v}\) with \((A-\lambda I)\mathbf{v}=\mathbf{0}\). That can only happen if \(A-\lambda I\) collapses space — i.e. it's singular — so we solve the <strong style="color:#e6e8ee; font-weight:600;">characteristic equation</strong>:
+                      \[ \det(A-\lambda I)=0 \]
+                      For a 2×2 matrix this is just a quadratic in \(\lambda\)<span style="display:inline-block; width:8px; height:15px; background:#9a7cff; margin-left:2px; vertical-align:-2px; border-radius:1px;"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- explain-check block -->
+                <div style="margin-left:40px; background:#121319; border:1px solid #24262e; border-radius:10px; padding:15px 16px;">
+                  <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+                    <span style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#9a7cff; font-weight:600;">Explain-check</span>
+                    <span style="font-size:11px; color:#626878;">writing it yourself counts toward mastery</span>
+                  </div>
+                  <div style="font-size:13.5px; line-height:1.6; color:#c9cdd8; margin-bottom:11px;">In your own words, why must \(A-\lambda I\) be singular for an eigenvector to exist?</div>
+                  <div style="background:#0e0f13; border:1px solid #24262e; border-radius:7px; padding:11px 13px; min-height:58px; font-size:13px; color:#5b6172; line-height:1.55;">Type your explanation…</div>
+                  <div style="display:flex; align-items:center; justify-content:space-between; margin-top:11px;">
+                    <span style="font-size:11px; color:#626878;">graded on intuition, not wording</span>
+                    <div style="display:flex; align-items:center; gap:6px; padding:7px 14px; background:#9a7cff; border-radius:7px;">
+                      <span style="font-size:12px; font-weight:600; color:#0e0f13;">Submit explanation</span>
+                      <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(14,15,19,0.6);">⌘↵</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- input bar -->
+            <div style="flex:none; padding:14px 28px 18px; border-top:1px solid #1a1c22;">
+              <div style="max-width:780px; margin:0 auto;">
+                <div style="display:flex; align-items:flex-end; gap:12px; background:#16181d; border:1px solid #2a2d36; border-radius:11px; padding:11px 13px;">
+                  <div style="flex:1; font-size:13.5px; color:#626878; line-height:1.5; padding:2px 0;">Ask a follow-up, or paste a problem…</div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#5b6172;">⌘↵ send</span>
+                    <div style="width:30px; height:30px; border-radius:7px; background:#9a7cff; display:flex; align-items:center; justify-content:center;">
+                      <svg width="11" height="11" viewBox="0 0 11 11"><polygon points="0,0 11,5.5 0,11 2,5.5" fill="#0e0f13"></polygon></svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ---------- STATUS BAR ---------- -->
+        <div style="height:26px; flex:none; display:flex; align-items:center; gap:0; padding:0 14px; background:#131419; border-top:1px solid #1e2027; font-family:'JetBrains Mono',monospace; font-size:10.5px;">
+          <div style="display:flex; align-items:center; gap:7px; color:#9aa0ad; padding-right:14px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#43b888;"></span>
+            claude connected · v1.4.2
+          </div>
+          <div style="color:#626878; padding:0 14px; border-left:1px solid #24262e;">session: linalg/eigenvectors · learn</div>
+          <div style="flex:1;"></div>
+          <div style="display:flex; align-items:center; gap:7px; color:#cdbcff; padding-left:14px;">
+            <span style="width:6px;height:6px;border-radius:50%;background:#9a7cff;"></span>
+            3 due today
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ FRAME 2: PRACTICE MODE ============ -->
+    <div style="display:flex; flex-direction:column; gap:13px;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#9a7cff;">02</span>
+        <span style="font-size:13px; font-weight:600; color:#c9cdd8;">Practice mode · generate &amp; grade</span>
+        <span style="font-size:11.5px; color:#626878;">Numeric problem card → submitted wrong → where-wrong + escalated hint, reveal solution, mastery tick</span>
+      </div>
+
+      <div data-screen-label="Shell — Practice" style="width:1440px; height:900px; background:#0e0f13; border:1px solid #262932; border-radius:9px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 28px 70px rgba(0,0,0,0.55);">
+        <!-- TOP BAR -->
+        <div style="height:46px; flex:none; display:flex; align-items:center; padding:0 14px; background:#131419; border-bottom:1px solid #1e2027;">
+          <div style="display:flex; align-items:center; gap:8px; padding-right:16px;">
+            <span style="width:10px; height:10px; border-radius:3px; background:#9a7cff;"></span>
+            <span style="font-size:13px; font-weight:600; letter-spacing:0.03em; color:#e6e8ee;">STEM</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:7px; padding:0 14px; border-left:1px solid #24262e; height:24px;">
+            <span style="font-size:12px; color:#626878;">Linear Algebra</span>
+            <span style="font-size:11px; color:#3a3e48;">/</span>
+            <span style="font-size:12px; color:#c9cdd8; font-weight:500;">Eigenvectors &amp; Eigenvalues</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:2px; margin-left:18px; background:#0e0f13; border:1px solid #24262e; border-radius:7px; padding:2px;">
+            <div style="padding:5px 13px; border-radius:5px; font-size:12px; color:#9aa0ad;">Learn</div>
+            <div style="display:flex; align-items:center; gap:6px; padding:5px 13px; border-radius:5px; background:rgba(154,124,255,0.16); box-shadow:inset 0 0 0 1px rgba(154,124,255,0.34);">
+              <span style="width:5px;height:5px;border-radius:50%;background:#9a7cff;"></span>
+              <span style="font-size:12px; font-weight:600; color:#cdbcff;">Practice</span>
+            </div>
+            <div style="padding:5px 13px; border-radius:5px; font-size:12px; color:#9aa0ad;">Visualize</div>
+            <div style="padding:5px 13px; border-radius:5px; font-size:12px; color:#9aa0ad;">Research</div>
+          </div>
+          <div style="flex:1;"></div>
+          <div style="display:flex; align-items:center; gap:4px;">
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad;">Dashboard</div>
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad;">Notes</div>
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad; display:flex; align-items:center; gap:7px;">Review
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; color:#0e0f13; background:#9a7cff; border-radius:9px; padding:1px 6px;">3</span>
+            </div>
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad;">Settings</div>
+          </div>
+        </div>
+
+        <!-- BODY -->
+        <div style="flex:1; display:flex; min-height:0;">
+          <!-- SIDEBAR -->
+          <div style="width:266px; flex:none; background:#131419; border-right:1px solid #1e2027; display:flex; flex-direction:column; min-height:0;">
+            <div style="padding:12px 12px 10px;">
+              <div style="display:flex; align-items:center; gap:9px; height:34px; padding:0 11px; background:#0e0f13; border:1px solid #24262e; border-radius:7px;">
+                <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#5b6172;">⌘K</span>
+                <span style="font-size:12.5px; color:#626878;">Search topics, jump to mode…</span>
+              </div>
+            </div>
+            <div style="flex:1; overflow:hidden; padding:2px 8px;">
+              <div style="display:flex; align-items:center; gap:7px; padding:7px 8px 6px;">
+                <span style="font-size:9px; color:#9aa0ad; width:9px;">▾</span>
+                <span style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#c9cdd8; font-weight:600; flex:1;">Linear Algebra</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#626878;">61</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 24px; border-radius:6px;"><span style="width:6px;height:6px;border-radius:50%;background:#43b888; flex:none;"></span><span style="flex:1; font-size:12.5px; color:#9aa0ad;">Vectors &amp; Spaces</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#43b888;">92</span></div>
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 24px; border-radius:6px;"><span style="width:6px;height:6px;border-radius:50%;background:#4f93e0; flex:none;"></span><span style="flex:1; font-size:12.5px; color:#9aa0ad;">Linear Combinations</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#4f93e0;">78</span></div>
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 24px; border-radius:6px;"><span style="width:6px;height:6px;border-radius:50%;background:#d2934a; flex:none;"></span><span style="flex:1; font-size:12.5px; color:#9aa0ad;">Matrix Transformations</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#d2934a;">54</span></div>
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 21px; border-radius:6px; background:rgba(154,124,255,0.13); box-shadow:inset 2px 0 0 #9a7cff;"><span style="width:6px;height:6px;border-radius:50%;background:#d2934a; flex:none;"></span><span style="flex:1; font-size:12.5px; color:#e6e8ee; font-weight:500;">Eigenvectors &amp; Eigenvalues</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#d2934a;">41</span></div>
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 24px; border-radius:6px;"><span style="width:6px;height:6px;border-radius:50%;background:#5b6172; flex:none;"></span><span style="flex:1; font-size:12.5px; color:#7e8494;">Determinants</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#5b6172;">—</span></div>
+              <div style="display:flex; align-items:center; gap:8px; padding:6px 10px 6px 24px; border-radius:6px;"><span style="width:6px;height:6px;border-radius:50%;background:#5b6172; flex:none;"></span><span style="flex:1; font-size:12.5px; color:#7e8494;">Diagonalization</span><span style="font-size:10px; color:#a06a3a;">⚠</span></div>
+              <div style="display:flex; align-items:center; gap:7px; padding:11px 8px 6px;"><span style="font-size:9px; color:#626878; width:9px;">▸</span><span style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#7e8494; font-weight:600; flex:1;">Calculus</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#626878;">23</span></div>
+              <div style="display:flex; align-items:center; gap:7px; padding:6px 8px;"><span style="font-size:9px; color:#626878; width:9px;">▸</span><span style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#7e8494; font-weight:600; flex:1;">Physics</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#626878;">8</span></div>
+              <div style="display:flex; align-items:center; gap:7px; padding:6px 8px;"><span style="font-size:9px; color:#9a7cff; width:9px;">◆</span><span style="font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#9aa0ad; font-weight:600; flex:1;">Capstone · Neural Net</span><span style="font-size:9px; color:#a06a3a;">⚠</span></div>
+            </div>
+            <div style="border-top:1px solid #1e2027; padding:11px 14px;">
+              <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#626878; margin-bottom:6px;">Problem set</div>
+              <div style="display:flex; align-items:center; gap:7px;">
+                <div style="display:flex; gap:4px;">
+                  <span style="width:18px;height:5px;border-radius:3px;background:#43b888;"></span>
+                  <span style="width:18px;height:5px;border-radius:3px;background:#43b888;"></span>
+                  <span style="width:18px;height:5px;border-radius:3px;background:#e0625f;"></span>
+                  <span style="width:18px;height:5px;border-radius:3px;background:#22242c;"></span>
+                  <span style="width:18px;height:5px;border-radius:3px;background:#22242c;"></span>
+                </div>
+                <span style="font-size:11px; color:#626878; margin-left:2px;">3 / 5</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MAIN: PRACTICE -->
+          <div style="flex:1; min-width:0; display:flex; flex-direction:column; background:#0e0f13;">
+            <div style="height:54px; flex:none; display:flex; align-items:center; gap:16px; padding:0 28px; border-bottom:1px solid #1a1c22;">
+              <span style="font-size:14.5px; font-weight:600; color:#e6e8ee;">Eigenvectors &amp; Eigenvalues</span>
+              <div style="display:flex; align-items:center; gap:8px;">
+                <div style="width:120px; height:5px; border-radius:3px; background:#22242c; overflow:hidden;"><div style="width:43%; height:100%; background:#d2934a; border-radius:3px;"></div></div>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#d2934a;">43</span>
+                <span style="font-size:11px; color:#43b888;">▲ +2</span>
+              </div>
+              <div style="flex:1;"></div>
+              <div style="display:flex; align-items:center; gap:8px; font-size:11.5px; color:#7e8494;">Problem 3 of 5 · attempt 1</div>
+              <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#626878; padding:4px 9px; border:1px solid #24262e; border-radius:6px;">⌘N new problem</div>
+            </div>
+
+            <!-- practice body -->
+            <div style="flex:1; overflow:hidden; padding:28px;">
+              <div style="max-width:820px; margin:0 auto; display:flex; flex-direction:column; gap:18px;">
+
+                <!-- PROBLEM CARD -->
+                <div style="background:#15171d; border:1px solid #262932; border-radius:12px; overflow:hidden;">
+                  <div style="display:flex; align-items:center; gap:14px; padding:14px 20px; border-bottom:1px solid #20232b; background:#16181e;">
+                    <span style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9a7cff; font-weight:600;">Numeric</span>
+                    <div style="display:flex; align-items:center; gap:5px;">
+                      <span style="width:7px;height:7px;border-radius:50%;background:#d2934a;"></span>
+                      <span style="width:7px;height:7px;border-radius:50%;background:#d2934a;"></span>
+                      <span style="width:7px;height:7px;border-radius:50%;border:1px solid #3a3e48;"></span>
+                      <span style="font-size:11px; color:#9aa0ad; margin-left:3px;">Intermediate</span>
+                    </div>
+                    <div style="flex:1;"></div>
+                    <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#626878;">linalg/eigenvectors</span>
+                  </div>
+                  <div style="padding:22px 20px;">
+                    <div style="font-size:15px; line-height:1.7; color:#d7dae2; margin-bottom:18px;">
+                      Consider the symmetric matrix
+                      \[ A=\begin{bmatrix} 2 & 1 \\ 1 & 2 \end{bmatrix} \]
+                      It has two real eigenvalues \(\lambda_1 > \lambda_2\). Enter the <strong style="color:#e6e8ee; font-weight:600;">larger</strong> eigenvalue \(\lambda_1\).
+                    </div>
+                    <!-- numeric answer input -->
+                    <div style="display:flex; align-items:center; gap:12px;">
+                      <div style="display:flex; align-items:center; gap:10px; background:#0e0f13; border:1.5px solid #e0625f; border-radius:9px; padding:0 14px; height:46px; width:200px; box-shadow:0 0 0 3px rgba(224,98,95,0.12);">
+                        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#5b6172;">λ₁ =</span>
+                        <span style="font-family:'JetBrains Mono',monospace; font-size:18px; color:#e6e8ee;">2</span>
+                        <span style="width:1.5px; height:20px; background:#9a7cff; margin-left:auto;"></span>
+                      </div>
+                      <div style="display:flex; align-items:center; gap:8px; padding:0 18px; height:46px; border-radius:9px; background:#22242c; opacity:0.6;">
+                        <span style="font-size:13px; font-weight:600; color:#9aa0ad;">Submit</span>
+                        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:#5b6172;">⌘↵</span>
+                      </div>
+                      <span style="font-size:12px; color:#626878;">exact value or to 3 d.p.</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- GRADE / FEEDBACK PANEL — wrong -->
+                <div style="background:#15171d; border:1px solid #3a2727; border-radius:12px; overflow:hidden;">
+                  <div style="display:flex; align-items:center; gap:11px; padding:13px 20px; border-bottom:1px solid #2e2122; background:rgba(224,98,95,0.06);">
+                    <span style="width:18px;height:18px;border-radius:50%; background:rgba(224,98,95,0.16); display:flex; align-items:center; justify-content:center;">
+                      <span style="width:8px; height:2px; background:#e0625f; transform:rotate(45deg); position:absolute;"></span>
+                      <span style="width:8px; height:2px; background:#e0625f; transform:rotate(-45deg);"></span>
+                    </span>
+                    <span style="font-size:13.5px; font-weight:600; color:#e89c9a;">Not quite — you entered <span style="font-family:'JetBrains Mono',monospace;">2</span></span>
+                    <div style="flex:1;"></div>
+                    <span style="font-size:11px; color:#626878;">no mastery penalty · hints don't cost</span>
+                  </div>
+                  <div style="padding:18px 20px; display:flex; flex-direction:column; gap:16px;">
+                    <!-- where wrong -->
+                    <div>
+                      <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#7e8494; margin-bottom:7px;">Where it went wrong</div>
+                      <div style="font-size:13.5px; line-height:1.65; color:#c9cdd8;">That's a diagonal entry of \(A\), not an eigenvalue. The eigenvalues come from the characteristic equation \(\det(A-\lambda I)=0\), not by reading the diagonal.</div>
+                    </div>
+                    <!-- escalated hint -->
+                    <div style="background:#121319; border:1px solid #24262e; border-radius:9px; padding:13px 15px;">
+                      <div style="display:flex; align-items:center; gap:9px; margin-bottom:8px;">
+                        <span style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#d2934a; font-weight:600;">Hint 2 of 3</span>
+                        <div style="display:flex; gap:4px;">
+                          <span style="width:16px;height:3px;border-radius:2px;background:#d2934a;"></span>
+                          <span style="width:16px;height:3px;border-radius:2px;background:#d2934a;"></span>
+                          <span style="width:16px;height:3px;border-radius:2px;background:#22242c;"></span>
+                        </div>
+                        <span style="font-size:11px; color:#626878;">escalated after this attempt</span>
+                      </div>
+                      <div style="font-size:13.5px; line-height:1.65; color:#c9cdd8;">Set up the determinant and expand: \(\det(A-\lambda I)=(2-\lambda)^2-1=0\). Solve the quadratic for the two roots, then take the larger.</div>
+                    </div>
+                    <!-- actions -->
+                    <div style="display:flex; align-items:center; gap:10px;">
+                      <div style="display:flex; align-items:center; gap:8px; padding:0 16px; height:40px; border-radius:8px; background:#9a7cff;">
+                        <span style="font-size:13px; font-weight:600; color:#0e0f13;">Try again</span>
+                        <span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(14,15,19,0.6);">⌘↵</span>
+                      </div>
+                      <div style="display:flex; align-items:center; gap:8px; padding:0 16px; height:40px; border-radius:8px; background:#1a1c22; border:1px solid #2a2d36;">
+                        <span style="font-size:13px; font-weight:500; color:#c9cdd8;">Show next hint</span>
+                      </div>
+                      <div style="flex:1;"></div>
+                      <div style="display:flex; align-items:center; gap:8px; padding:0 16px; height:40px; border-radius:8px; border:1px solid #2a2d36;">
+                        <span style="font-size:13px; font-weight:500; color:#7e8494;">Reveal solution</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div style="height:26px; flex:none;"></div>
+          </div>
+        </div>
+
+        <!-- STATUS BAR -->
+        <div style="height:26px; flex:none; display:flex; align-items:center; padding:0 14px; background:#131419; border-top:1px solid #1e2027; font-family:'JetBrains Mono',monospace; font-size:10.5px;">
+          <div style="display:flex; align-items:center; gap:7px; color:#9aa0ad; padding-right:14px;"><span style="width:6px;height:6px;border-radius:50%;background:#43b888;"></span>claude connected · v1.4.2</div>
+          <div style="color:#626878; padding:0 14px; border-left:1px solid #24262e;">session: linalg/eigenvectors · practice</div>
+          <div style="flex:1;"></div>
+          <div style="display:flex; align-items:center; gap:7px; color:#cdbcff; padding-left:14px;"><span style="width:6px;height:6px;border-radius:50%;background:#9a7cff;"></span>3 due today</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ FRAME 3: VISUALIZE MODE ============ -->
+    <div style="display:flex; flex-direction:column; gap:13px;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#9a7cff;">03</span>
+        <span style="font-size:13px; font-weight:600; color:#c9cdd8;">Visualize · visualization host</span>
+        <span style="font-size:11.5px; color:#626878;">Interactive canvas + parameter controls + gallery — opened from the Learn &lt;viz&gt; chip or directly</span>
+      </div>
+
+      <div data-screen-label="Shell — Visualize" style="width:1440px; height:900px; background:#0e0f13; border:1px solid #262932; border-radius:9px; overflow:hidden; display:flex; flex-direction:column; box-shadow:0 28px 70px rgba(0,0,0,0.55);">
+        <!-- TOP BAR -->
+        <div style="height:46px; flex:none; display:flex; align-items:center; padding:0 14px; background:#131419; border-bottom:1px solid #1e2027;">
+          <div style="display:flex; align-items:center; gap:8px; padding-right:16px;">
+            <span style="width:10px; height:10px; border-radius:3px; background:#9a7cff;"></span>
+            <span style="font-size:13px; font-weight:600; letter-spacing:0.03em; color:#e6e8ee;">STEM</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:7px; padding:0 14px; border-left:1px solid #24262e; height:24px;">
+            <span style="font-size:12px; color:#626878;">Linear Algebra</span>
+            <span style="font-size:11px; color:#3a3e48;">/</span>
+            <span style="font-size:12px; color:#c9cdd8; font-weight:500;">Eigenvectors &amp; Eigenvalues</span>
+          </div>
+          <div style="display:flex; align-items:center; gap:2px; margin-left:18px; background:#0e0f13; border:1px solid #24262e; border-radius:7px; padding:2px;">
+            <div style="padding:5px 13px; border-radius:5px; font-size:12px; color:#9aa0ad;">Learn</div>
+            <div style="padding:5px 13px; border-radius:5px; font-size:12px; color:#9aa0ad;">Practice</div>
+            <div style="display:flex; align-items:center; gap:6px; padding:5px 13px; border-radius:5px; background:rgba(154,124,255,0.16); box-shadow:inset 0 0 0 1px rgba(154,124,255,0.34);">
+              <span style="width:5px;height:5px;border-radius:50%;background:#9a7cff;"></span>
+              <span style="font-size:12px; font-weight:600; color:#cdbcff;">Visualize</span>
+            </div>
+            <div style="padding:5px 13px; border-radius:5px; font-size:12px; color:#9aa0ad;">Research</div>
+          </div>
+          <div style="flex:1;"></div>
+          <div style="display:flex; align-items:center; gap:4px;">
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad;">Dashboard</div>
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad;">Notes</div>
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad; display:flex; align-items:center; gap:7px;">Review
+              <span style="font-family:'JetBrains Mono',monospace; font-size:10px; font-weight:600; color:#0e0f13; background:#9a7cff; border-radius:9px; padding:1px 6px;">3</span>
+            </div>
+            <div style="padding:6px 11px; border-radius:6px; font-size:12px; color:#9aa0ad;">Settings</div>
+          </div>
+        </div>
+
+        <!-- BODY -->
+        <div style="flex:1; display:flex; min-height:0;">
+          <!-- SIDEBAR (gallery context) -->
+          <div style="width:266px; flex:none; background:#131419; border-right:1px solid #1e2027; display:flex; flex-direction:column; min-height:0;">
+            <div style="padding:13px 14px 10px; border-bottom:1px solid #1e2027;">
+              <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#626878; margin-bottom:3px;">Visualization gallery</div>
+              <div style="font-size:11.5px; color:#7e8494;">pick directly, or open from a &lt;viz&gt; chip</div>
+            </div>
+            <div style="flex:1; overflow:hidden; padding:8px;">
+              <!-- gallery items -->
+              <div style="display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px; background:rgba(154,124,255,0.13); box-shadow:inset 2px 0 0 #9a7cff; margin-bottom:2px;">
+                <span style="width:9px;height:9px;border-radius:2px;background:#9a7cff; flex:none;"></span>
+                <div style="flex:1;"><div style="font-size:12.5px; color:#e6e8ee; font-weight:500;">Eigenvectors</div><div style="font-size:10.5px; color:#7e8494;">2D · eigen-decomposition</div></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px;">
+                <span style="width:9px;height:9px;border-radius:2px;border:1px solid #4f93e0; flex:none;"></span>
+                <div style="flex:1;"><div style="font-size:12.5px; color:#9aa0ad;">3D Vectors</div><div style="font-size:10.5px; color:#626878;">three.js · rotate/zoom</div></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px;">
+                <span style="width:9px;height:9px;border-radius:2px;border:1px solid #5b6172; flex:none;"></span>
+                <div style="flex:1;"><div style="font-size:12.5px; color:#9aa0ad;">Matrix Transforms</div><div style="font-size:10.5px; color:#626878;">grid warp</div></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px;">
+                <span style="width:9px;height:9px;border-radius:2px;border:1px solid #5b6172; flex:none;"></span>
+                <div style="flex:1;"><div style="font-size:12.5px; color:#9aa0ad;">Function Plot</div><div style="font-size:10.5px; color:#626878;">2D · plotly</div></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px;">
+                <span style="width:9px;height:9px;border-radius:2px;border:1px solid #5b6172; flex:none;"></span>
+                <div style="flex:1;"><div style="font-size:12.5px; color:#9aa0ad;">Distributions</div><div style="font-size:10.5px; color:#626878;">probability</div></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px;">
+                <span style="width:9px;height:9px;border-radius:2px;border:1px solid #5b6172; flex:none;"></span>
+                <div style="flex:1;"><div style="font-size:12.5px; color:#9aa0ad;">Gradient Descent</div><div style="font-size:10.5px; color:#626878;">optimization</div></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:7px;">
+                <span style="width:9px;height:9px;border-radius:2px;border:1px solid #5b6172; flex:none;"></span>
+                <div style="flex:1;"><div style="font-size:12.5px; color:#9aa0ad;">Physics Sim</div><div style="font-size:10.5px; color:#626878;">basic mechanics</div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- MAIN: VISUALIZE -->
+          <div style="flex:1; min-width:0; display:flex; min-height:0;">
+            <!-- canvas area -->
+            <div style="flex:1; min-width:0; display:flex; flex-direction:column; background:#0b0c10;">
+              <div style="height:48px; flex:none; display:flex; align-items:center; gap:14px; padding:0 22px; border-bottom:1px solid #1a1c22;">
+                <span style="font-size:13.5px; font-weight:600; color:#e6e8ee;">Eigenvectors of a 2×2 matrix</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#626878;">eigen-2d</span>
+                <div style="flex:1;"></div>
+                <span style="font-size:11px; color:#7e8494; display:flex; align-items:center; gap:6px;"><span style="width:6px;height:6px;border-radius:50%;background:#43b888;"></span>live</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#626878; padding:4px 9px; border:1px solid #24262e; border-radius:6px;">⤢ reset view</span>
+              </div>
+              <!-- the plot -->
+              <div style="flex:1; display:flex; align-items:center; justify-content:center; padding:24px; position:relative;">
+                <svg width="560" height="470" viewBox="0 0 560 470" style="display:block;">
+                  <!-- grid -->
+                  <g stroke="#1b1d24" stroke-width="1">
+                    <line x1="40" y1="75" x2="520" y2="75"></line>
+                    <line x1="40" y1="135" x2="520" y2="135"></line>
+                    <line x1="40" y1="195" x2="520" y2="195"></line>
+                    <line x1="40" y1="315" x2="520" y2="315"></line>
+                    <line x1="40" y1="375" x2="520" y2="375"></line>
+                    <line x1="40" y1="435" x2="520" y2="435"></line>
+                    <line x1="100" y1="35" x2="100" y2="445"></line>
+                    <line x1="160" y1="35" x2="160" y2="445"></line>
+                    <line x1="220" y1="35" x2="220" y2="445"></line>
+                    <line x1="340" y1="35" x2="340" y2="445"></line>
+                    <line x1="400" y1="35" x2="400" y2="445"></line>
+                    <line x1="460" y1="35" x2="460" y2="445"></line>
+                  </g>
+                  <!-- axes -->
+                  <g stroke="#33363f" stroke-width="1.5">
+                    <line x1="40" y1="255" x2="520" y2="255"></line>
+                    <line x1="280" y1="35" x2="280" y2="445"></line>
+                  </g>
+                  <!-- eigenline 1: direction [1,1], lambda=3 (violet) -->
+                  <line x1="100" y1="435" x2="460" y2="75" stroke="#9a7cff" stroke-width="1.5" stroke-dasharray="5 5" opacity="0.85"></line>
+                  <!-- eigenline 2: direction [1,-1], lambda=1 (amber) -->
+                  <line x1="100" y1="75" x2="460" y2="435" stroke="#d2934a" stroke-width="1.5" stroke-dasharray="5 5" opacity="0.85"></line>
+                  <!-- input vector v = [1.6, 0.6] (white) -->
+                  <line x1="280" y1="255" x2="376" y2="219" stroke="#e6e8ee" stroke-width="2.5"></line>
+                  <polygon points="376,219 366,218 372,228" fill="#e6e8ee"></polygon>
+                  <!-- image Av = [3.8, 2.8] scaled to fit (violet, pulled toward eigenline 1) -->
+                  <line x1="280" y1="255" x2="432" y2="143" stroke="#9a7cff" stroke-width="2.5"></line>
+                  <polygon points="432,143 421,144 428,153" fill="#9a7cff"></polygon>
+                  <!-- origin -->
+                  <circle cx="280" cy="255" r="3.5" fill="#e6e8ee"></circle>
+                  <!-- labels -->
+                  <text x="384" y="214" font-family="JetBrains Mono, monospace" font-size="12" fill="#e6e8ee">v</text>
+                  <text x="438" y="139" font-family="JetBrains Mono, monospace" font-size="12" fill="#cdbcff">Av</text>
+                  <text x="462" y="70" font-family="JetBrains Mono, monospace" font-size="11" fill="#9a7cff">λ₁=3</text>
+                  <text x="462" y="448" font-family="JetBrains Mono, monospace" font-size="11" fill="#d2934a">λ₂=1</text>
+                </svg>
+                <div style="position:absolute; left:36px; bottom:28px; display:flex; flex-direction:column; gap:5px; background:rgba(14,15,19,0.7); border:1px solid #24262e; border-radius:7px; padding:9px 11px;">
+                  <div style="display:flex; align-items:center; gap:8px;"><span style="width:14px; height:2px; background:#e6e8ee;"></span><span style="font-size:11px; color:#9aa0ad;">input vector v</span></div>
+                  <div style="display:flex; align-items:center; gap:8px;"><span style="width:14px; height:2px; background:#9a7cff;"></span><span style="font-size:11px; color:#9aa0ad;">Av — pulled toward eigenline</span></div>
+                  <div style="display:flex; align-items:center; gap:8px;"><span style="width:14px; height:0; border-top:2px dashed #9a7cff;"></span><span style="font-size:11px; color:#9aa0ad;">eigendirections (invariant)</span></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- controls panel -->
+            <div style="width:308px; flex:none; background:#131419; border-left:1px solid #1e2027; display:flex; flex-direction:column;">
+              <div style="padding:15px 18px 12px; border-bottom:1px solid #1e2027;">
+                <div style="font-size:12px; font-weight:600; color:#e6e8ee;">Parameters</div>
+                <div style="font-size:11px; color:#626878; margin-top:2px;">matrix A — drag or type</div>
+              </div>
+              <div style="padding:16px 18px; display:flex; flex-direction:column; gap:18px;">
+                <!-- matrix entry sliders -->
+                <div style="display:flex; flex-direction:column; gap:14px;">
+                  <div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9aa0ad;">a₁₁</span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#cdbcff;">2.00</span></div>
+                    <div style="height:5px; border-radius:3px; background:#22242c; position:relative;"><div style="position:absolute; left:0; top:0; bottom:0; width:66%; background:#9a7cff; border-radius:3px;"></div><div style="position:absolute; left:66%; top:50%; transform:translate(-50%,-50%); width:12px; height:12px; border-radius:50%; background:#cdbcff; box-shadow:0 0 0 3px rgba(154,124,255,0.18);"></div></div>
+                  </div>
+                  <div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9aa0ad;">a₁₂</span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#cdbcff;">1.00</span></div>
+                    <div style="height:5px; border-radius:3px; background:#22242c; position:relative;"><div style="position:absolute; left:0; top:0; bottom:0; width:50%; background:#9a7cff; border-radius:3px;"></div><div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:12px; height:12px; border-radius:50%; background:#cdbcff; box-shadow:0 0 0 3px rgba(154,124,255,0.18);"></div></div>
+                  </div>
+                  <div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9aa0ad;">a₂₁</span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#cdbcff;">1.00</span></div>
+                    <div style="height:5px; border-radius:3px; background:#22242c; position:relative;"><div style="position:absolute; left:0; top:0; bottom:0; width:50%; background:#9a7cff; border-radius:3px;"></div><div style="position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); width:12px; height:12px; border-radius:50%; background:#cdbcff; box-shadow:0 0 0 3px rgba(154,124,255,0.18);"></div></div>
+                  </div>
+                  <div>
+                    <div style="display:flex; justify-content:space-between; margin-bottom:7px;"><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#9aa0ad;">a₂₂</span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#cdbcff;">2.00</span></div>
+                    <div style="height:5px; border-radius:3px; background:#22242c; position:relative;"><div style="position:absolute; left:0; top:0; bottom:0; width:66%; background:#9a7cff; border-radius:3px;"></div><div style="position:absolute; left:66%; top:50%; transform:translate(-50%,-50%); width:12px; height:12px; border-radius:50%; background:#cdbcff; box-shadow:0 0 0 3px rgba(154,124,255,0.18);"></div></div>
+                  </div>
+                </div>
+                <!-- computed readout -->
+                <div style="background:#0e0f13; border:1px solid #24262e; border-radius:9px; padding:13px 14px;">
+                  <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#626878; margin-bottom:9px;">Computed</div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:7px;"><span style="font-size:12px; color:#9aa0ad;">eigenvalues</span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#e6e8ee;">3.00, 1.00</span></div>
+                  <div style="display:flex; justify-content:space-between; margin-bottom:7px;"><span style="font-size:12px; color:#9aa0ad;">det A</span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#e6e8ee;">3.00</span></div>
+                  <div style="display:flex; justify-content:space-between;"><span style="font-size:12px; color:#9aa0ad;">trace A</span><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#e6e8ee;">4.00</span></div>
+                </div>
+                <!-- presets -->
+                <div>
+                  <div style="font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#626878; margin-bottom:9px;">Presets</div>
+                  <div style="display:flex; flex-wrap:wrap; gap:7px;">
+                    <span style="font-size:11.5px; color:#cdbcff; padding:5px 11px; border-radius:6px; background:rgba(154,124,255,0.14); border:1px solid rgba(154,124,255,0.3);">Symmetric</span>
+                    <span style="font-size:11.5px; color:#9aa0ad; padding:5px 11px; border-radius:6px; background:#1a1c22; border:1px solid #2a2d36;">Shear</span>
+                    <span style="font-size:11.5px; color:#9aa0ad; padding:5px 11px; border-radius:6px; background:#1a1c22; border:1px solid #2a2d36;">Rotation</span>
+                    <span style="font-size:11.5px; color:#9aa0ad; padding:5px 11px; border-radius:6px; background:#1a1c22; border:1px solid #2a2d36;">Scaling</span>
+                  </div>
+                </div>
+                <!-- back to chat -->
+                <div style="display:flex; align-items:center; gap:9px; padding:11px 13px; border-radius:9px; background:#16181d; border:1px solid #2a2d36;">
+                  <svg width="9" height="10" viewBox="0 0 9 10" style="transform:rotate(180deg);"><polygon points="0,0 9,5 0,10" fill="#9a7cff"></polygon></svg>
+                  <span style="font-size:12.5px; color:#cdbcff;">Back to Learn chat</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATUS BAR -->
+        <div style="height:26px; flex:none; display:flex; align-items:center; padding:0 14px; background:#131419; border-top:1px solid #1e2027; font-family:'JetBrains Mono',monospace; font-size:10.5px;">
+          <div style="display:flex; align-items:center; gap:7px; color:#9aa0ad; padding-right:14px;"><span style="width:6px;height:6px;border-radius:50%;background:#43b888;"></span>claude connected · v1.4.2</div>
+          <div style="color:#626878; padding:0 14px; border-left:1px solid #24262e;">session: linalg/eigenvectors · visualize</div>
+          <div style="flex:1;"></div>
+          <div style="display:flex; align-items:center; gap:7px; color:#cdbcff; padding-left:14px;"><span style="width:6px;height:6px;border-radius:50%;background:#9a7cff;"></span>3 due today</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ SECTION: SHELL LAYOUT VARIATIONS ============ -->
+    <div style="display:flex; flex-direction:column; gap:13px;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#9a7cff;">V1</span>
+        <span style="font-size:13px; font-weight:600; color:#c9cdd8;">Shell layout — alternatives</span>
+        <span style="font-size:11.5px; color:#626878;">same chrome, different arrangement of the mode switcher &amp; sidebar</span>
+      </div>
+      <div style="display:flex; gap:48px; align-items:flex-start;">
+
+        <!-- VARIATION B: activity rail -->
+        <div style="display:flex; flex-direction:column; gap:9px; flex:none; width:700px;">
+          <span style="font-size:11.5px; color:#9aa0ad;"><strong style="color:#cdbcff; font-weight:600;">B · Activity rail</strong> — modes as a left icon rail (VS Code style); sidebar narrows</span>
+          <div style="width:700px; height:430px; background:#0e0f13; border:1px solid #262932; border-radius:8px; overflow:hidden; display:flex; flex-direction:column;">
+            <div style="height:40px; flex:none; display:flex; align-items:center; padding:0 12px; gap:10px; background:#131419; border-bottom:1px solid #1e2027;">
+              <span style="width:9px;height:9px;border-radius:2px;background:#9a7cff;"></span>
+              <span style="font-size:12px; font-weight:600; color:#e6e8ee;">STEM</span>
+              <span style="font-size:11px; color:#626878; border-left:1px solid #24262e; padding-left:10px;">Linear Algebra / Eigenvectors</span>
+              <div style="flex:1;"></div>
+              <span style="font-size:11px; color:#7e8494;">Dashboard · Notes · Review · Settings</span>
+            </div>
+            <div style="flex:1; display:flex; min-height:0;">
+              <!-- icon rail -->
+              <div style="width:54px; flex:none; background:#0b0c10; border-right:1px solid #1e2027; display:flex; flex-direction:column; align-items:center; padding-top:10px; gap:6px;">
+                <div style="width:40px; height:40px; border-radius:8px; background:rgba(154,124,255,0.16); box-shadow:inset 0 0 0 1px rgba(154,124,255,0.34); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;"><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#cdbcff; font-weight:600;">Lr</span></div>
+                <div style="width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7e8494;">Pr</span></div>
+                <div style="width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7e8494;">Vz</span></div>
+                <div style="width:40px; height:40px; border-radius:8px; display:flex; align-items:center; justify-content:center;"><span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#7e8494;">Rs</span></div>
+              </div>
+              <!-- thin sidebar -->
+              <div style="width:158px; flex:none; background:#131419; border-right:1px solid #1e2027; padding:10px 8px;">
+                <div style="height:26px; background:#0e0f13; border:1px solid #24262e; border-radius:6px; margin-bottom:10px;"></div>
+                <div style="font-size:10px; letter-spacing:0.06em; text-transform:uppercase; color:#7e8494; padding:4px 6px;">Linear Algebra</div>
+                <div style="display:flex; align-items:center; gap:7px; padding:5px 7px;"><span style="width:5px;height:5px;border-radius:50%;background:#43b888;"></span><span style="font-size:11.5px; color:#9aa0ad;">Vectors</span></div>
+                <div style="display:flex; align-items:center; gap:7px; padding:5px 7px;"><span style="width:5px;height:5px;border-radius:50%;background:#d2934a;"></span><span style="font-size:11.5px; color:#9aa0ad;">Transforms</span></div>
+                <div style="display:flex; align-items:center; gap:7px; padding:5px 7px; border-radius:5px; background:rgba(154,124,255,0.13); box-shadow:inset 2px 0 0 #9a7cff;"><span style="width:5px;height:5px;border-radius:50%;background:#d2934a;"></span><span style="font-size:11.5px; color:#e6e8ee;">Eigenvectors</span></div>
+                <div style="display:flex; align-items:center; gap:7px; padding:5px 7px;"><span style="width:5px;height:5px;border-radius:50%;background:#5b6172;"></span><span style="font-size:11.5px; color:#7e8494;">Determinants</span></div>
+              </div>
+              <div style="flex:1; background:#0e0f13; padding:18px 20px;">
+                <div style="height:9px; width:180px; background:#22242c; border-radius:4px; margin-bottom:14px;"></div>
+                <div style="height:7px; width:90%; background:#191b21; border-radius:4px; margin-bottom:8px;"></div>
+                <div style="height:7px; width:84%; background:#191b21; border-radius:4px; margin-bottom:8px;"></div>
+                <div style="height:7px; width:60%; background:#191b21; border-radius:4px; margin-bottom:18px;"></div>
+                <div style="display:inline-flex; align-items:center; gap:7px; padding:7px 11px; background:#16181d; border:1px solid #2a2d36; border-radius:7px;"><span style="width:16px;height:16px;border-radius:4px;background:rgba(154,124,255,0.16);display:flex;align-items:center;justify-content:center;"><svg width="6" height="7" viewBox="0 0 6 7"><polygon points="0,0 6,3.5 0,7" fill="#b6a3ff"></polygon></svg></span><span style="font-size:11px; color:#cdbcff;">Visualize chip</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VARIATION C: focus / collapsed sidebar -->
+        <div style="display:flex; flex-direction:column; gap:9px; flex:none; width:700px;">
+          <span style="font-size:11.5px; color:#9aa0ad;"><strong style="color:#cdbcff; font-weight:600;">C · Focus</strong> — centered top mode switcher, sidebar collapsed to dots; maximum content width</span>
+          <div style="width:700px; height:430px; background:#0e0f13; border:1px solid #262932; border-radius:8px; overflow:hidden; display:flex; flex-direction:column;">
+            <div style="height:44px; flex:none; display:flex; align-items:center; padding:0 14px; background:#131419; border-bottom:1px solid #1e2027;">
+              <span style="width:9px;height:9px;border-radius:2px;background:#9a7cff;"></span>
+              <div style="flex:1;"></div>
+              <div style="display:flex; align-items:center; gap:2px; background:#0e0f13; border:1px solid #24262e; border-radius:7px; padding:2px;">
+                <div style="padding:5px 14px; border-radius:5px; font-size:11.5px; color:#cdbcff; background:rgba(154,124,255,0.16); box-shadow:inset 0 0 0 1px rgba(154,124,255,0.34);">Learn</div>
+                <div style="padding:5px 14px; border-radius:5px; font-size:11.5px; color:#9aa0ad;">Practice</div>
+                <div style="padding:5px 14px; border-radius:5px; font-size:11.5px; color:#9aa0ad;">Visualize</div>
+                <div style="padding:5px 14px; border-radius:5px; font-size:11.5px; color:#9aa0ad;">Research</div>
+              </div>
+              <div style="flex:1;"></div>
+              <span style="font-size:11px; color:#7e8494;">⌘K</span>
+            </div>
+            <div style="flex:1; display:flex; min-height:0;">
+              <div style="width:48px; flex:none; background:#131419; border-right:1px solid #1e2027; display:flex; flex-direction:column; align-items:center; padding-top:12px; gap:11px;">
+                <span style="width:7px;height:7px;border-radius:50%;background:#43b888;"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#d2934a;"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#d2934a; box-shadow:0 0 0 3px rgba(154,124,255,0.2);"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#5b6172;"></span>
+                <span style="width:7px;height:7px;border-radius:50%;background:#5b6172;"></span>
+              </div>
+              <div style="flex:1; background:#0e0f13; padding:22px 26px;">
+                <div style="max-width:430px; margin:0 auto;">
+                  <div style="height:10px; width:200px; background:#22242c; border-radius:4px; margin-bottom:16px;"></div>
+                  <div style="height:7px; width:100%; background:#191b21; border-radius:4px; margin-bottom:8px;"></div>
+                  <div style="height:7px; width:96%; background:#191b21; border-radius:4px; margin-bottom:8px;"></div>
+                  <div style="height:7px; width:70%; background:#191b21; border-radius:4px; margin-bottom:16px;"></div>
+                  <div style="height:34px; width:100%; background:#15171d; border:1px solid #262932; border-radius:8px;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============ SECTION: PROBLEM CARD VARIATIONS ============ -->
+    <div style="display:flex; flex-direction:column; gap:13px;">
+      <div style="display:flex; align-items:center; gap:12px;">
+        <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#9a7cff;">V2</span>
+        <span style="font-size:13px; font-weight:600; color:#c9cdd8;">Problem card &amp; grade — by kind &amp; state</span>
+        <span style="font-size:11.5px; color:#626878;">multiple-choice · code · solution revealed</span>
+      </div>
+      <div style="display:flex; gap:48px; align-items:flex-start;">
+
+        <!-- MULTIPLE CHOICE — correct -->
+        <div style="display:flex; flex-direction:column; gap:9px; flex:none; width:430px;">
+          <span style="font-size:11.5px; color:#9aa0ad;"><strong style="color:#cdbcff; font-weight:600;">Multiple choice</strong> · graded correct</span>
+          <div style="width:430px; background:#15171d; border:1px solid #262932; border-radius:12px; overflow:hidden;">
+            <div style="display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid #20232b; background:#16181e;">
+              <span style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9a7cff; font-weight:600;">Multiple choice</span>
+              <div style="display:flex; gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#d2934a;"></span><span style="width:6px;height:6px;border-radius:50%;border:1px solid #3a3e48;"></span><span style="width:6px;height:6px;border-radius:50%;border:1px solid #3a3e48;"></span></div>
+              <div style="flex:1;"></div>
+              <span style="font-size:11px; color:#43b888;">+3 mastery</span>
+            </div>
+            <div style="padding:18px;">
+              <div style="font-size:14px; line-height:1.6; color:#d7dae2; margin-bottom:14px;">Which vector is an eigenvector of \(\begin{bmatrix}2&1\\1&2\end{bmatrix}\)?</div>
+              <div style="display:flex; flex-direction:column; gap:8px;">
+                <div style="display:flex; align-items:center; gap:11px; padding:10px 13px; border:1px solid #2a2d36; border-radius:8px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#7e8494; width:14px;">A</span><span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#c9cdd8;">[2, 0]</span></div>
+                <div style="display:flex; align-items:center; gap:11px; padding:10px 13px; border:1.5px solid #43b888; border-radius:8px; background:rgba(67,184,136,0.08);"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#43b888; width:14px;">B</span><span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#e6e8ee;">[1, 1]</span><div style="flex:1;"></div><span style="font-size:11px; color:#43b888;">✓ correct · λ = 3</span></div>
+                <div style="display:flex; align-items:center; gap:11px; padding:10px 13px; border:1px solid #2a2d36; border-radius:8px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#7e8494; width:14px;">C</span><span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#c9cdd8;">[3, 1]</span></div>
+                <div style="display:flex; align-items:center; gap:11px; padding:10px 13px; border:1px solid #2a2d36; border-radius:8px;"><span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#7e8494; width:14px;">D</span><span style="font-family:'JetBrains Mono',monospace; font-size:13px; color:#c9cdd8;">[0, 1]</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CODE -->
+        <div style="display:flex; flex-direction:column; gap:9px; flex:none; width:430px;">
+          <span style="font-size:11.5px; color:#9aa0ad;"><strong style="color:#cdbcff; font-weight:600;">Code</strong> · monospace editor, run &amp; grade</span>
+          <div style="width:430px; background:#15171d; border:1px solid #262932; border-radius:12px; overflow:hidden;">
+            <div style="display:flex; align-items:center; gap:12px; padding:12px 18px; border-bottom:1px solid #20232b; background:#16181e;">
+              <span style="font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:#9a7cff; font-weight:600;">Code</span>
+              <div style="display:flex; gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#d2934a;"></span><span style="width:6px;height:6px;border-radius:50%;background:#d2934a;"></span><span style="width:6px;height:6px;border-radius:50%;background:#d2934a;"></span></div>
+              <div style="flex:1;"></div>
+              <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#626878;">python</span>
+            </div>
+            <div style="padding:16px 18px;">
+              <div style="font-size:13.5px; line-height:1.55; color:#d7dae2; margin-bottom:13px;">Implement <span style="font-family:'JetBrains Mono',monospace; color:#cdbcff;">power_iteration(A, n)</span> returning the dominant eigenvector.</div>
+              <div style="background:#0b0c10; border:1px solid #24262e; border-radius:8px; padding:13px 14px; font-family:'JetBrains Mono',monospace; font-size:12px; line-height:1.65;">
+                <div><span style="color:#9a7cff;">def</span> <span style="color:#7fb3e8;">power_iteration</span><span style="color:#9aa0ad;">(A, n):</span></div>
+                <div style="padding-left:18px; color:#9aa0ad;">v = np.random.rand(A.shape[<span style="color:#d2934a;">0</span>])</div>
+                <div style="padding-left:18px; color:#9a7cff;">for <span style="color:#9aa0ad;">_ </span>in <span style="color:#7fb3e8;">range</span><span style="color:#9aa0ad;">(n):</span></div>
+                <div style="padding-left:36px; color:#9aa0ad;">v = A @ v</div>
+                <div style="padding-left:36px; color:#5b6172;">v = v / np.linalg.norm(v)<span style="display:inline-block; width:7px; height:14px; background:#9a7cff; vertical-align:-2px; margin-left:2px;"></span></div>
+                <div style="padding-left:18px; color:#9a7cff;">return <span style="color:#9aa0ad;">v</span></div>
+              </div>
+              <div style="display:flex; align-items:center; gap:9px; margin-top:13px;">
+                <div style="display:flex; align-items:center; gap:7px; padding:0 14px; height:34px; border-radius:7px; background:#9a7cff;"><span style="font-size:12px; font-weight:600; color:#0e0f13;">Run &amp; grade</span><span style="font-family:'JetBrains Mono',monospace; font-size:10px; color:rgba(14,15,19,0.6);">⌘↵</span></div>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:#626878;">6 tests</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SOLUTION REVEALED -->
+        <div style="display:flex; flex-direction:column; gap:9px; flex:none; width:430px;">
+          <span style="font-size:11.5px; color:#9aa0ad;"><strong style="color:#cdbcff; font-weight:600;">Numeric</strong> · solution revealed</span>
+          <div style="width:430px; background:#15171d; border:1px solid #262932; border-radius:12px; overflow:hidden;">
+            <div style="display:flex; align-items:center; gap:11px; padding:12px 18px; border-bottom:1px solid #20232b; background:#16181e;">
+              <span style="width:16px;height:16px;border-radius:50%; background:rgba(154,124,255,0.16); display:flex; align-items:center; justify-content:center;"><span style="width:6px;height:6px;border-radius:50%;background:#9a7cff;"></span></span>
+              <span style="font-size:12.5px; font-weight:600; color:#cdbcff;">Worked solution</span>
+              <div style="flex:1;"></div>
+              <span style="font-size:11px; color:#626878;">no mastery (revealed)</span>
+            </div>
+            <div style="padding:18px;">
+              <div style="font-size:13px; line-height:1.7; color:#c9cdd8;">
+                Solve the characteristic equation:
+                \[ \det(A-\lambda I)=(2-\lambda)^2-1=0 \]
+                so \( (2-\lambda)=\pm 1 \), giving
+                \[ \lambda_1 = 3,\quad \lambda_2 = 1 \]
+                The larger eigenvalue is \(\lambda_1 = 3\); its eigenvector solves \((A-3I)\mathbf v=\mathbf 0\Rightarrow \mathbf v=[1,1]\).
+              </div>
+              <div style="margin-top:14px; display:flex; align-items:center; gap:9px; padding:11px 13px; background:#121319; border:1px solid #24262e; border-radius:8px;">
+                <span style="font-size:11px; color:#7e8494;">Schedule a review of this in</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:12px; color:#cdbcff;">2 days</span>
+                <div style="flex:1;"></div>
+                <span style="font-size:11.5px; color:#cdbcff; padding:5px 11px; border-radius:6px; border:1px solid rgba(154,124,255,0.3); background:rgba(154,124,255,0.12);">Add to review</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    let tries = 0;
+    const run = () => {
+      tries++;
+      if (window.renderMathInElement) {
+        try {
+          window.renderMathInElement(document.getElementById('stemRoot') || document.body, {
+            delimiters: [
+              { left: '$$', right: '$$', display: true },
+              { left: '\\[', right: '\\]', display: true },
+              { left: '\\(', right: '\\)', display: false },
+            ],
+            throwOnError: false,
+            ignoredClasses: ['no-katex'],
+          });
+        } catch (e) {}
+      } else if (tries < 60) {
+        setTimeout(run, 100);
+      }
+    };
+    setTimeout(run, 200);
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

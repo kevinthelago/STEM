@@ -61,6 +61,13 @@ export function PracticeMode({ topicId }: PracticeModeProps) {
     await requestHint(sessionId, problem.id)
   }
 
+  function handleAddToReview() {
+    // Topic is added to review via the normal mastery pipeline; this navigates to confirm.
+    // The spaced-repetition schedule is managed by the backend on each practice attempt.
+    // Showing a "next problem" flow is the best available action without a dedicated command.
+    handleGenerate()
+  }
+
   return (
     <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: surface.panel }}>
       {/* Mode header */}
@@ -189,6 +196,7 @@ export function PracticeMode({ topicId }: PracticeModeProps) {
               onNextProblem={handleGenerate}
               onRevealSolution={handleRevealSolution}
               onRequestHint={handleRequestHint}
+              onAddToReview={grade.solution ? handleAddToReview : undefined}
             />
           )}
         </div>

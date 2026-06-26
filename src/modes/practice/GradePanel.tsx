@@ -7,16 +7,26 @@ import type { Grade } from '@/lib/types'
 
 interface GradePanelProps {
   grade: Grade
+  topicId?: string
   onTryAgain(): void
   onNextProblem(): void
   onRevealSolution?(): void
   onRequestHint?(): void
+  onAddToReview?(): void
 }
 
-export function GradePanel({ grade, onTryAgain, onNextProblem, onRevealSolution, onRequestHint }: GradePanelProps) {
+export function GradePanel({
+  grade,
+  onTryAgain,
+  onNextProblem,
+  onRevealSolution,
+  onRequestHint,
+  onAddToReview,
+}: GradePanelProps) {
   const isCorrect = grade.result === 'correct'
   const isPartial = grade.result === 'partial'
   const isWrong = grade.result === 'wrong'
+  const solutionRevealed = !!grade.solution
 
   const headerBg = isCorrect
     ? gradeColors.correctBg
@@ -30,7 +40,13 @@ export function GradePanel({ grade, onTryAgain, onNextProblem, onRevealSolution,
       ? gradeColors.partial
       : gradeColors.wrongInnerBorder
 
-  const outerBorder = isWrong ? gradeColors.wrongBorder : isPartial ? '#3a3020' : '#273a30'
+  const outerBorder = solutionRevealed
+    ? '#2a2d36'
+    : isWrong
+      ? gradeColors.wrongBorder
+      : isPartial
+        ? '#3a3020'
+        : '#273a30'
 
   const icon = isCorrect ? '✓' : isWrong ? '×' : '~'
   const iconColor = isCorrect ? gradeColors.correct : isPartial ? gradeColors.partial : gradeColors.wrong
@@ -88,9 +104,37 @@ export function GradePanel({ grade, onTryAgain, onNextProblem, onRevealSolution,
           {titleText}
         </span>
         <div style={{ flex: 1 }} />
-        {!isCorrect && (
+        {/* +N mastery chip (correct answer) */}
+        {isCorrect && grade.masteryDelta !== undefined && grade.masteryDelta > 0 && (
+          <span
+            style={{
+              fontFamily: font.mono,
+              fontSize: '11.5px',
+              fontWeight: 700,
+              color: gradeColors.correct,
+              background: 'rgba(67,184,136,0.14)',
+              border: `1px solid rgba(67,184,136,0.3)`,
+              borderRadius: '5px',
+              padding: '2px 8px',
+            }}
+          >
+            +{grade.masteryDelta} mastery
+          </span>
+        )}
+        {!isCorrect && !solutionRevealed && (
           <span style={{ fontSize: '11px', color: text.placeholder }}>
             no mastery penalty · hints don't cost
+          </span>
+        )}
+        {solutionRevealed && !isCorrect && (
+          <span
+            style={{
+              fontSize: '11px',
+              color: text.placeholder,
+              fontFamily: font.mono,
+            }}
+          >
+            no mastery (revealed)
           </span>
         )}
       </div>
@@ -119,7 +163,7 @@ export function GradePanel({ grade, onTryAgain, onNextProblem, onRevealSolution,
           </div>
         )}
 
-        {/* Hint */}
+        {/* Hint with progress bar */}
         {grade.hint && (
           <div
             style={{
@@ -163,31 +207,74 @@ export function GradePanel({ grade, onTryAgain, onNextProblem, onRevealSolution,
           </div>
         )}
 
-        {/* Solution reveal */}
-        {grade.solution && (
-          <div>
+        {/* Solution-revealed variant */}
+        {solutionRevealed && (
+          <div
+            style={{
+              background: '#0e1016',
+              border: `1px solid ${border.card}`,
+              borderRadius: '10px',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Worked solution header */}
             <div
               style={{
-                fontSize: '10px',
-                letterSpacing: '0.1em',
-                textTransform: 'uppercase',
-                color: text.dimmed,
-                marginBottom: '7px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                padding: '10px 16px',
+                borderBottom: `1px solid ${border.inner}`,
+                background: '#121419',
               }}
             >
-              Solution
+              <span
+                style={{
+                  fontSize: '10px',
+                  letterSpacing: '0.1em',
+                  textTransform: 'uppercase',
+                  color: text.dimmed,
+                  fontWeight: 600,
+                }}
+              >
+                Worked solution
+              </span>
+              <span style={{ fontSize: '10.5px', color: text.placeholder, fontFamily: font.mono }}>
+                no mastery (revealed)
+              </span>
             </div>
-            <div style={{ fontSize: '13.5px', lineHeight: 1.65, color: text.secondary }}>
+            {/* Solution body */}
+            <div style={{ padding: '16px', fontSize: '13.5px', lineHeight: 1.7, color: text.secondary }}>
               <ReactMarkdown remarkPlugins={[remarkMath]} rehypePlugins={[rehypeKatex]}>
                 {grade.solution}
               </ReactMarkdown>
             </div>
+            {/* Add to review footer */}
+            {onAddToReview && (
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  padding: '10px 16px',
+                  borderTop: `1px solid ${border.inner}`,
+                  background: '#0d0e12',
+                }}
+              >
+                <span style={{ fontSize: '11.5px', color: text.placeholder }}>
+                  Schedule for spaced repetition
+                </span>
+                <Button variant="ghost" size="sm" onClick={onAddToReview}>
+                  Add to review
+                </Button>
+              </div>
+            )}
           </div>
         )}
 
         {/* Actions */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          {!isCorrect && (
+          {!isCorrect && !solutionRevealed && (
             <Button variant="primary" onClick={onTryAgain} style={{ gap: '8px' }}>
               Try again
               <span style={{ fontFamily: font.mono, fontSize: '10px', color: 'rgba(14,15,19,0.6)' }}>
@@ -199,33 +286,17 @@ export function GradePanel({ grade, onTryAgain, onNextProblem, onRevealSolution,
             Next problem
           </Button>
           <div style={{ flex: 1 }} />
-          {!isCorrect && onRequestHint && grade.hintLevel < grade.maxHints && !grade.solution && (
+          {!isCorrect && onRequestHint && grade.hintLevel < grade.maxHints && !solutionRevealed && (
             <Button variant="ghost" onClick={onRequestHint}>
               {grade.hintLevel === 0 ? 'Get hint' : 'Next hint'}
             </Button>
           )}
-          {!isCorrect && !grade.solution && onRevealSolution && (
+          {!isCorrect && !solutionRevealed && onRevealSolution && (
             <Button variant="ghost" onClick={onRevealSolution}>
               Reveal solution
             </Button>
           )}
         </div>
-
-        {/* Mastery delta */}
-        {grade.masteryDelta !== undefined && (
-          <div style={{ fontSize: '11px', color: text.placeholder }}>
-            Mastery{' '}
-            <span
-              style={{
-                color: grade.masteryDelta >= 0 ? gradeColors.correct : gradeColors.wrong,
-              }}
-            >
-              {grade.masteryDelta >= 0 ? '+' : ''}
-              {grade.masteryDelta}
-            </span>{' '}
-            points
-          </div>
-        )}
       </div>
     </div>
   )

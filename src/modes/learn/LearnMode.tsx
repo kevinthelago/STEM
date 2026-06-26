@@ -15,6 +15,8 @@ interface LearnModeProps {
 export function LearnMode({ topicId }: LearnModeProps) {
   const [input, setInput] = useState('')
   const [showExplainCheck, setShowExplainCheck] = useState(false)
+  const [sessionDead, setSessionDead] = useState(false)
+  const [restarting, setRestarting] = useState(false)
   const scrollRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -44,11 +46,27 @@ export function LearnMode({ topicId }: LearnModeProps) {
 
   const handleSend = useCallback(async () => {
     const content = input.trim()
-    if (!content || !sessionId) return
+    if (!content || !sessionId || sessionDead) return
     setInput('')
     useSessionStore.getState().appendUserMessage(sessionId, content)
-    await sendLearnMessage(sessionId, content)
-  }, [input, sessionId])
+    try {
+      await sendLearnMessage(sessionId, content)
+    } catch {
+      // PTY write failed — session is dead; surface the restart UI
+      setSessionDead(true)
+    }
+  }, [input, sessionId, sessionDead])
+
+  const handleRestart = useCallback(async () => {
+    setRestarting(true)
+    setSessionDead(false)
+    try {
+      const s = await ensureSession(topicId)
+      setSessionId(s.id)
+    } finally {
+      setRestarting(false)
+    }
+  }, [topicId, ensureSession])
 
   function handleKeyDown(e: React.KeyboardEvent) {
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
@@ -101,8 +119,10 @@ export function LearnMode({ topicId }: LearnModeProps) {
           </div>
         )}
         <div style={{ flex: 1 }} />
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11.5px', color: text.dimmed }}>
-          {session && (
+        <div
+          style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '11.5px', color: text.dimmed }}
+        >
+          {session && !sessionDead && (
             <>
               <span
                 style={{
@@ -113,6 +133,19 @@ export function LearnMode({ topicId }: LearnModeProps) {
                 }}
               />
               {`session active · ${session.turnCount} turns`}
+            </>
+          )}
+          {sessionDead && (
+            <>
+              <span
+                style={{
+                  width: '6px',
+                  height: '6px',
+                  borderRadius: '50%',
+                  background: '#e0625f',
+                }}
+              />
+              <span style={{ color: '#e0625f' }}>session ended</span>
             </>
           )}
         </div>
@@ -131,10 +164,7 @@ export function LearnMode({ topicId }: LearnModeProps) {
       </div>
 
       {/* Chat scroll area */}
-      <div
-        ref={scrollRef}
-        style={{ flex: 1, overflowY: 'auto', padding: '26px 28px' }}
-      >
+      <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto', padding: '26px 28px' }}>
         <div
           style={{
             maxWidth: '780px',
@@ -144,7 +174,7 @@ export function LearnMode({ topicId }: LearnModeProps) {
             gap: '22px',
           }}
         >
-          {msgs.length === 0 && !isStreaming && (
+          {msgs.length === 0 && !isStreaming && !sessionDead && (
             <div
               style={{
                 textAlign: 'center',
@@ -185,6 +215,46 @@ export function LearnMode({ topicId }: LearnModeProps) {
               onClose={() => setShowExplainCheck(false)}
             />
           )}
+
+          {/* Dead-session restart card */}
+          {sessionDead && (
+            <div
+              style={{
+                marginLeft: '40px',
+                background: '#121319',
+                border: `1px solid #3a2727`,
+                borderRadius: '10px',
+                padding: '18px 20px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '16px',
+              }}
+            >
+              <div>
+                <div
+                  style={{
+                    fontSize: '13px',
+                    fontWeight: 600,
+                    color: '#e89c9a',
+                    marginBottom: '4px',
+                  }}
+                >
+                  Session ended
+                </div>
+                <div style={{ fontSize: '12px', color: text.placeholder }}>
+                  The claude process stopped. Restart to continue.
+                </div>
+              </div>
+              <Button
+                variant="primary"
+                onClick={handleRestart}
+                disabled={restarting}
+              >
+                {restarting ? 'Restarting…' : 'Restart session'}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -202,10 +272,11 @@ export function LearnMode({ topicId }: LearnModeProps) {
               display: 'flex',
               alignItems: 'flex-end',
               gap: '12px',
-              background: surface.input,
-              border: `1px solid ${border.card}`,
+              background: sessionDead ? surface.overlay : surface.input,
+              border: `1px solid ${sessionDead ? border.subtle : border.card}`,
               borderRadius: '11px',
               padding: '11px 13px',
+              opacity: sessionDead ? 0.5 : 1,
             }}
           >
             <textarea
@@ -213,8 +284,9 @@ export function LearnMode({ topicId }: LearnModeProps) {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask a follow-up, or paste a problem…"
+              placeholder={sessionDead ? 'Session ended — restart to continue' : 'Ask a follow-up, or paste a problem…'}
               rows={1}
+              disabled={sessionDead}
               style={{
                 flex: 1,
                 fontSize: '13.5px',
@@ -236,7 +308,7 @@ export function LearnMode({ topicId }: LearnModeProps) {
                 variant="primary"
                 size="sm"
                 onClick={handleSend}
-                disabled={!input.trim() || isStreaming}
+                disabled={!input.trim() || isStreaming || sessionDead}
                 style={{ borderRadius: '7px', width: '30px', height: '30px', padding: 0 }}
               >
                 <svg width="11" height="11" viewBox="0 0 11 11">
@@ -247,21 +319,23 @@ export function LearnMode({ topicId }: LearnModeProps) {
           </div>
 
           {/* Explain-check trigger */}
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
-            <button
-              onClick={() => setShowExplainCheck(true)}
-              style={{
-                fontSize: '11px',
-                color: accent.text,
-                background: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
-                fontFamily: font.ui,
-              }}
-            >
-              + Explain-check
-            </button>
-          </div>
+          {!sessionDead && (
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '8px' }}>
+              <button
+                onClick={() => setShowExplainCheck(true)}
+                style={{
+                  fontSize: '11px',
+                  color: accent.text,
+                  background: 'transparent',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontFamily: font.ui,
+                }}
+              >
+                + Explain-check
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </div>

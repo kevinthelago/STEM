@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import { TopBar } from './TopBar'
 import { Sidebar } from './Sidebar'
 import { StatusBar } from './StatusBar'
@@ -11,7 +11,7 @@ import { TerminalMode } from '@/modes/terminal/TerminalMode'
 import { ResearchMode } from '@/modes/research/ResearchMode'
 import { MasteryDashboard } from '@/dashboard'
 import { ReviewQueue, ReviewSession, useReviewStore } from '@/review'
-import { VizGallery } from '@/viz'
+import { VisualizeMode } from '@/viz'
 import { Notes } from '@/notes/Notes'
 import { Settings } from '@/settings/Settings'
 import { surface } from '@/theme'
@@ -21,7 +21,9 @@ export default function App() {
   const { load: loadCurriculum, updateTopicMastery } = useCurriculumStore()
   const { appendTutorChunk, setProblem, setGrade, attachVizToLastMessage } = useSessionStore()
   const { load: loadSettings } = useSettingsStore()
-  const { view, commandPaletteOpen, openCommandPalette, closeCommandPalette } = useNavStore()
+  const { view, setMode, commandPaletteOpen, openCommandPalette, closeCommandPalette } = useNavStore()
+
+  const handleBackToLearn = useCallback(() => setMode('learn'), [setMode])
 
   // Bootstrap
   useEffect(() => {
@@ -76,9 +78,9 @@ export default function App() {
     >
       <TopBar />
       <div style={{ flex: 1, display: 'flex', minHeight: 0 }}>
-        <Sidebar />
+        {!(view.type === 'mode' && view.mode === 'visualize') && <Sidebar />}
         <main style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
-          <MainContent view={view} />
+          <MainContent view={view} onBackToLearn={handleBackToLearn} />
         </main>
       </div>
       <StatusBar />
@@ -87,7 +89,7 @@ export default function App() {
   )
 }
 
-function MainContent({ view }: { view: ActiveView }) {
+function MainContent({ view, onBackToLearn }: { view: ActiveView; onBackToLearn(): void }) {
   if (view.type === 'settings') return <Settings />
   if (view.type === 'notes') return <Notes topicId={view.topicId} />
 
@@ -98,7 +100,7 @@ function MainContent({ view }: { view: ActiveView }) {
   const { mode, topicId } = view
   if (mode === 'learn') return <LearnMode topicId={topicId} />
   if (mode === 'practice') return <PracticeMode topicId={topicId} />
-  if (mode === 'visualize') return <VizGallery />
+  if (mode === 'visualize') return <VisualizeMode onBackToLearn={onBackToLearn} />
   if (mode === 'research') return <ResearchMode topicId={topicId} />
 
   // terminal — accessible via the terminal button / command palette

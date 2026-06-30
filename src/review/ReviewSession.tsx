@@ -14,9 +14,9 @@ const SIMPLIFIED_QUALITY: Record<SimplifiedOutcome, { quality: number; outcome: 
 
 const GRADE_STYLES: Record<SimplifiedOutcome, { color: string; bg: string; border: string }> = {
   forgot: { color: grade.wrong, bg: grade.wrongBg, border: grade.wrongBorder },
-  hard:   { color: grade.partial, bg: grade.partialBg, border: '#3a2d1f' },
-  good:   { color: grade.correct, bg: grade.correctBg, border: '#1f3a2d' },
-  easy:   { color: accent.text, bg: accent.tint, border: `rgba(154,124,255,0.24)` },
+  hard:   { color: grade.partial, bg: grade.partialBg, border: 'rgba(210,147,74,0.22)' },
+  good:   { color: grade.correct, bg: grade.correctBg, border: 'rgba(67,184,136,0.22)' },
+  easy:   { color: accent.text, bg: accent.tint, border: 'rgba(154,124,255,0.24)' },
 }
 
 const GRADE_LABELS: Record<SimplifiedOutcome, string> = {

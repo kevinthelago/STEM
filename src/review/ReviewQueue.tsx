@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useReviewStore } from './reviewStore'
-import { surface, border, text, accent, mastery as masteryTokens, font, radius } from '@/theme'
+import { surface, border, text, accent, grade, mastery as masteryTokens, font, radius } from '@/theme'
 
 function formatDueStatus(dueAt: string): string {
   const due = new Date(dueAt)
@@ -62,7 +62,7 @@ export function ReviewQueue({ onStartSession }: ReviewQueueProps) {
           fontFamily: font.ui,
         }}
       >
-        <div style={{ color: '#e0625f', fontSize: 13 }}>
+        <div style={{ color: grade.wrong, fontSize: 13 }}>
           Failed to load review queue: {error}
         </div>
         <button
@@ -146,7 +146,7 @@ export function ReviewQueue({ onStartSession }: ReviewQueueProps) {
               {dueItems.length} item{dueItems.length !== 1 ? 's' : ''} due
             </span>
             {overdueCount > 0 && (
-              <span style={{ color: '#e0625f', fontFamily: font.mono }}>
+              <span style={{ color: grade.wrong, fontFamily: font.mono }}>
                 {overdueCount} overdue
               </span>
             )}
@@ -237,7 +237,7 @@ export function ReviewQueue({ onStartSession }: ReviewQueueProps) {
                   style={{
                     fontSize: 10,
                     fontFamily: font.mono,
-                    color: overdue ? '#e0625f' : text.placeholder,
+                    color: overdue ? grade.wrong : text.placeholder,
                   }}
                 >
                   {formatDueStatus(item.due_at)}

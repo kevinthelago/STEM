@@ -3,7 +3,7 @@ import { useCapstoneStore } from './capstoneStore'
 import type { MilestoneId } from './milestones'
 import { PrerequisiteGate } from './components/PrerequisiteGate'
 import { CapstoneProgress } from './components/CapstoneProgress'
-import { surface, text, accent, font, radius } from '@/theme'
+import { surface, text, accent, grade, font, radius } from '@/theme'
 
 interface NeuralNetCapstoneProps {
   onStudyCalculus?: () => void
@@ -52,7 +52,7 @@ export function NeuralNetCapstone({
           fontFamily: font.ui,
         }}
       >
-        <div style={{ color: '#e0625f', fontSize: 13 }}>Error: {store.error}</div>
+        <div style={{ color: grade.wrong, fontSize: 13 }}>Error: {store.error}</div>
         <button
           onClick={() => store.load()}
           style={{

@@ -309,7 +309,7 @@ function MultiChoiceBody({
           const isCorrect = answered && gradeResult === 'correct' && isSelected
           const isWrong = answered && gradeResult === 'wrong' && isSelected
 
-          let borderCol = border.subtle
+          let borderCol: string = border.subtle
           if (isCorrect) borderCol = gradeColors.correct
           else if (isWrong) borderCol = gradeColors.wrong
           else if (isSelected && !answered) borderCol = accent.border

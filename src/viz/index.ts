@@ -1,5 +1,6 @@
 export { VizHost } from "./VizHost";
 export { VizGallery } from "./VizGallery";
+export { VisualizeMode } from "./VisualizeMode";
 export { isKnownVizType, getDefaultParams, VIZ_REGISTRY, VIZ_TYPES } from "./registry";
 export type {
   VizType,
@@ -12,3 +13,4 @@ export type {
   GradientDescentParams,
   PhysicsSimParams,
 } from "./types";
+export type { VisualizeModeProps } from "./VisualizeMode";

@@ -113,6 +113,11 @@ describe('PracticeMode — header', () => {
     render(<PracticeMode topicId="topic-det" />)
     expect(screen.getByText(/problem 1 · attempt 1/i)).toBeInTheDocument()
   })
+
+  it('shows mastery score in header', () => {
+    render(<PracticeMode topicId="topic-det" />)
+    expect(screen.getByText('60')).toBeInTheDocument()
+  })
 })
 
 describe('PracticeMode — difficulty selector', () => {

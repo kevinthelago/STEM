@@ -3,6 +3,7 @@ import { isKnownVizType, getDefaultParams, VIZ_REGISTRY, VIZ_TYPES } from "../re
 import type { VizType } from "../types";
 
 const ALL_TYPES: VizType[] = [
+  "eigen_2d",
   "vector3d",
   "matrix_transform",
   "function_plot",
@@ -65,6 +66,13 @@ describe("getDefaultParams", () => {
     const d = getDefaultParams("physics_sim");
     expect(Array.isArray(d.bodies)).toBe(true);
     expect((d.bodies as unknown[]).length).toBeGreaterThan(0);
+  });
+
+  it("eigen_2d defaults include a 2×2 matrix", () => {
+    const d = getDefaultParams("eigen_2d");
+    const m = d.matrix as number[][];
+    expect(m.length).toBe(2);
+    m.forEach((row) => expect(row.length).toBe(2));
   });
 });
 

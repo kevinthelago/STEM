@@ -1,8 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
 import { lazy } from "react";
-import type { VizType, Vector3DParams, MatrixTransformParams, FunctionPlotParams, DistributionParams, GradientDescentParams, PhysicsSimParams } from "./types";
+import type { VizType, Eigen2DParams, Vector3DParams, MatrixTransformParams, FunctionPlotParams, DistributionParams, GradientDescentParams, PhysicsSimParams } from "./types";
 
 export const VIZ_REGISTRY = {
+  eigen_2d: lazy(() => import("./components/Eigen2D").then((m) => ({ default: m.Eigen2D }))),
   vector3d: lazy(() => import("./components/Vector3D").then((m) => ({ default: m.Vector3D }))),
   matrix_transform: lazy(() => import("./components/MatrixTransform").then((m) => ({ default: m.MatrixTransform }))),
   function_plot: lazy(() => import("./components/FunctionPlot").then((m) => ({ default: m.FunctionPlot }))),
@@ -18,6 +19,11 @@ export function isKnownVizType(type: string): type is VizType {
 }
 
 const DEFAULTS: Record<VizType, Record<string, unknown>> = {
+  eigen_2d: {
+    matrix: [[2, 1], [1, 2]],
+    showGrid: true,
+    showEigenlines: true,
+  } satisfies Eigen2DParams,
   vector3d: {
     vectors: [{ direction: [1, 0, 0], color: "#f39c12", label: "v" }],
     showAxes: true,

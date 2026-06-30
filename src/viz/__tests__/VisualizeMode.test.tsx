@@ -27,14 +27,20 @@ describe('VisualizeMode — sidebar', () => {
     expect(screen.getByTestId('viz-sidebar')).toBeTruthy()
   })
 
-  it('shows all six viz type labels in the sidebar', () => {
+  it('shows the visualization gallery header', () => {
     render(<VisualizeMode />)
+    expect(screen.getByText('Visualization gallery')).toBeTruthy()
+  })
+
+  it('shows all seven viz type labels in the sidebar', () => {
+    render(<VisualizeMode />)
+    expect(screen.getAllByText('Eigenvectors').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText('3D Vectors').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('Matrix Transform').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Matrix Transforms').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText('Function Plot').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('Distribution').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Distributions').length).toBeGreaterThanOrEqual(1)
     expect(screen.getAllByText('Gradient Descent').length).toBeGreaterThanOrEqual(1)
-    expect(screen.getAllByText('Physics Simulation').length).toBeGreaterThanOrEqual(1)
+    expect(screen.getAllByText('Physics Sim').length).toBeGreaterThanOrEqual(1)
   })
 
   it('clicking a sidebar item switches the active viz type', () => {
@@ -70,12 +76,17 @@ describe('VisualizeMode — canvas header', () => {
     render(<VisualizeMode />)
     expect(screen.getByText('live')).toBeTruthy()
   })
+
+  it('shows reset view button', () => {
+    render(<VisualizeMode />)
+    expect(screen.getByText(/reset view/i)).toBeTruthy()
+  })
 })
 
 describe('VisualizeMode — VizHost wiring', () => {
-  it('passes the first viz type to VizHost by default', () => {
+  it('passes eigen_2d as the first/default viz type to VizHost', () => {
     render(<VisualizeMode />)
-    expect(screen.getByTestId('viz-host-mock').getAttribute('data-viz-type')).toBe('vector3d')
+    expect(screen.getByTestId('viz-host-mock').getAttribute('data-viz-type')).toBe('eigen_2d')
   })
 
   it('passes initialVizType to VizHost', () => {
@@ -91,7 +102,7 @@ describe('VisualizeMode — VizHost wiring', () => {
 })
 
 describe('VisualizeMode — Back to Learn', () => {
-  it('shows Back to Learn button when onBackToLearn is provided', () => {
+  it('shows Back to Learn button in controls panel when onBackToLearn is provided', () => {
     render(<VisualizeMode onBackToLearn={vi.fn()} />)
     expect(screen.getByText(/back to learn/i)).toBeTruthy()
   })
@@ -106,6 +117,46 @@ describe('VisualizeMode — Back to Learn', () => {
     render(<VisualizeMode onBackToLearn={onBackToLearn} />)
     fireEvent.click(screen.getByText(/back to learn/i))
     expect(onBackToLearn).toHaveBeenCalledTimes(1)
+  })
+})
+
+describe('VisualizeMode — eigen_2d controls', () => {
+  it('shows controls panel for eigen_2d', () => {
+    render(<VisualizeMode initialVizType="eigen_2d" />)
+    expect(screen.getByTestId('viz-controls')).toBeTruthy()
+    expect(screen.getByText('Parameters')).toBeTruthy()
+  })
+
+  it('shows a₁₁ a₁₂ a₂₁ a₂₂ sliders for eigen_2d', () => {
+    render(<VisualizeMode initialVizType="eigen_2d" />)
+    expect(screen.getByLabelText('a₁₁')).toBeTruthy()
+    expect(screen.getByLabelText('a₁₂')).toBeTruthy()
+    expect(screen.getByLabelText('a₂₁')).toBeTruthy()
+    expect(screen.getByLabelText('a₂₂')).toBeTruthy()
+  })
+
+  it('shows computed readout for eigen_2d', () => {
+    render(<VisualizeMode initialVizType="eigen_2d" />)
+    expect(screen.getByText('eigenvalues')).toBeTruthy()
+    expect(screen.getByText('det A')).toBeTruthy()
+    expect(screen.getByText('trace A')).toBeTruthy()
+    expect(screen.getByText('Computed')).toBeTruthy()
+  })
+
+  it('shows presets for eigen_2d', () => {
+    render(<VisualizeMode initialVizType="eigen_2d" />)
+    expect(screen.getByText('Symmetric')).toBeTruthy()
+    expect(screen.getByText('Shear')).toBeTruthy()
+    expect(screen.getByText('Scaling')).toBeTruthy()
+    expect(screen.getByText('Rotation')).toBeTruthy()
+  })
+
+  it('applies a preset when clicked', () => {
+    render(<VisualizeMode initialVizType="eigen_2d" />)
+    fireEvent.click(screen.getByText('Shear'))
+    // After Shear preset, a₁₂ should be 1.00 and a₂₁ should be 0.00
+    const a12Slider = screen.getByLabelText('a₁₂') as HTMLInputElement
+    expect(a12Slider.value).toBe('1')
   })
 })
 

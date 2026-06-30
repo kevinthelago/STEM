@@ -1,16 +1,16 @@
-import React from "react";
-import { MATH_PREREQUISITES } from "../milestones";
+import { MATH_PREREQUISITES } from '../milestones'
+import { surface, border, text, accent, mastery as masteryTokens, font, radius } from '@/theme'
 
 interface PrerequisiteGateProps {
-  prerequisiteMastery: Record<string, number>;
-  onStudyCalculus?: () => void;
-  onStudyLinearAlgebra?: () => void;
+  prerequisiteMastery: Record<string, number>
+  onStudyCalculus?: () => void
+  onStudyLinearAlgebra?: () => void
 }
 
 const TOPIC_LABELS: Record<string, string> = {
-  derivatives: "Derivatives & Calculus",
-  linear_algebra_basics: "Linear Algebra Basics",
-};
+  derivatives: 'Derivatives & Calculus',
+  linear_algebra_basics: 'Linear Algebra Basics',
+}
 
 export function PrerequisiteGate({
   prerequisiteMastery,
@@ -18,41 +18,118 @@ export function PrerequisiteGate({
   onStudyLinearAlgebra,
 }: PrerequisiteGateProps) {
   const missing = Object.entries(MATH_PREREQUISITES).filter(
-    ([topicId, required]) => (prerequisiteMastery[topicId] ?? 0) < required,
-  );
+    ([topicId, required]) => (prerequisiteMastery[topicId] ?? 0) < required
+  )
 
   const actionFor = (topicId: string): (() => void) | undefined => {
-    if (topicId === "derivatives") return onStudyCalculus;
-    if (topicId === "linear_algebra_basics") return onStudyLinearAlgebra;
-    return undefined;
-  };
+    if (topicId === 'derivatives') return onStudyCalculus
+    if (topicId === 'linear_algebra_basics') return onStudyLinearAlgebra
+    return undefined
+  }
 
   return (
-    <div style={styles.container}>
-      <div style={styles.icon}>🔒</div>
-      <h2 style={styles.heading}>Math Prerequisites Required</h2>
-      <p style={styles.subtext}>
-        The Neural-Net Capstone requires foundational math skills. Complete the
-        following topics to unlock it:
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '48px 32px',
+        gap: 16,
+        maxWidth: 480,
+        margin: '0 auto',
+        fontFamily: font.ui,
+      }}
+    >
+      {/* Lock icon */}
+      <div
+        style={{
+          width: 52,
+          height: 52,
+          borderRadius: '50%',
+          background: 'rgba(160,106,58,0.12)',
+          border: '1px solid rgba(160,106,58,0.3)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          fontSize: 24,
+        }}
+      >
+        🔒
+      </div>
+
+      <h2
+        style={{
+          margin: 0,
+          fontSize: 17,
+          fontWeight: 600,
+          color: text.primary,
+          textAlign: 'center',
+        }}
+      >
+        Math Prerequisites Required
+      </h2>
+      <p
+        style={{
+          margin: 0,
+          color: text.muted,
+          textAlign: 'center',
+          lineHeight: 1.65,
+          fontSize: 13,
+        }}
+      >
+        The Neural-Net Capstone requires foundational math skills. Complete the following topics to
+        unlock it:
       </p>
-      <div style={styles.prereqList}>
+
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', marginTop: 8 }}>
         {missing.map(([topicId, required]) => {
-          const current = prerequisiteMastery[topicId] ?? 0;
-          const pct = Math.min(100, Math.round((current / required) * 100));
-          const action = actionFor(topicId);
+          const current = prerequisiteMastery[topicId] ?? 0
+          const pct = Math.min(100, Math.round((current / required) * 100))
+          const action = actionFor(topicId)
+
           return (
-            <div key={topicId} style={styles.prereqCard}>
-              <div style={styles.prereqHeader}>
-                <span style={styles.prereqName}>
+            <div
+              key={topicId}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: 10,
+                padding: '14px 18px',
+                borderRadius: radius.xl,
+                background: surface.raised,
+                border: `1px solid ${border.card}`,
+              }}
+            >
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+              >
+                <span style={{ fontWeight: 500, fontSize: 13, color: text.secondary }}>
                   {TOPIC_LABELS[topicId] ?? topicId}
                 </span>
-                <span style={styles.prereqScore}>
+                <span style={{ fontSize: 12, color: text.placeholder, fontFamily: font.mono }}>
                   {current.toFixed(0)} / {required}
                 </span>
               </div>
-              <div style={styles.progressTrack}>
+              <div
+                style={{
+                  height: 4,
+                  background: surface.track,
+                  borderRadius: 2,
+                  overflow: 'hidden',
+                }}
+              >
                 <div
-                  style={{ ...styles.progressFill, width: `${pct}%` }}
+                  style={{
+                    width: `${pct}%`,
+                    height: '100%',
+                    background: masteryTokens.learning,
+                    borderRadius: 2,
+                    transition: 'width 0.3s ease',
+                  }}
                   role="progressbar"
                   aria-valuenow={current}
                   aria-valuemin={0}
@@ -60,82 +137,28 @@ export function PrerequisiteGate({
                 />
               </div>
               {action && (
-                <button style={styles.studyBtn} onClick={action}>
-                  Study{" "}
-                  {topicId === "derivatives" ? "Calculus" : "Linear Algebra"}
+                <button
+                  onClick={action}
+                  style={{
+                    alignSelf: 'flex-start',
+                    padding: '6px 14px',
+                    borderRadius: radius.md,
+                    border: `1px solid ${accent.border}`,
+                    background: accent.activeBg,
+                    color: accent.text,
+                    fontSize: 12,
+                    fontWeight: 500,
+                    cursor: 'pointer',
+                    fontFamily: font.ui,
+                  }}
+                >
+                  Study {topicId === 'derivatives' ? 'Calculus' : 'Linear Algebra'}
                 </button>
               )}
             </div>
-          );
+          )
         })}
       </div>
     </div>
-  );
+  )
 }
-
-const styles: Record<string, React.CSSProperties> = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    padding: "48px 32px",
-    gap: 16,
-    maxWidth: 480,
-    margin: "0 auto",
-  },
-  icon: { fontSize: 48 },
-  heading: { margin: 0, fontSize: 22, fontWeight: 700, textAlign: "center" },
-  subtext: {
-    margin: 0,
-    color: "#666",
-    textAlign: "center",
-    lineHeight: 1.6,
-  },
-  prereqList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 16,
-    width: "100%",
-    marginTop: 8,
-  },
-  prereqCard: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 8,
-    padding: "16px 20px",
-    borderRadius: 8,
-    background: "#f8f8f8",
-    border: "1px solid #e0e0e0",
-  },
-  prereqHeader: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-  prereqName: { fontWeight: 600, fontSize: 15 },
-  prereqScore: { fontSize: 13, color: "#888" },
-  progressTrack: {
-    height: 8,
-    background: "#e0e0e0",
-    borderRadius: 4,
-    overflow: "hidden",
-  },
-  progressFill: {
-    height: "100%",
-    background: "#f59e0b",
-    borderRadius: 4,
-    transition: "width 0.3s ease",
-  },
-  studyBtn: {
-    alignSelf: "flex-start",
-    padding: "6px 16px",
-    borderRadius: 6,
-    border: "none",
-    background: "#3b82f6",
-    color: "#fff",
-    fontSize: 13,
-    fontWeight: 600,
-    cursor: "pointer",
-    marginTop: 4,
-  },
-};

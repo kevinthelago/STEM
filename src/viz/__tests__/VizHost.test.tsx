@@ -6,6 +6,7 @@ import { getDefaultParams } from "../registry";
 import type { VizType } from "../types";
 
 // Mock all viz components to keep tests fast and environment-independent
+vi.mock("../components/Eigen2D", () => ({ Eigen2D: () => <div data-testid="comp-eigen_2d" /> }));
 vi.mock("../components/Vector3D", () => ({ Vector3D: () => <div data-testid="comp-vector3d" /> }));
 vi.mock("../components/MatrixTransform", () => ({ MatrixTransform: () => <div data-testid="comp-matrix_transform" /> }));
 vi.mock("../components/FunctionPlot", () => ({ FunctionPlot: () => <div data-testid="comp-function_plot" /> }));
@@ -21,6 +22,7 @@ async function renderAndFlush(ui: React.ReactElement) {
 }
 
 const ALL_TYPES: VizType[] = [
+  "eigen_2d",
   "vector3d",
   "matrix_transform",
   "function_plot",

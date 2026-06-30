@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
-import { surface, border, accent, text, font } from '@/theme'
+import { surface, border, accent, text, font, mastery as masteryColors } from '@/theme'
+import type { MasteryLevel } from '@/theme'
+import { MasteryBar } from '@/lib/components/MasteryBar'
 import { useSessionStore, useCurriculumStore } from '@/app/store'
 import { generateProblem, revealSolution, requestHint } from '@/lib/tauri'
 import { ProblemCard } from './ProblemCard'
@@ -85,10 +87,24 @@ export function PracticeMode({ topicId }: PracticeModeProps) {
         <span style={{ fontSize: '14.5px', fontWeight: 600, color: text.primary }}>
           {topic?.title ?? topicId}
         </span>
-        {grade?.masteryDelta !== undefined && (
-          <span style={{ fontSize: '11px', color: grade.masteryDelta >= 0 ? '#43b888' : '#e0625f' }}>
-            {grade.masteryDelta >= 0 ? '▲' : '▼'} {Math.abs(grade.masteryDelta)}
-          </span>
+        {topic && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+            <MasteryBar score={topic.masteryScore} level={topic.masteryLevel} />
+            <span
+              style={{
+                fontFamily: font.mono,
+                fontSize: '11px',
+                color: masteryColors[topic.masteryLevel as MasteryLevel],
+              }}
+            >
+              {topic.masteryScore}
+            </span>
+            {grade?.masteryDelta !== undefined && (
+              <span style={{ fontSize: '11px', color: grade.masteryDelta >= 0 ? '#43b888' : '#e0625f' }}>
+                {grade.masteryDelta >= 0 ? '▲' : '▼'} {Math.abs(grade.masteryDelta)}
+              </span>
+            )}
+          </div>
         )}
         <div style={{ flex: 1 }} />
         <span style={{ fontSize: '11.5px', color: text.dimmed }}>

@@ -183,10 +183,31 @@ describe('ProblemSetProgress', () => {
     expect(screen.getByText('3 / 5')).toBeInTheDocument()
   })
 
-  it('shows at least 5 dots', () => {
+  it('shows at least 5 bars', () => {
     const { container } = render(<ProblemSetProgress correct={1} total={3} />)
-    // 5 dots minimum (spans with background)
-    const dots = container.querySelectorAll('span[style]')
-    expect(dots.length).toBeGreaterThanOrEqual(5)
+    const bars = container.querySelectorAll('span[style]')
+    expect(bars.length).toBeGreaterThanOrEqual(5)
+  })
+
+  it('colors correct bars green and wrong bars red', () => {
+    const { container } = render(<ProblemSetProgress correct={2} total={5} wrong={1} />)
+    const bars = Array.from(container.querySelectorAll('div > div > span'))
+    // First 2 bars: mastered green
+    expect((bars[0] as HTMLElement).style.background).toContain('43b888')
+    expect((bars[1] as HTMLElement).style.background).toContain('43b888')
+    // 3rd bar: wrong red
+    expect((bars[2] as HTMLElement).style.background).toBe('#e0625f')
+    // 4th and 5th: not done (track color)
+    expect((bars[3] as HTMLElement).style.background).not.toContain('43b888')
+    expect((bars[3] as HTMLElement).style.background).not.toBe('#e0625f')
+  })
+
+  it('defaults wrong to 0 when not provided', () => {
+    const { container } = render(<ProblemSetProgress correct={2} total={5} />)
+    const bars = Array.from(container.querySelectorAll('div > div > span'))
+    // Only first 2 bars should be green
+    expect((bars[0] as HTMLElement).style.background).toContain('43b888')
+    expect((bars[1] as HTMLElement).style.background).toContain('43b888')
+    expect((bars[2] as HTMLElement).style.background).not.toContain('43b888')
   })
 })

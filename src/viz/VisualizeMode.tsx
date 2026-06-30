@@ -2,7 +2,7 @@ import { useState, useCallback } from 'react'
 import type { VizType } from './types'
 import { VIZ_TYPES, getDefaultParams } from './registry'
 import { VizHost } from './VizHost'
-import { surface, border, text, accent, font } from '@/theme'
+import { surface, border, text, accent, grade, font } from '@/theme'
 
 const VIZ_LABELS: Record<VizType, string> = {
   vector3d: '3D Vectors',
@@ -154,7 +154,7 @@ export function VisualizeMode({ initialVizType, onBackToLearn }: VisualizeModePr
                     borderRadius: 2,
                     flexShrink: 0,
                     background: active ? accent.primary : 'transparent',
-                    border: active ? 'none' : '1px solid #4f6080',
+                    border: active ? 'none' : `1px solid ${text.disabled}`,
                   }}
                 />
                 <div style={{ flex: 1, minWidth: 0 }}>
@@ -250,7 +250,7 @@ export function VisualizeMode({ initialVizType, onBackToLearn }: VisualizeModePr
               fontFamily: font.ui,
             }}
           >
-            <span style={{ width: 6, height: 6, borderRadius: '50%', background: '#43b888' }} />
+            <span style={{ width: 6, height: 6, borderRadius: '50%', background: grade.correct }} />
             live
           </span>
         </div>

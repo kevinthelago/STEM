@@ -195,30 +195,30 @@ pub fn db_notes_insert(
     note: NewNote,
     app: tauri::AppHandle,
     state: State<'_, DbState>,
-) -> Result<i64, String> {
+) -> Result<String, String> {
     let db = open_db(&app, &state)?;
     db.notes().insert(&note).map_err(|e| e.to_string())
 }
 
 #[tauri::command]
 pub fn db_notes_update(
-    id: i64,
+    id: String,
     note: NewNote,
     app: tauri::AppHandle,
     state: State<'_, DbState>,
 ) -> Result<(), String> {
     let db = open_db(&app, &state)?;
-    db.notes().update(id, &note).map_err(|e| e.to_string())
+    db.notes().update(&id, &note).map_err(|e| e.to_string())
 }
 
 #[tauri::command]
 pub fn db_notes_delete(
-    id: i64,
+    id: String,
     app: tauri::AppHandle,
     state: State<'_, DbState>,
 ) -> Result<(), String> {
     let db = open_db(&app, &state)?;
-    db.notes().delete(id).map_err(|e| e.to_string())
+    db.notes().delete(&id).map_err(|e| e.to_string())
 }
 
 #[tauri::command]

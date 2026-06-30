@@ -1,10 +1,17 @@
 export type VizType =
+  | "eigen_2d"
   | "vector3d"
   | "matrix_transform"
   | "function_plot"
   | "distribution"
   | "gradient_descent"
   | "physics_sim";
+
+export interface Eigen2DParams {
+  matrix?: [[number, number], [number, number]]
+  showGrid?: boolean
+  showEigenlines?: boolean
+}
 
 export interface VizPayload {
   type: string;

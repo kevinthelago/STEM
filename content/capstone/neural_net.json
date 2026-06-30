@@ -1,0 +1,41 @@
+{
+  "pack": "neural_net",
+  "subject": "capstone",
+  "category": "applied-ml",
+  "topics": [
+    {
+      "id": "cap-neural-net",
+      "slug": "neural-net",
+      "title": "Neural Networks from Scratch",
+      "description": "Build, train, and understand a multi-layer neural network using only the linear algebra, calculus, and statistics you have mastered.",
+      "level": 0,
+      "estimated_minutes": 300,
+      "objectives": [
+        "Represent a neural network as a composition of affine transformations and activations",
+        "Derive the backpropagation algorithm using the chain rule",
+        "Implement gradient descent and mini-batch SGD",
+        "Explain the role of eigenvalues in understanding loss landscapes and weight initialisation",
+        "Apply the central limit theorem to justify batch normalisation"
+      ],
+      "viz_refs": ["eigenvalue-viz", "gradient-descent-viz"],
+      "prerequisites": ["la-eigenvalues", "calc-derivatives", "stat-distributions"],
+      "problem_templates": [
+        {
+          "id": "cap-neural-net-pt-1",
+          "difficulty": 2,
+          "prompt_template": "A single-layer network maps ℝ³ → ℝ² via z = Wx + b, then applies σ(z) element-wise. Given W = [[1,0,−1],[0,2,1]] and b = [1,−1], compute the output for x = [2,1,3] and the Jacobian ∂z/∂x."
+        },
+        {
+          "id": "cap-neural-net-pt-2",
+          "difficulty": 3,
+          "prompt_template": "Derive the gradient ∂L/∂W for a two-layer network with MSE loss L = ½||y − ŷ||². Use the chain rule step-by-step, identifying the roles of the activation's derivative and the upstream gradient."
+        },
+        {
+          "id": "cap-neural-net-pt-3",
+          "difficulty": 4,
+          "prompt_template": "Explain why the Hessian's eigenvalues determine the curvature of the loss landscape and how this motivates adaptive learning rates (Adam). Sketch the relationship between a large condition number and slow gradient descent convergence."
+        }
+      ]
+    }
+  ]
+}

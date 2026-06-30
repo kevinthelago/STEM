@@ -131,20 +131,53 @@
       ]
     },
     {
+      "id": "la-determinants",
+      "slug": "determinants",
+      "title": "Determinants",
+      "description": "Scalar values encoding volume scaling, orientation, and invertibility of a matrix.",
+      "level": 3,
+      "estimated_minutes": 90,
+      "objectives": [
+        "Compute determinants via cofactor expansion and row operations",
+        "Apply properties: multilinearity, antisymmetry, det(AB)=det(A)det(B)",
+        "Relate det(A)=0 to singular matrices and the null space",
+        "Use Cramer's rule for small linear systems"
+      ],
+      "viz_refs": ["matrix-transform-viz"],
+      "prerequisites": ["la-matrix-operations"],
+      "problem_templates": [
+        {
+          "id": "la-determinants-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Compute det(A) for A = [[3,1,2],[0,−1,4],[2,0,1]] using cofactor expansion along the first column. Show each 2×2 minor."
+        },
+        {
+          "id": "la-determinants-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Use properties of the determinant to evaluate det([[1,a,a²],[1,b,b²],[1,c,c²]]) (Vandermonde matrix). Factor the result completely."
+        },
+        {
+          "id": "la-determinants-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Prove that if A is an n×n matrix with two identical rows, det(A)=0. Then use Cramer's rule to solve 2x+y=5, x−y=1."
+        }
+      ]
+    },
+    {
       "id": "la-eigenvalues",
       "slug": "eigenvalues",
       "title": "Eigenvalues and Eigenvectors",
       "description": "Special scalars and vectors that reveal intrinsic properties of linear transformations.",
-      "level": 3,
+      "level": 4,
       "estimated_minutes": 150,
       "objectives": [
         "Define eigenvalues and eigenvectors",
         "Compute eigenvalues from the characteristic equation",
         "Find eigenvectors for each eigenvalue",
-        "Apply to matrix diagonalization and PCA intuition"
+        "Apply spectral decomposition and PCA intuition"
       ],
       "viz_refs": ["eigenvalue-viz"],
-      "prerequisites": ["la-linear-systems"],
+      "prerequisites": ["la-determinants", "la-linear-systems"],
       "problem_templates": [
         {
           "id": "la-eigenvalues-pt-1",
@@ -154,7 +187,7 @@
         {
           "id": "la-eigenvalues-pt-2",
           "difficulty": 2,
-          "prompt_template": "Diagonalize A = [[3,1],[0,2]] if possible. Find P and D such that A = PDP⁻¹ and verify."
+          "prompt_template": "Find all eigenvalues and eigenvectors of A = [[1,2,0],[0,3,4],[0,0,2]]. Identify any repeated eigenvalues and describe their eigenspaces."
         },
         {
           "id": "la-eigenvalues-pt-3",
@@ -193,6 +226,39 @@
           "id": "la-vector-spaces-pt-3",
           "difficulty": 3,
           "prompt_template": "Show that {1, x, x²} is a basis for P₂ (polynomials of degree ≤ 2). Then find the coordinates of p(x) = 3 − 2x + x² in this basis."
+        }
+      ]
+    },
+    {
+      "id": "la-diagonalization",
+      "slug": "diagonalization",
+      "title": "Diagonalization",
+      "description": "Decomposing a matrix as PDP⁻¹ to simplify powers, exponentials, and dynamical systems.",
+      "level": 5,
+      "estimated_minutes": 120,
+      "objectives": [
+        "Determine when a matrix is diagonalizable",
+        "Construct P and D from eigenvectors and eigenvalues",
+        "Compute matrix powers efficiently via A^k = PD^kP⁻¹",
+        "Apply to discrete dynamical systems and Markov chains"
+      ],
+      "viz_refs": ["eigenvalue-viz", "matrix-transform-viz"],
+      "prerequisites": ["la-eigenvalues"],
+      "problem_templates": [
+        {
+          "id": "la-diagonalization-pt-1",
+          "difficulty": 1,
+          "prompt_template": "Diagonalize A = [[3,1],[0,2]] by finding P and D such that A = PDP⁻¹. Verify by computing PDP⁻¹ explicitly."
+        },
+        {
+          "id": "la-diagonalization-pt-2",
+          "difficulty": 2,
+          "prompt_template": "Use diagonalization to compute A⁶ for A = [[2,1],[0,3]]. Compare the work to six direct matrix multiplications."
+        },
+        {
+          "id": "la-diagonalization-pt-3",
+          "difficulty": 3,
+          "prompt_template": "Determine whether B = [[2,1,0],[0,2,1],[0,0,2]] is diagonalizable. If not, explain why and describe its Jordan form instead."
         }
       ]
     }

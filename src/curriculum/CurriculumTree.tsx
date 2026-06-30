@@ -244,10 +244,11 @@ export function SuggestedNext({ topic, onClick }: SuggestedNextProps) {
 export interface ProblemSetProgressProps {
   correct: number
   total: number
+  wrong?: number
 }
 
-export function ProblemSetProgress({ correct, total }: ProblemSetProgressProps) {
-  const dots = Math.max(total, 5)
+export function ProblemSetProgress({ correct, total, wrong = 0 }: ProblemSetProgressProps) {
+  const bars = Math.max(total, 5)
   return (
     <div style={{ borderTop: `1px solid ${border.inner}`, padding: '11px 14px' }}>
       <div
@@ -261,20 +262,27 @@ export function ProblemSetProgress({ correct, total }: ProblemSetProgressProps) 
       >
         Problem set
       </div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-        <div style={{ display: 'flex', gap: '3px' }}>
-          {Array.from({ length: dots }, (_, i) => (
-            <span
-              key={i}
-              style={{
-                width: '8px',
-                height: '8px',
-                borderRadius: '50%',
-                background: i < correct ? masteryColors.mastered : surface.raised,
-                border: i < correct ? 'none' : `1px solid ${border.subtle}`,
-              }}
-            />
-          ))}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '7px' }}>
+        <div style={{ display: 'flex', gap: '4px' }}>
+          {Array.from({ length: bars }, (_, i) => {
+            const bg =
+              i < correct
+                ? masteryColors.mastered
+                : i < correct + wrong
+                  ? '#e0625f'
+                  : surface.track
+            return (
+              <span
+                key={i}
+                style={{
+                  width: '18px',
+                  height: '5px',
+                  borderRadius: '3px',
+                  background: bg,
+                }}
+              />
+            )
+          })}
         </div>
         <span style={{ fontFamily: font.mono, fontSize: '10px', color: text.placeholder }}>
           {correct} / {total}

@@ -1,7 +1,12 @@
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import remarkMath from 'remark-math'
 import rehypeKatex from 'rehype-katex'
+import CodeMirror from '@uiw/react-codemirror'
+import { python } from '@codemirror/lang-python'
+import { EditorView } from '@codemirror/view'
+import { HighlightStyle, syntaxHighlighting } from '@codemirror/language'
+import { tags } from '@lezer/highlight'
 import { surface, border, accent, text, font, grade as gradeColors } from '@/theme'
 import { Button } from '@/lib/components/Button'
 import { submitAnswer } from '@/lib/tauri'
@@ -395,6 +400,42 @@ function MultiChoiceBody({
   )
 }
 
+// Syntax colors lifted from the design's code-card mockup (def/for/return = violet,
+// function names = blue, numeric literals = amber, trailing comments = dimmed).
+const pythonHighlightStyle = HighlightStyle.define([
+  { tag: tags.keyword, color: accent.primary },
+  { tag: [tags.function(tags.variableName), tags.function(tags.propertyName)], color: '#7fb3e8' },
+  { tag: tags.variableName, color: text.muted },
+  { tag: tags.propertyName, color: text.muted },
+  { tag: [tags.number, tags.bool, tags.null], color: gradeColors.partial },
+  { tag: tags.string, color: '#43b888' },
+  { tag: tags.comment, color: text.disabled, fontStyle: 'italic' },
+  { tag: tags.operator, color: text.secondary },
+  { tag: tags.punctuation, color: text.muted },
+])
+
+const codeEditorTheme = EditorView.theme(
+  {
+    '&': { fontSize: '13px', backgroundColor: 'transparent', height: '100%' },
+    '.cm-content': { fontFamily: font.mono, color: text.secondary, padding: '14px 0' },
+    '.cm-gutters': {
+      backgroundColor: '#0a0b0e',
+      color: text.disabled,
+      border: 'none',
+      borderRight: '1px solid #1a1c22',
+    },
+    '.cm-activeLineGutter, .cm-activeLine': { backgroundColor: 'transparent' },
+    '.cm-line': { padding: '0 14px' },
+    '&.cm-focused .cm-cursor': { borderLeftColor: accent.primary },
+    '&.cm-focused .cm-selectionBackground, .cm-selectionBackground': {
+      backgroundColor: 'rgba(154,124,255,0.18)',
+    },
+  },
+  { dark: true },
+)
+
+const codeEditorExtensions = [python(), codeEditorTheme, syntaxHighlighting(pythonHighlightStyle)]
+
 // ── Code card ─────────────────────────────────────────────────────────────────
 
 function CodeBody({
@@ -411,6 +452,7 @@ function CodeBody({
   const [code, setCode] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const lineCount = code ? code.split('\n').length : 1
+  const extensions = useMemo(() => codeEditorExtensions, [])
 
   async function handleRun() {
     if (!code.trim() || submitting || answered) return
@@ -426,18 +468,6 @@ function CodeBody({
     if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
       e.preventDefault()
       handleRun()
-    }
-    // Allow tab to insert spaces instead of focusing next element
-    if (e.key === 'Tab') {
-      e.preventDefault()
-      const target = e.target as HTMLTextAreaElement
-      const start = target.selectionStart
-      const end = target.selectionEnd
-      const next = code.slice(0, start) + '    ' + code.slice(end)
-      setCode(next)
-      requestAnimationFrame(() => {
-        target.selectionStart = target.selectionEnd = start + 4
-      })
     }
   }
 
@@ -460,6 +490,7 @@ function CodeBody({
           overflow: 'hidden',
           marginBottom: '14px',
         }}
+        onKeyDown={handleKeyDown}
       >
         {/* Editor toolbar */}
         <div
@@ -488,50 +519,15 @@ function CodeBody({
           </span>
         </div>
 
-        {/* Editor area */}
-        <div style={{ display: 'flex' }}>
-          {/* Line numbers */}
-          <div
-            style={{
-              padding: '14px 10px',
-              background: '#0a0b0e',
-              borderRight: `1px solid #1a1c22`,
-              userSelect: 'none',
-              fontFamily: font.mono,
-              fontSize: '12px',
-              color: text.disabled,
-              lineHeight: 1.7,
-              minWidth: '36px',
-              textAlign: 'right',
-            }}
-          >
-            {Array.from({ length: Math.max(lineCount, 4) }, (_, i) => (
-              <div key={i}>{i + 1}</div>
-            ))}
-          </div>
-
-          <textarea
-            value={code}
-            onChange={(e) => setCode(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="# Write your solution here…"
-            spellCheck={false}
-            disabled={answered}
-            style={{
-              flex: 1,
-              padding: '14px 14px',
-              fontFamily: font.mono,
-              fontSize: '13px',
-              color: '#c9cdd8',
-              background: 'transparent',
-              border: 'none',
-              outline: 'none',
-              resize: 'none',
-              lineHeight: 1.7,
-              minHeight: `${Math.max(lineCount, 4) * 22}px`,
-            }}
-          />
-        </div>
+        <CodeMirror
+          value={code}
+          onChange={setCode}
+          extensions={extensions}
+          editable={!answered}
+          basicSetup={{ lineNumbers: true, foldGutter: false, highlightActiveLine: false }}
+          placeholder="# Write your solution here…"
+          style={{ minHeight: '120px' }}
+        />
       </div>
 
       {!answered && (

@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { ProblemCard } from '../ProblemCard'
 import type { Problem } from '@/lib/types'
 
@@ -116,10 +117,10 @@ describe('ProblemCard — multiple choice (derived kind)', () => {
 })
 
 describe('ProblemCard — code (multistep kind)', () => {
-  it('renders a textarea for code entry', () => {
+  it('renders a CodeMirror editor for code entry', () => {
     render(<ProblemCard problem={codeProblem} sessionId="s1" answered={false} />)
-    const textarea = document.querySelector('textarea')
-    expect(textarea).toBeInTheDocument()
+    expect(document.querySelector('.cm-editor')).toBeInTheDocument()
+    expect(document.querySelector('.cm-content')).toBeInTheDocument()
   })
 
   it('renders Run & grade button', () => {
@@ -133,12 +134,19 @@ describe('ProblemCard — code (multistep kind)', () => {
     expect(btn).toBeDisabled()
   })
 
-  it('run button enables after typing code', () => {
+  it('run button enables after typing code', async () => {
     render(<ProblemCard problem={codeProblem} sessionId="s1" answered={false} />)
-    const textarea = document.querySelector('textarea')!
-    fireEvent.change(textarea, { target: { value: 'def f(x, n): return n * x**(n-1)' } })
+    const content = document.querySelector('.cm-content') as HTMLElement
+    const user = userEvent.setup()
+    await user.type(content, 'def f(x, n): return n * x**(n-1)')
     const btn = screen.getByText(/run & grade/i)
     expect(btn).not.toBeDisabled()
+  })
+
+  it('editor is non-editable once answered', () => {
+    render(<ProblemCard problem={codeProblem} sessionId="s1" answered={true} gradeResult="correct" />)
+    const content = document.querySelector('.cm-content') as HTMLElement
+    expect(content.getAttribute('contenteditable')).toBe('false')
   })
 })
 
